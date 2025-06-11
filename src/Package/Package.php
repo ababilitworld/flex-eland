@@ -1,0 +1,105 @@
+<?php
+    namespace Ababilithub\FlexELand\Package;
+
+    (defined( 'ABSPATH' ) && defined( 'WPINC' )) || exit();
+
+	use Ababilithub\{
+		FlexPhp\Package\Mixin\V1\Standard\Mixin as StandardMixin,
+		FlexELand\Package\Plugin\Production\Production as FlexProduction,
+	};
+
+	use const Ababilithub\{
+		FlexELand\PLUGIN_NAME,
+		FlexELand\PLUGIN_DIR,
+        FlexELand\PLUGIN_URL,
+		FlexELand\PLUGIN_FILE,
+		FlexELand\PLUGIN_VERSION
+	};
+
+	if ( ! class_exists( __NAMESPACE__.'\Package' ) ) 
+	{
+		/**
+		 * Class Package
+		 *
+		 * @package Ababilithub\FlexELand\Package
+		 */
+		class Package 
+		{
+			use StandardMixin;
+	
+			/**
+			 * Package version
+			 *
+			 * @var string
+			 */
+			public $version = '1.0.0';
+
+			private $test;
+	
+			/**
+			 * Constructor
+			 */
+			public function __construct($data = []) 
+			{
+				$this->init($data);
+				register_uninstall_hook(PLUGIN_FILE, array('self', 'uninstall'));                
+			}
+
+			public function init($data)
+			{
+				$this->test  = FlexProduction::getInstance();
+			}
+	
+			/**
+			 * Run the isntaller
+			 * 
+			 * @return void
+			 */
+			public static function run() 
+			{
+				$installed = get_option( PLUGIN_NAME.'-installed' );
+	
+				if ( ! $installed ) 
+				{
+					update_option( PLUGIN_NAME.'-installed', time() );
+				}
+	
+				update_option( PLUGIN_NAME.'-version', PLUGIN_VERSION );
+			}
+	
+			/**
+			 * Activate The class
+			 *
+			 * @return void
+			 */
+			public static function activate(): void 
+			{
+				//flush_rewrite_rules();
+                self::run();
+			}
+	
+			/**
+			 * Dectivate The class
+			 *
+			 * @return void
+			 */
+			public static function deactivate(): void 
+			{
+				flush_rewrite_rules();
+			}
+	
+			/**
+			 * Uninstall the plugin
+			 *
+			 * @return void
+			 */
+			public static function uninstall(): void 
+			{
+				delete_option(PLUGIN_NAME . '-installed');
+				delete_option(PLUGIN_NAME . '-version');
+				flush_rewrite_rules();
+			}	
+		}
+
+	}
+	
