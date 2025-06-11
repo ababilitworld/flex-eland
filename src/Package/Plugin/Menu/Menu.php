@@ -46,7 +46,7 @@ if (!class_exists(__NAMESPACE__.'\Menu'))
                 'page_title' => 'Document',
                 'menu_title' => 'Document',
                 'capability' => 'manage_options',
-                'slug'       => 'flex-document',
+                'slug'       => 'edit.php?post_type=flexdoc',
                 'callback'   => [$this, 'render_submenu']
             ]);
 
@@ -54,15 +54,15 @@ if (!class_exists(__NAMESPACE__.'\Menu'))
                 'page_title' => 'Mouza',
                 'menu_title' => 'Mouza',
                 'capability' => 'manage_options',
-                'slug'       => 'flex-mouza',
+                'slug'       => 'edit.php?post_type=fmouza',
                 'callback'   => [$this, 'render_submenu']
             ]);
 
             $this->add_submenu([
-                'page_title' => 'Land',
-                'menu_title' => 'Land',
+                'page_title' => 'Land Record',
+                'menu_title' => 'Land Record',
                 'capability' => 'manage_options',
-                'slug'       => 'flex-land',
+                'slug'       => 'edit.php?post_type=flrecord',
                 'callback'   => [$this, 'render_submenu']
             ]);
 
