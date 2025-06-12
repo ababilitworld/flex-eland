@@ -35,7 +35,7 @@
 			public $version = '1.0.0';
 
 			private $test;
-	
+			private $production;	
 			/**
 			 * Constructor
 			 */
@@ -47,7 +47,10 @@
 
 			public function init($data)
 			{
-				$this->test  = FlexProduction::getInstance();
+				add_action('plugins_loaded', function () {
+					$this->production  = FlexProduction::getInstance();
+				});
+				
 			}
 	
 			/**

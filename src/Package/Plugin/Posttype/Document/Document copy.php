@@ -1,5 +1,5 @@
 <?php
-    namespace Ababilithub\FlexELand\Package\Document;
+    namespace Ababilithub\FlexELand\Package\Plugin\Posttype\Document;
 
     use Ababilithub\{
         FlexPhp\Package\Mixin\V1\Standard\Mixin as StandardMixin,

@@ -2,6 +2,7 @@
 namespace Ababilithub\FlexELand\Package\Plugin\Menu;
 
 use Ababilithub\{
+    FlexPhp\Package\Mixin\V1\Standard\Mixin as StandardMixin,
     FlexWordpress\Package\Menu\Base\Menu as BaseMenu,
     FlexELand\Package\Plugin\Language\Arabic\Alphabet\Presentation\Template\Template as AlphabetTemplate,
 };
@@ -16,7 +17,7 @@ use const Ababilithub\{
     FlexELand\PLUGIN_VERSION
 };
 
-(defined( 'ABSPATH' ) && defined( 'WPINC' )) || exit();
+(defined('ABSPATH') && defined('WPINC')) || exit();
 
 if (!class_exists(__NAMESPACE__.'\Menu')) 
 {
@@ -24,108 +25,112 @@ if (!class_exists(__NAMESPACE__.'\Menu'))
      * Concrete Class ThemeSettingsMenu
      * Implements the WordPress admin menu for theme settings
      */
-    class Menu extends BaseMenu
+    class Menu 
     {
+        use StandardMixin;
+
         /**
          * Constructor to define menu properties and submenus
          */
         public function __construct()
         {
-            $this->page_title    = 'Flex ELand';
-            $this->menu_title    = 'Flex ELand';
-            $this->capability    = 'manage_options';
-            $this->menu_slug     = 'flex-eland';
-            $this->callback      = [$this, 'render_page'];
-            $this->menu_icon     = 'dashicons-admin-customizer';
-            $this->menu_position = 9;
+            // Add filter to collect menu items
+            add_filter(PLUGIN_PRE_UNDS.'_admin_menu', [$this, 'add_menu_items']);
+            // Add action to register menus
+            add_action('admin_menu', [$this, 'register_admin_menus']);
+        }
 
-            parent::__construct();
-
-            // Add submenus dynamically
-            $this->add_submenu([
-                'page_title' => 'Document',
-                'menu_title' => 'Document',
+        /**
+         * Add default menu items (can be overridden by other plugins/themes)
+         */
+        public function add_menu_items($menu_items = [])
+        {
+            // Default main menu item
+            $menu_items[] = [
+                'type' => 'menu',
+                'page_title' => 'Flex ELand',
+                'menu_title' => 'Flex ELand',
                 'capability' => 'manage_options',
-                'slug'       => 'edit.php?post_type=flexdoc',
-                'callback'   => [$this, 'render_submenu']
-            ]);
+                'menu_slug' => 'flex-eland',
+                'callback' => [$this, 'render_main_page'],
+                'icon' => 'dashicons-admin-customizer',
+                'position' => 9
+            ];
 
-            $this->add_submenu([
-                'page_title' => 'Mouza',
-                'menu_title' => 'Mouza',
+            $menu_items[] = [
+                'type' => 'submenu',
+                'parent_slug' => 'flex-eland',
+                'page_title' => 'Settings',
+                'menu_title' => 'Settings',
                 'capability' => 'manage_options',
-                'slug'       => 'edit.php?post_type=fmouza',
-                'callback'   => [$this, 'render_submenu']
-            ]);
+                'menu_slug' => 'flex-eland-settings',
+                'callback' => [$this, 'render_settings_page'],
+                'position' => 1,
+            ];
 
-            $this->add_submenu([
-                'page_title' => 'Land Record',
-                'menu_title' => 'Land Record',
-                'capability' => 'manage_options',
-                'slug'       => 'edit.php?post_type=flrecord',
-                'callback'   => [$this, 'render_submenu']
-            ]);
+            return $menu_items;
+        }
 
-            add_shortcode('flex_multilingual_alphabet_grid', array($this,'render_page'));
 
+        /**
+         * Register all admin menus and submenus
+         */
+        public function register_admin_menus()
+        {
+            // Get all menu items from filter
+            $menu_items = apply_filters(PLUGIN_PRE_UNDS.'_admin_menu', []);
+
+            foreach ($menu_items as $item) {
+                if ($item['type'] === 'menu') {
+                    add_menu_page(
+                        $item['page_title'],
+                        $item['menu_title'],
+                        $item['capability'],
+                        $item['menu_slug'],
+                        $item['callback'],
+                        $item['icon'],
+                        $item['position']
+                    );
+                } 
+                elseif ($item['type'] === 'submenu') {
+                    add_submenu_page(
+                        $item['parent_slug'],
+                        $item['page_title'],
+                        $item['menu_title'],
+                        $item['capability'],
+                        $item['menu_slug'],
+                        $item['callback'],
+                        $item['position']
+                    );
+                }
+            }
         }
 
         /**
-         * Renders the main settings page
+         * Render main page content
          */
-        public function render_page(): void
+        public function render_main_page()
         {
-            $template = new AlphabetTemplate();
-            echo AlphabetTemplate::alphabet_grid([]);
+            echo '<div class="wrap">';
+            echo '<h1>Flex ELand Dashboard</h1>';
+            echo '<p>Welcome to Flex ELand administration panel.</p>';
+            echo '</div>';
         }
 
         /**
-         * Renders the submenu pages
+         * Render settings page content
          */
-        public function render_submenu(): void
+        public function render_settings_page()
         {
-            $template = new AlphabetTemplate();
-            echo AlphabetTemplate::alphabet_grid([]);
-        }
-
-        /**
-         * Get the page title
-         */
-        protected function get_page_title(): string
-        {
-            return $this->page_title;
-        }
-
-        /**
-         * Get the menu title
-         */
-        protected function get_menu_title(): string
-        {
-            return $this->menu_title;
-        }
-
-        /**
-         * Get the menu capability
-         */
-        protected function get_menu_capability(): string
-        {
-            return $this->capability;
-        }
-
-        /**
-         * Get the menu slug
-         */
-        protected function get_menu_slug(): string
-        {
-            return $this->menu_slug;
-        }
-
-        /**
-         * Get the callback function
-         */
-        protected function get_callback(): callable 
-        {
-            return is_callable($this->callback) ? $this->callback : '__return_false';
+            echo '<div class="wrap">';
+            echo '<h1>Flex ELand Settings</h1>';
+            echo '<form method="post" action="options.php">';
+            // Add your settings fields here
+            settings_fields('flex-eland-settings-group');
+            do_settings_sections('flex-eland-settings');
+            submit_button();
+            echo '</form>';
+            echo '</div>';
         }
     }
 }

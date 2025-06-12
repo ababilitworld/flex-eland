@@ -5,6 +5,8 @@ namespace Ababilithub\FlexELand\Package\Plugin\Production;
 
 use Ababilithub\{
     FlexPhp\Package\Mixin\V1\Standard\Mixin as StandardMixin,
+    FlexELand\Package\Plugin\Posttype\Document\Document as DocumentPosttype,
+    FlexELand\Package\Plugin\Taxonomy\Document\Catagory\Taxonomy as DocumentCatagoryTaxonomy,
     FlexELand\Package\Plugin\Menu\Menu as ProductionMenu,
 };
 
@@ -23,7 +25,10 @@ if (!class_exists(__NAMESPACE__.'\Production'))
 
         public function init($data) 
         {
-            $this->menu = ProductionMenu::getInstance();      
+            
+            $this->menu = ProductionMenu::getInstance(); 
+            DocumentCatagoryTaxonomy::getInstance();
+            DocumentPosttype::getInstance();
         }
     }
 }

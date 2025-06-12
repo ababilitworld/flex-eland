@@ -1,19 +1,19 @@
 <?php
-    namespace Ababilithub\FlexELand\Package\Document\Setting;
+    namespace Ababilithub\FlexELand\Package\Plugin\Posttype\Document\Setting;
 
     use Ababilithub\{
         FlexPhp\Package\Mixin\V1\Standard\Mixin as StandardMixin,
-        FlexELand\Package\Document\Setting\General\Setting as GeneralSetting
+        FlexELand\Package\Plugin\Posttype\Document\Setting\General\Setting as GeneralSetting
     };
 
     use const Ababilithub\{
-        FlexPortfolio\PLUGIN_NAME,
-        FlexPortfolio\PLUGIN_DIR,
-        FlexPortfolio\PLUGIN_URL,
-        FlexPortfolio\PLUGIN_FILE,
-        FlexPortfolio\PLUGIN_PRE_UNDS,
-        FlexPortfolio\PLUGIN_PRE_HYPH,
-        FlexPortfolio\PLUGIN_VERSION
+        FlexELand\PLUGIN_NAME,
+        FlexELand\PLUGIN_DIR,
+        FlexELand\PLUGIN_URL,
+        FlexELand\PLUGIN_FILE,
+        FlexELand\PLUGIN_PRE_UNDS,
+        FlexELand\PLUGIN_PRE_HYPH,
+        FlexELand\PLUGIN_VERSION
     };
 
     (defined( 'ABSPATH' ) && defined( 'WPINC' )) || exit();
@@ -27,14 +27,14 @@
             private $posttype;
             private $general_setting;
 
-            public function __construct(array $data = null) 
+            public function __construct() 
             {
-                $this->init($data);
+                $this->init();
             }
 
-            private function init($data) 
+            private function init() 
             {
-                $this->posttype = $data['posttype']??'';
+                $this->posttype = 'flexdoc';
                 $this->general_setting = GeneralSetting::getInstance();
                 add_action('add_meta_boxes', array($this, 'meta_box'));
                         
@@ -60,10 +60,10 @@
                         <div class="tab-container">
                             <ul class="tab-menu">
                                 <h3><?php esc_html_e('Attribute','flex-eland');?></h3>
-                                <?php do_action('setting_tab_item'); ?>
+                                <?php do_action($this->posttype.'_setting_tab_item'); ?>
                             </ul>
                             <div class="tab-content-container">
-                                <?php do_action('setting_tab_content',$portfolio_id); ?>
+                                <?php do_action($this->posttype.'_setting_tab_content',$portfolio_id); ?>
                             </div>
                         </div>
                     </div>
