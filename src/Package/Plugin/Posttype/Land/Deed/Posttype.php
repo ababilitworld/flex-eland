@@ -46,7 +46,7 @@ if (!class_exists(__NAMESPACE__.'\Posttype'))
         private function init_hook()
         {
             add_filter(PLUGIN_PRE_UNDS.'_admin_menu', [$this, 'add_menu_items']);
-            add_action('init', [$this, 'register_post_type'], 10);
+            add_action('init', [$this, 'register_post_type'], 99);
             add_filter('use_block_editor_for_post_type', [$this, 'disable_gutenberg'], 10, 2);
             
         }

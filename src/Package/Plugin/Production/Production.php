@@ -28,26 +28,28 @@ if (!class_exists(__NAMESPACE__.'\Production'))
 
         public function __construct($data = []) 
         {
-            $this->init($data); 
-            
+            $this->init(); 
+            //add_action('init', [$this, 'init'], 0);           
         }
 
-        public function init($data) 
+        public function init() 
         {
             
-            ProductionMenu::getInstance();
             TaxonomyFactory::get(LandDeedTypeTaxonomy::class); 
             TaxonomyFactory::get(LandDocumentTypeTaxonomy::class);  
-            TaxonomyFactory::get(DistrictTaxonomy::class); 
-            TaxonomyFactory::get(ThanaTaxonomy::class);          
+                      
             TaxonomyFactory::get(LandMouzaTaxonomy::class); 
             TaxonomyFactory::get(LandSurveyTaxonomy::class);
             TaxonomyFactory::get(LandTypeTaxonomy::class);
+            TaxonomyFactory::get(DistrictTaxonomy::class); 
+            TaxonomyFactory::get(ThanaTaxonomy::class);
             TaxonomyFactory::get(MediaTypeTaxonomy::class); 
             TaxonomyFactory::get(ExtensionTypeTaxonomy::class);
             
+            ProductionMenu::getInstance();
             DocumentPosttype::getInstance();
             DeedPosttype::getInstance();
         }
+        
     }
 }

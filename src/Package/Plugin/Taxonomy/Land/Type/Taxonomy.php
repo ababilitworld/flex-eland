@@ -22,6 +22,41 @@ if (!class_exists(__NAMESPACE__.'\Taxonomy'))
             $this->taxonomy = 'land-type';
             $this->taxonomy_slug = 'land-type';
             
+            $this->init_hook();
+            $this->init_service();
+        }
+
+        protected function init_hook(): void
+        {
+            //add_filter(PLUGIN_PRE_UNDS.'_admin_menu', [$this, 'add_menu_items']);
+            add_action('init', [$this, 'init_taxonomy'], 97); 
+            parent::init_hook();           
+        }
+
+        protected function init_service(): void
+        {
+            //
+        }
+
+        public function add_menu_items($menu_items = [])
+        {
+            $menu_items[] = [
+                'type' => 'submenu',
+                'parent_slug' => 'parent-slug',
+                'page_title' => __('Land Type', 'flex-eland'),
+                'menu_title' => __('Land Type', 'flex-eland'),
+                'capability' => 'manage_options',
+                'menu_slug' => 'edit-tags.php?taxonomy='.$this->taxonomy_slug,
+                'callback' => null,
+                'position' => 9,
+            ];
+
+            return $menu_items;
+        }
+
+        public function init_taxonomy()
+        {
+            
             $this->set_labels([
                 'name'              => _x('Land Types', 'taxonomy general name', 'flex-eland'),
                 'singular_name'     => _x('Land Type', 'taxonomy singular name', 'flex-eland'),
@@ -51,35 +86,6 @@ if (!class_exists(__NAMESPACE__.'\Taxonomy'))
                 'show_in_nav_menus' => true,
             ]);
 
-            $this->init_hook();
-            $this->init_service();
-        }
-
-        protected function init_hook(): void
-        {
-            parent::init_hook();
-            //add_filter(PLUGIN_PRE_UNDS.'_admin_menu', [$this, 'add_menu_items']);
-        }
-
-        protected function init_service(): void
-        {
-            //
-        }
-
-        public function add_menu_items($menu_items = [])
-        {
-            $menu_items[] = [
-                'type' => 'submenu',
-                'parent_slug' => 'parent-slug',
-                'page_title' => __('Land Type', 'flex-eland'),
-                'menu_title' => __('Land Type', 'flex-eland'),
-                'capability' => 'manage_options',
-                'menu_slug' => 'edit-tags.php?taxonomy='.$this->taxonomy_slug,
-                'callback' => null,
-                'position' => 9,
-            ];
-
-            return $menu_items;
         }
     }
 }
