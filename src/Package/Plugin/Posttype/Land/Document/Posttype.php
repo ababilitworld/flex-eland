@@ -47,7 +47,7 @@ if (!class_exists(__NAMESPACE__.'\Posttype'))
         private function init_hook()
         {
             add_filter(PLUGIN_PRE_UNDS.'_admin_menu', [$this, 'add_menu_items']);
-            add_action('init', [$this, 'register_post_type'], 10);
+            add_action('init', [$this, 'register_post_type'], 99);
             add_filter('use_block_editor_for_post_type', [$this, 'disable_gutenberg'], 10, 2);
             
         }
@@ -122,7 +122,7 @@ if (!class_exists(__NAMESPACE__.'\Posttype'))
                 'menu_icon' => "dashicons-admin-post",
                 'rewrite' => array('slug' => $this->posttype),
                 'supports' => array('title', 'thumbnail', 'editor'),
-                'taxonomies' => array('media-type','extension-type'),
+                'taxonomies' => array('land-doc-type','media-type','extension-type'),
             );
 
             register_post_type($this->posttype, $args);

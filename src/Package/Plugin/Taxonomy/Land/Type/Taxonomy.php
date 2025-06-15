@@ -20,7 +20,7 @@ if (!class_exists(__NAMESPACE__.'\Taxonomy'))
         protected function init(): void
         {
             $this->taxonomy = 'land-type';
-            $this->taxonomy_slug = 'land-type';
+            $this->slug = 'land-type';
             
             $this->init_hook();
             $this->init_service();
@@ -46,7 +46,7 @@ if (!class_exists(__NAMESPACE__.'\Taxonomy'))
                 'page_title' => __('Land Type', 'flex-eland'),
                 'menu_title' => __('Land Type', 'flex-eland'),
                 'capability' => 'manage_options',
-                'menu_slug' => 'edit-tags.php?taxonomy='.$this->taxonomy_slug,
+                'menu_slug' => 'edit-tags.php?taxonomy='.$this->slug,
                 'callback' => null,
                 'position' => 9,
             ];
@@ -78,12 +78,42 @@ if (!class_exists(__NAMESPACE__.'\Taxonomy'))
                 'show_ui' => true,
                 'show_admin_column' => true,
                 'query_var' => true,
-                'rewrite' => ['slug' => $this->taxonomy_slug],
+                'rewrite' => ['slug' => $this->slug],
                 'show_in_quick_edit' => true,
                 'show_in_rest' => true,
                 'meta_box_cb' => 'post_categories_meta_box',
                 'show_in_menu' => true,
                 'show_in_nav_menus' => true,
+            ]);
+
+            $this->set_terms([
+                $this->generate_term_data(
+                    'agricultural-land',
+                    'Agricultural Land',
+                    'This is the most prevalent type of land in Bangladesh, used for cultivation and crop production',
+                    [
+                        'max_duration' => 99,
+                        'renewable' => true
+                    ]
+                ),
+                $this->generate_term_data(
+                    'homestead-land',
+                    'Homestead Land',
+                    'This refers to the land where residential dwellings (houses, structures) are located',
+                    [
+                        'max_duration' => 99,
+                        'renewable' => true
+                    ]
+                ),
+                $this->generate_term_data(
+                    'khas-land',
+                    'Khas Land',
+                    'This is government-owned land under the control of the Ministry of Land. It\'s managed by the Collector or Deputy Commissioner on behalf of the government',
+                    [
+                        'max_duration' => 99,
+                        'renewable' => true
+                    ]
+                ),
             ]);
 
         }

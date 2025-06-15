@@ -20,17 +20,17 @@ if (!class_exists(__NAMESPACE__.'\Taxonomy'))
         protected function init(): void
         {
             $this->taxonomy = 'land-deed-type';
-            $this->taxonomy_slug = 'land-deed-type';
+            $this->slug = 'land-deed-type';
 
             $this->init_hook();
             $this->init_service();
         }
 
         protected function init_hook(): void
-        {            
-            parent::init_hook();
+        {
             //add_filter(PLUGIN_PRE_UNDS.'_admin_menu', [$this, 'add_menu_items']);
-            add_action('init', [$this, 'init_taxonomy'], 97);            
+            add_action('init', [$this, 'init_taxonomy'], 97); 
+            parent::init_hook();            
         }
 
         protected function init_service(): void
@@ -46,7 +46,7 @@ if (!class_exists(__NAMESPACE__.'\Taxonomy'))
                 'page_title' => __('Land Deed Type', 'flex-eland'),
                 'menu_title' => __('Land Deed Type', 'flex-eland'),
                 'capability' => 'manage_options',
-                'menu_slug' => 'edit-tags.php?taxonomy='.$this->taxonomy_slug,
+                'menu_slug' => 'edit-tags.php?taxonomy='.$this->slug,
                 'callback' => null,
                 'position' => 9,
             ];
@@ -77,12 +77,78 @@ if (!class_exists(__NAMESPACE__.'\Taxonomy'))
                 'show_ui' => true,
                 'show_admin_column' => true,
                 'query_var' => true,
-                'rewrite' => ['slug' => $this->taxonomy_slug],
+                'rewrite' => ['slug' => $this->slug],
                 'show_in_quick_edit' => true,
                 'show_in_rest' => true,
                 'meta_box_cb' => 'post_categories_meta_box',
                 'show_in_menu' => true,
                 'show_in_nav_menus' => true,
+            ]);
+
+            $this->set_terms([
+                $this->generate_term_data(
+                    'sale_deed',
+                    'Sale Deed (বিক্রয় দলিল)',
+                    'Legal document for permanent transfer of ownership',
+                    [
+                        'legal_effect' => 'permanent_transfer',
+                        'stamp_duty' => 5.0,
+                        'registration_fee' => 2.0,
+                        'requires_witness' => true
+                    ]
+                ),
+                $this->generate_term_data(
+                    'gift_deed',
+                    'Gift Deed (উপহার দলিল)',
+                    'Voluntary transfer without monetary consideration',
+                    [
+                        'legal_effect' => 'voluntary_transfer',
+                        'stamp_duty' => 1.0,
+                        'registration_fee' => 1.0,
+                        'revocable' => false
+                    ]
+                ),
+                $this->generate_term_data(
+                    'lease_deed',
+                    'Lease Deed (ইজারা দলিল)',
+                    'Temporary transfer of possession for fixed period',
+                    [
+                        'legal_effect' => 'temporary_possession',
+                        'max_duration' => 99,
+                        'renewable' => true,
+                        'stamp_duty' => 'slab_rate'
+                    ]
+                ),
+                $this->generate_term_data(
+                    'mortgage_deed',
+                    'Mortgage Deed (বন্ধকী দলিল)',
+                    'Security interest in land for loan collateral',
+                    [
+                        'legal_effect' => 'security_interest',
+                        'redemption_period' => 15,
+                        'foreclosure_possible' => true
+                    ]
+                ),
+                $this->generate_term_data(
+                    'partition_deed',
+                    'Partition Deed (বিভাজন দলিল)',
+                    'Division of jointly held property among co-owners',
+                    [
+                        'legal_effect' => 'division_of_property',
+                        'requires_consent' => true,
+                        'minimum_coowners' => 2
+                    ]
+                ),
+                $this->generate_term_data(
+                    'power_of_attorney',
+                    'Power of Attorney (মুক্তিয়ারনামা)',
+                    'Authorization to act on behalf of property owner',
+                    [
+                        'legal_effect' => 'authorization',
+                        'revocable' => true,
+                        'types' => ['general', 'special']
+                    ]
+                )
             ]);
 
         }

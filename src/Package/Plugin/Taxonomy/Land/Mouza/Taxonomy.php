@@ -20,7 +20,7 @@ if (!class_exists(__NAMESPACE__.'\Taxonomy'))
         protected function init(): void
         {
             $this->taxonomy = 'land-mouza';
-            $this->taxonomy_slug = 'land-mouza';
+            $this->slug = 'land-mouza';
 
             $this->init_hook();
             $this->init_service();
@@ -47,7 +47,7 @@ if (!class_exists(__NAMESPACE__.'\Taxonomy'))
                 'page_title' => __('Land Mouza', 'flex-eland'),
                 'menu_title' => __('Land Mouza', 'flex-eland'),
                 'capability' => 'manage_options',
-                'menu_slug' => 'edit-tags.php?taxonomy='.$this->taxonomy_slug,
+                'menu_slug' => 'edit-tags.php?taxonomy='.$this->slug,
                 'callback' => null,
                 'position' => 9,
             ];
@@ -79,7 +79,7 @@ if (!class_exists(__NAMESPACE__.'\Taxonomy'))
                 'show_ui' => true,
                 'show_admin_column' => true,
                 'query_var' => true,
-                'rewrite' => ['slug' => $this->taxonomy_slug],
+                'rewrite' => ['slug' => $this->slug],
                 'show_in_quick_edit' => true,
                 'show_in_rest' => true,
                 'meta_box_cb' => 'post_categories_meta_box',
@@ -87,6 +87,53 @@ if (!class_exists(__NAMESPACE__.'\Taxonomy'))
                 'show_in_nav_menus' => true,
             ]);
 
+            $this->set_terms([
+                $this->generate_term_data(
+                    'kashimpur',
+                    'Kashimpur',
+                    'Union Auliapur',
+                    [
+                        'type' => 'mouza',
+                        'parent' => 'thana-kotwali',
+                        'union' => 'Auliapur',
+                        'thana' => 'Kotwali',
+                        'upazila' => 'Dinajpur Sadar',
+                        'district' => 'Dinajpur',
+                        'division' => 'Rangpur',
+                        'jl_no' => 101
+                    ]
+                ),
+                $this->generate_term_data(
+                    'tarimpur',
+                    'Tarimpur',
+                    'Union Auliapur',
+                    [
+                        'type' => 'mouza',
+                        'parent' => 'thana-kotwali',
+                        'union' => 'Auliapur',
+                        'thana' => 'Kotwali',
+                        'upazila' => 'Dinajpur Sadar',
+                        'district' => 'Dinajpur',
+                        'division' => 'Rangpur',
+                        'jl_no' => 103
+                    ]
+                ),
+            ]);
+
+        }
+
+        protected function generate_term_data(
+            string $slug,
+            string $name,
+            string $description = '',
+            array $meta = []
+        ): array {
+            return [
+                'slug' => $slug,
+                'name' => isset($meta['jl_no']) ? "{$name} (JL-{$meta['jl_no']})" : $name,
+                'description' => $description,
+                'meta' => $meta
+            ];
         }
     }
 }

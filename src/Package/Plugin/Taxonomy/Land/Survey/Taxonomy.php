@@ -20,7 +20,7 @@ if (!class_exists(__NAMESPACE__.'\Taxonomy'))
         protected function init(): void
         {
             $this->taxonomy = 'land-survey';
-            $this->taxonomy_slug = 'land-survey';
+            $this->slug = 'land-survey';
 
             $this->init_hook();
             $this->init_service();
@@ -46,7 +46,7 @@ if (!class_exists(__NAMESPACE__.'\Taxonomy'))
                 'page_title' => __('Land Survey', 'flex-eland'),
                 'menu_title' => __('Land Survey', 'flex-eland'),
                 'capability' => 'manage_options',
-                'menu_slug' => 'edit-tags.php?taxonomy='.$this->taxonomy_slug,
+                'menu_slug' => 'edit-tags.php?taxonomy='.$this->slug,
                 'callback' => null,
                 'position' => 9,
             ];
@@ -78,12 +78,45 @@ if (!class_exists(__NAMESPACE__.'\Taxonomy'))
                 'show_ui' => true,
                 'show_admin_column' => true,
                 'query_var' => true,
-                'rewrite' => ['slug' => $this->taxonomy_slug],
+                'rewrite' => ['slug' => $this->slug],
                 'show_in_quick_edit' => true,
                 'show_in_rest' => true,
                 'meta_box_cb' => 'post_categories_meta_box',
                 'show_in_menu' => true,
                 'show_in_nav_menus' => true,
+            ]);
+
+            $this->set_terms([
+                $this->generate_term_data(
+                    'cs',
+                    'CS (Cadastral Survey)',
+                    'Original survey conducted during British period (1880-1940)',
+                    ['year_start' => 1880, 'year_end' => 1940]
+                ),
+                $this->generate_term_data(
+                    'sa',
+                    'SA (State Acquisition Survey)',
+                    'Conducted after abolition of zamindari system (1950-1962)',
+                    ['year_start' => 1950, 'year_end' => 1962]
+                ),
+                $this->generate_term_data(
+                    'rs',
+                    'RS (Revisional Survey)',
+                    'First revision survey (1960-1980)',
+                    ['year_start' => 1960, 'year_end' => 1980]
+                ),
+                $this->generate_term_data(
+                    'bs',
+                    'BS (Bangladesh Survey)',
+                    'Conducted after independence (1980-present)',
+                    ['year_start' => 1980, 'year_end' => 0]
+                ),
+                $this->generate_term_data(
+                    'mrs',
+                    'MRS (Modern Revisional Survey)',
+                    'Digital survey using modern techniques (2010-present)',
+                    ['year_start' => 2010, 'year_end' => 0, 'digital' => true]
+                )
             ]);
 
         }
