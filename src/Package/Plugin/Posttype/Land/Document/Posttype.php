@@ -1,10 +1,12 @@
 <?php
-namespace Ababilithub\FlexELand\Package\Plugin\Posttype\Document;
+namespace Ababilithub\FlexELand\Package\Plugin\Posttype\Land\Document;
+
+(defined('ABSPATH') && defined('WPINC')) || exit();
 
 use Ababilithub\{
     FlexPhp\Package\Mixin\V1\Standard\Mixin as StandardMixin,
     FlexELand\Package\Plugin\Taxonomy\Document\Catagory\Taxonomy as DocumentCatagory,
-    FlexELand\Package\Plugin\Posttype\Document\Setting\Setting as Setting,
+    FlexELand\Package\Plugin\Posttype\Land\Document\Setting\Setting as Setting,
 };
 
 use const Ababilithub\{
@@ -17,11 +19,9 @@ use const Ababilithub\{
     FlexELand\PLUGIN_VERSION
 };
 
-(defined('ABSPATH') && defined('WPINC')) || exit();
-
-if (!class_exists(__NAMESPACE__.'\Document')) 
+if (!class_exists(__NAMESPACE__.'\Posttype')) 
 {
-    class Document 
+    class Posttype 
     {
         use StandardMixin;
 
@@ -72,7 +72,7 @@ if (!class_exists(__NAMESPACE__.'\Document'))
                 'capability' => 'manage_options',
                 'menu_slug' => 'edit.php?post_type='.$this->posttype,
                 'callback' => null ,// Uses default post type listing
-                'position' => 3
+                'position' => 2
             ];
 
             return $menu_items;
@@ -122,7 +122,7 @@ if (!class_exists(__NAMESPACE__.'\Document'))
                 'menu_icon' => "dashicons-admin-post",
                 'rewrite' => array('slug' => $this->posttype),
                 'supports' => array('title', 'thumbnail', 'editor'),
-                'taxonomies' => array('document-category', 'category', 'post_tag'),
+                'taxonomies' => array('media-type','extension-type'),
             );
 
             register_post_type($this->posttype, $args);

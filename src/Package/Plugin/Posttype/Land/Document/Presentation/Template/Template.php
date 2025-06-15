@@ -1,5 +1,5 @@
 <?php
-namespace Ababilithub\FlexELand\Package\Plugin\Presentation\Template;
+namespace Ababilithub\FlexELand\Package\Plugin\Posttype\Land\Document\Presentation\Template;
 
 (defined('ABSPATH') && defined('WPINC')) || die();
 
@@ -55,59 +55,10 @@ if (!class_exists(__NAMESPACE__.'\Template'))
                 time(), 
                 true
             );
-        
-            wp_enqueue_style(
-                'flex-eland-portfolio-template-style', 
-                $this->asset_url.'css/portfolio-template.css', 
-                array(), 
-                time()
-            );
-
-            wp_enqueue_style(
-                'flex-eland-modal-style', 
-                $this->asset_url.'css/modal.css', 
-                array(), 
-                time()
-            );
-            wp_enqueue_script(
-                'flex-eland-modal-script', 
-                $this->asset_url.'js/modal.js', 
-                array(), 
-                time(), 
-                true
-            );
-
-            wp_enqueue_style(
-                'flex-eland-lightbox-style', 
-                $this->asset_url.'css/lightbox.css', 
-                array(), 
-                time()
-            );
-            wp_enqueue_script(
-                'flex-eland-lightbox-script', 
-                $this->asset_url.'js/lightbox.js', 
-                array(), 
-                time(),
-                true
-            );
-
-            wp_enqueue_style(
-                'flex-eland-category-style', 
-                $this->asset_url.'css/category.css', 
-                array(), 
-                time()
-            );
-            wp_enqueue_script(
-                'flex-eland-category-script', 
-                $this->asset_url.'js/category.js', 
-                array('jquery'), 
-                time(), 
-                true
-            );
             
             wp_localize_script(
                 'flex-eland-template-script', 
-                'flex_portfolio_by_ababilitworld_template_localize', 
+                PLUGIN_PRE_UNDS.'_'.'template_localize', 
                 array(
                     'adminAjaxUrl' => admin_url('admin-ajax.php'),
                     'ajaxUrl' => admin_url('admin-ajax.php'),

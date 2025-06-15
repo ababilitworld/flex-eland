@@ -48,8 +48,8 @@ if (!class_exists(__NAMESPACE__.'\Menu'))
             // Default main menu item
             $menu_items[] = [
                 'type' => 'menu',
-                'page_title' => 'Flex ELand',
-                'menu_title' => 'Flex ELand',
+                'page_title' => 'Flex Bangla Land',
+                'menu_title' => 'Flex Bangla Land',
                 'capability' => 'manage_options',
                 'menu_slug' => 'flex-eland',
                 'callback' => [$this, 'render_main_page'],
@@ -112,8 +112,8 @@ if (!class_exists(__NAMESPACE__.'\Menu'))
         public function render_main_page()
         {
             echo '<div class="wrap">';
-            echo '<h1>Flex ELand Dashboard</h1>';
-            echo '<p>Welcome to Flex ELand administration panel.</p>';
+            echo '<h1>Flex Bangla Land Dashboard</h1>';
+            echo '<p>Welcome to Flex Bangla Land administration panel.</p>';
             echo '</div>';
         }
 
@@ -123,7 +123,7 @@ if (!class_exists(__NAMESPACE__.'\Menu'))
         public function render_settings_page()
         {
             echo '<div class="wrap">';
-            echo '<h1>Flex ELand Settings</h1>';
+            echo '<h1>Flex Bangla Land Settings</h1>';
             echo '<form method="post" action="options.php">';
             // Add your settings fields here
             settings_fields('flex-eland-settings-group');

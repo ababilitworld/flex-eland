@@ -1,5 +1,5 @@
 <?php
-    namespace Ababilithub\FlexELand\Package\Plugin\Posttype\Document\Setting\General;
+    namespace Ababilithub\FlexELand\Package\Plugin\Posttype\Land\Document\Setting\General;
 
     use Ababilithub\{
         FlexPhp\Package\Mixin\V1\Standard\Mixin as StandardMixin,
@@ -34,9 +34,9 @@
             private function init() 
             {
                 add_action('admin_enqueue_scripts', array($this, 'enqueue'));
-                add_action($this->posttype.'_setting_tab_item', array($this, 'tab_item'));
-                add_action($this->posttype.'_setting_tab_content', array($this, 'tab_content'));
-                add_action($this->posttype.'_setting_general_info', array($this, 'general_info'));
+                add_action(PLUGIN_PRE_UNDS.'_'.$this->posttype.'_'.'setting_tab_item', array($this, 'tab_item'));
+                add_action(PLUGIN_PRE_UNDS.'_'.$this->posttype.'_'.'setting_tab_content', array($this, 'tab_content'));
+                add_action(PLUGIN_PRE_UNDS.'_'.$this->posttype.'_'.'setting_general_info', array($this, 'general_info'));
                 add_action('save_post', array($this, 'save'));
                 
             }
@@ -44,21 +44,32 @@
             public function enqueue() 
             {
                 wp_enqueue_media();
-                wp_enqueue_script(PLUGIN_PRE_HYPH.'document-image-script', PLUGIN_URL . '/src/Package/Document/Presentation/Template/Asset/js/image.js', array(), time(), true);
+                wp_enqueue_script(PLUGIN_PRE_HYPH.'-'.$this->posttype.'-'.'document-image-script', PLUGIN_URL . '/src/Package/Plugin/Posttype/Document/Presentation/Template/Asset/js/image.js', array(), time(), true);
             }
 
             public function tab_item() 
             {
                 ?>
-                    <li class="tab-item active" data-tabs-target="#setting_general_info"><?php esc_html_e('Document Images','flex-eland');?></li>
+                <li role="presentation">
+                    <button class="tab-item" 
+                            role="tab" 
+                            aria-selected="false" 
+                            aria-controls="setting_general_info" 
+                            data-tabs-target="#setting_general_info">
+                        <?php esc_html_e('Document Images','flex-eland');?>
+                    </button>
+                </li>
                 <?php
             }
-            
+
             public function tab_content($post_id) 
             {
                 ?>
-                <div class="tab-content active" id="setting_general_info">
-                    <?php do_action($this->posttype.'_setting_general_info',$post_id); ?>
+                <div class="tab-content" 
+                    id="setting_general_info" 
+                    role="tabpanel" 
+                    aria-labelledby="setting_general_info-tab">
+                    <?php do_action(PLUGIN_PRE_UNDS.'_'.$this->posttype.'_'.'setting_general_info',$post_id); ?>
                 </div>
                 <?php
             }
@@ -79,8 +90,10 @@
                         <input type="button" class="button" id="upload-images-button" value="Upload Images">
                         <ul id="document-images-preview">
                             <?php
-                            if ($images) {
-                                foreach ($images as $image) {
+                            if ($images) 
+                            {
+                                foreach ($images as $image) 
+                                {
                                     echo '<li><img src="' . wp_get_attachment_url($image) . '" style="max-width: 150px;"><input type="hidden" name="document-images[]" value="' . $image . '"><a href="#" class="remove-image">Remove</a></li>';
                                 }
                             }

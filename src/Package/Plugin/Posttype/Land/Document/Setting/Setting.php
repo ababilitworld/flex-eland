@@ -1,9 +1,9 @@
 <?php
-    namespace Ababilithub\FlexELand\Package\Plugin\Posttype\Document\Setting;
+    namespace Ababilithub\FlexELand\Package\Plugin\Posttype\Land\Document\Setting;
 
     use Ababilithub\{
         FlexPhp\Package\Mixin\V1\Standard\Mixin as StandardMixin,
-        FlexELand\Package\Plugin\Posttype\Document\Setting\General\Setting as GeneralSetting
+        FlexELand\Package\Plugin\Posttype\Land\Document\Setting\General\Setting as GeneralSetting
     };
 
     use const Ababilithub\{
@@ -50,7 +50,7 @@
             
             public function settings() 
             {
-                $portfolio_id = get_the_ID();
+                $post_id = get_the_ID();
                 ?>
                 <div class="fpba">
                     <div class="meta-box">
@@ -58,12 +58,12 @@
                             <div class="loader-spinner"></div>
                         </div>
                         <div class="tab-container">
-                            <ul class="tab-menu">
+                            <ul class="tab-menu" role="tablist">
                                 <h3><?php esc_html_e('Attribute','flex-eland');?></h3>
-                                <?php do_action($this->posttype.'_setting_tab_item'); ?>
+                                <?php do_action(PLUGIN_PRE_UNDS.'_'.$this->posttype.'_'.'setting_tab_item'); ?>
                             </ul>
                             <div class="tab-content-container">
-                                <?php do_action($this->posttype.'_setting_tab_content',$portfolio_id); ?>
+                                <?php do_action(PLUGIN_PRE_UNDS.'_'.$this->posttype.'_'.'setting_tab_content',$post_id); ?>
                             </div>
                         </div>
                     </div>
