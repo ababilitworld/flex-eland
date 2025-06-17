@@ -14,7 +14,8 @@ use Ababilithub\{
     FlexELand\Package\Plugin\Taxonomy\Land\Document\Type\Taxonomy as LandDocumentTypeTaxonomy,
     FlexELand\Package\Plugin\Taxonomy\Land\Mouza\Taxonomy as LandMouzaTaxonomy,
     FlexELand\Package\Plugin\Taxonomy\Land\Survey\Taxonomy as LandSurveyTaxonomy,
-    FlexELand\Package\Plugin\Taxonomy\Land\Type\Taxonomy as LandTypeTaxonomy,    
+    FlexELand\Package\Plugin\Taxonomy\Land\Type\Taxonomy as LandTypeTaxonomy,
+    FlexWordpress\Package\Posttype\V1\Factory\Posttype as PosttypeFactory,   
     FlexELand\Package\Plugin\Posttype\Land\Document\Posttype as DocumentPosttype,
     FlexELand\Package\Plugin\Posttype\Land\Deed\Posttype as DeedPosttype,
     FlexELand\Package\Plugin\Menu\Menu as ProductionMenu,
@@ -28,27 +29,26 @@ if (!class_exists(__NAMESPACE__.'\Production'))
 
         public function __construct($data = []) 
         {
-            $this->init(); 
-            //add_action('init', [$this, 'init'], 0);           
+            $this->init();       
         }
 
         public function init() 
         {
             
             TaxonomyFactory::get(LandDeedTypeTaxonomy::class); 
-            TaxonomyFactory::get(LandDocumentTypeTaxonomy::class);  
-                      
-            TaxonomyFactory::get(LandMouzaTaxonomy::class); 
-            TaxonomyFactory::get(LandSurveyTaxonomy::class);
-            TaxonomyFactory::get(LandTypeTaxonomy::class);
+            TaxonomyFactory::get(LandDocumentTypeTaxonomy::class);
+            TaxonomyFactory::get(LandSurveyTaxonomy::class);            
             TaxonomyFactory::get(DistrictTaxonomy::class); 
             TaxonomyFactory::get(ThanaTaxonomy::class);
+            TaxonomyFactory::get(LandMouzaTaxonomy::class);
+            TaxonomyFactory::get(LandTypeTaxonomy::class);
             TaxonomyFactory::get(MediaTypeTaxonomy::class); 
             TaxonomyFactory::get(ExtensionTypeTaxonomy::class);
             
+            
             ProductionMenu::getInstance();
-            DocumentPosttype::getInstance();
-            DeedPosttype::getInstance();
+            PosttypeFactory::get(DocumentPosttype::class);
+            //PosttypeFactory::get(DeedPosttype::class);
         }
         
     }

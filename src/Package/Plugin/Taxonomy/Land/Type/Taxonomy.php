@@ -28,8 +28,7 @@ if (!class_exists(__NAMESPACE__.'\Taxonomy'))
 
         protected function init_hook(): void
         {
-            //add_filter(PLUGIN_PRE_UNDS.'_admin_menu', [$this, 'add_menu_items']);
-            add_action('init', [$this, 'init_taxonomy'], 97); 
+            //add_filter(PLUGIN_PRE_UNDS.'_admin_menu', [$this, 'add_menu_items']); 
             parent::init_hook();           
         }
 

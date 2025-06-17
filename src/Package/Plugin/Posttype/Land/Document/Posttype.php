@@ -5,141 +5,144 @@ namespace Ababilithub\FlexELand\Package\Plugin\Posttype\Land\Document;
 
 use Ababilithub\{
     FlexPhp\Package\Mixin\V1\Standard\Mixin as StandardMixin,
-    FlexELand\Package\Plugin\Taxonomy\Document\Catagory\Taxonomy as DocumentCatagory,
-    FlexELand\Package\Plugin\Posttype\Land\Document\Setting\Setting as Setting,
+    FlexWordpress\Package\Posttype\V1\Base\Posttype as BasePosttype
 };
 
 use const Ababilithub\{
-    FlexELand\PLUGIN_NAME,
-    FlexELand\PLUGIN_DIR,
-    FlexELand\PLUGIN_URL,
-    FlexELand\PLUGIN_FILE,
-    FlexELand\PLUGIN_PRE_UNDS,
-    FlexELand\PLUGIN_PRE_HYPH,
-    FlexELand\PLUGIN_VERSION
+    FlexELand\PLUGIN_PRE_UNDS
 };
 
-if (!class_exists(__NAMESPACE__.'\Posttype')) 
+class Posttype extends BasePosttype
 {
-    class Posttype 
+    use StandardMixin;
+    protected function init(): void
     {
-        use StandardMixin;
+        $this->posttype = 'fldoc';
+        $this->slug = 'fldoc';
 
-        private $posttype;
-        private $pagination_service;
-        private $portfolio_service;
-        private $portfolio_template;
-        private $settings;
+        $this->use_block_editor = true;
+        
+        $this->init_hook();
+        $this->init_service();
+    }
 
-        public function __construct()
-        {
-            $this->init();
-        }
+    protected function init_hook(): void
+    {
+        add_filter(PLUGIN_PRE_UNDS.'_admin_menu', [$this, 'add_menu_items']);
+        //add_filter(PLUGIN_PRE_UNDS.'_admin_menu', [$this, 'add_menu_items']);
+        
+        
+        parent::init_hook();           
+    }
 
-        private function init()
-        {
-            $this->posttype = 'flexdoc';
-            $this->init_hook();
-            $this->init_service();
-            
-        }
+    protected function init_service(): void
+    {
+        //
+    }
 
-        private function init_hook()
-        {
-            add_filter(PLUGIN_PRE_UNDS.'_admin_menu', [$this, 'add_menu_items']);
-            add_action('init', [$this, 'register_post_type'], 99);
-            add_filter('use_block_editor_for_post_type', [$this, 'disable_gutenberg'], 10, 2);
-            
-        }
+    public function add_menu_items($menu_items = [])
+    {
+        $menu_items[] = [
+            'type' => 'submenu',
+            'parent_slug' => 'flex-eland',
+            'page_title' => __('Land Doc', 'flex-eland'),
+            'menu_title' => __('Land Doc', 'flex-eland'),
+            'capability' => 'manage_options',
+            'menu_slug' => 'edit.php?post_type='.$this->posttype,
+            'callback' => null,
+            'position' => 9,
+        ];
 
-        private function init_service()
-        {
-            $this->settings = Setting::getInstance();
-        }
+        return $menu_items;
+    }
 
-        /**
-         * Add default menu items (can be overridden by other plugins/themes)
-         */
-        public function add_menu_items($menu_items = [])
-        {
+    public function init_posttype()
+    {
+        
+        $this->set_labels([
+            'name' => esc_html__('Land Docs', 'flex-eland'),
+            'singular_name' => esc_html__('Land Doc', 'flex-eland'),
+            'menu_name' => esc_html__('Land Docs', 'flex-eland'),
+            'name_admin_bar' => esc_html__('Land Docs', 'flex-eland'),
+            'archives' => esc_html__('Land Doc List', 'flex-eland'),
+            'attributes' => esc_html__('Land Doc List', 'flex-eland'),
+            'parent_item_colon' => esc_html__('Land Doc Item : ', 'flex-eland'),
+            'all_items' => esc_html__('All Land Doc', 'flex-eland'),
+            'add_new_item' => esc_html__('Add new Land Doc', 'flex-eland'),
+            'add_new' => esc_html__('Add new Land Doc', 'flex-eland'),
+            'new_item' => esc_html__('New Land Doc', 'flex-eland'),
+            'edit_item' => esc_html__('Edit Land Doc', 'flex-eland'),
+            'update_item' => esc_html__('Update Land Doc', 'flex-eland'),
+            'view_item' => esc_html__('View Land Doc', 'flex-eland'),
+            'view_items' => esc_html__('View Land Docs', 'flex-eland'),
+            'search_items' => esc_html__('Search Land Docs', 'flex-eland'),
+            'not_found' => esc_html__('Land Doc Not found', 'flex-eland'),
+            'not_found_in_trash' => esc_html__('Land Doc Not found in Trash', 'flex-eland'),
+            'featured_image' => esc_html__('Land Doc Feature Image', 'flex-eland'),
+            'set_featured_image' => esc_html__('Set Land Doc Feature Image', 'flex-eland'),
+            'remove_featured_image' => esc_html__('Remove Feature Image', 'flex-eland'),
+            'use_featured_image' => esc_html__('Use as Land Doc featured image', 'flex-eland'),
+            'insert_into_item' => esc_html__('Insert into Land Doc', 'flex-eland'),
+            'uploaded_to_this_item' => esc_html__('Uploaded to this ', 'flex-eland'),
+            'items_list' => esc_html__('Land Doc list', 'flex-eland'),
+            'items_list_navigation' => esc_html__('Land Doc list navigation', 'flex-eland'),
+            'filter_items_list' => esc_html__('Filter Land Doc List', 'flex-eland')
+        ]);
 
-            // Default submenu items
-            $menu_items[] = [
-                'type' => 'submenu',
-                'parent_slug' => 'flex-eland',
-                'page_title' => 'Document',
-                'menu_title' => 'Document',
-                'capability' => 'manage_options',
-                'menu_slug' => 'edit.php?post_type='.$this->posttype,
-                'callback' => null ,// Uses default post type listing
-                'position' => 2
-            ];
+        $this->set_supports(
+            array('title', 'thumbnail', 'editor', 'custom-fields')
+        );
 
-            return $menu_items;
-        }
+        $this->set_taxonomies(
+            array('media-type','extension-type')
+        );
 
-        public function register_post_type() 
-        {            
+        $this->set_args([
+            'public' => true, // Changed to true
+            'show_ui' => true,
+            'show_in_menu' => false, // Don't show in menu by default
+            'labels' => $this->labels,
+            'menu_icon' => "dashicons-admin-post",
+            'rewrite' => array('slug' => $this->slug),
+            'supports' => $this->supports,
+            'taxonomies' => $this->taxonomies,
+        ]);
 
-            add_theme_support('post-thumbnails', array($this->posttype));
-            add_theme_support('editor-color-palette', array($this->posttype));
+        $this->set_metas([
+            $this->generate_meta_definition(
+               [
+                    'key' => '_doc_description',
+                    'type' => 'string',
+                    'description' => 'short description of the '.$this->slug,
+                    'single' => true,
+                    'show_in_rest' => true,
+                    'sanitize_callback' => null,
+                    'auth_callback' => null,
+                ]
+            ),
+            $this->generate_meta_definition(
+                [
+                    'key' => '_doc_author',
+                    'type' => 'string',
+                    'description' => 'short description of the '.$this->slug,
+                    'single' => true,
+                    'show_in_rest' => true,
+                    'sanitize_callback' => null,
+                    'auth_callback' => null,
+                ]
+            ),
+            $this->generate_meta_definition(
+                [
+                    'key' => '__short_description',
+                    'type' => 'string',
+                    'description' => 'short description of the '.$this->slug,
+                    'single' => true,
+                    'show_in_rest' => true,
+                    'sanitize_callback' => null,
+                    'auth_callback' => null,
+                ]
+            ),
+        ]);
 
-            $labels = [
-                'name' => esc_html__('Documents', 'flex-eland'),
-                'singular_name' => esc_html__('Document', 'flex-eland'),
-                'menu_name' => esc_html__('Documents', 'flex-eland'),
-                'name_admin_bar' => esc_html__('Documents', 'flex-eland'),
-                'archives' => esc_html__('Document List', 'flex-eland'),
-                'attributes' => esc_html__('Document List', 'flex-eland'),
-                'parent_item_colon' => esc_html__('Document Item : ', 'flex-eland'),
-                'all_items' => esc_html__('All Document', 'flex-eland'),
-                'add_new_item' => esc_html__('Add new Document', 'flex-eland'),
-                'add_new' => esc_html__('Add new Document', 'flex-eland'),
-                'new_item' => esc_html__('New Document', 'flex-eland'),
-                'edit_item' => esc_html__('Edit Document', 'flex-eland'),
-                'update_item' => esc_html__('Update Document', 'flex-eland'),
-                'view_item' => esc_html__('View Document', 'flex-eland'),
-                'view_items' => esc_html__('View Documents', 'flex-eland'),
-                'search_items' => esc_html__('Search Documents', 'flex-eland'),
-                'not_found' => esc_html__('Document Not found', 'flex-eland'),
-                'not_found_in_trash' => esc_html__('Document Not found in Trash', 'flex-eland'),
-                'featured_image' => esc_html__('Document Feature Image', 'flex-eland'),
-                'set_featured_image' => esc_html__('Set Document Feature Image', 'flex-eland'),
-                'remove_featured_image' => esc_html__('Remove Feature Image', 'flex-eland'),
-                'use_featured_image' => esc_html__('Use as Document featured image', 'flex-eland'),
-                'insert_into_item' => esc_html__('Insert into Document', 'flex-eland'),
-                'uploaded_to_this_item' => esc_html__('Uploaded to this ', 'flex-eland'),
-                'items_list' => esc_html__('Document list', 'flex-eland'),
-                'items_list_navigation' => esc_html__('Document list navigation', 'flex-eland'),
-                'filter_items_list' => esc_html__('Filter Document List', 'flex-eland')
-            ];
-
-            $args = array(
-                'public' => true, // Changed to true
-                'show_ui' => true,
-                'show_in_menu' => false, // Don't show in menu by default
-                'labels' => $labels,
-                'menu_icon' => "dashicons-admin-post",
-                'rewrite' => array('slug' => $this->posttype),
-                'supports' => array('title', 'thumbnail', 'editor'),
-                'taxonomies' => array('land-doc-type','media-type','extension-type'),
-            );
-
-            register_post_type($this->posttype, $args);
-
-            // register_taxonomy_for_object_type('category', $this->posttype);
-            // register_taxonomy_for_object_type('post_tag', $this->posttype);
-            // register_taxonomy_for_object_type('document_category', $this->posttype);
-
-        }
-
-        public function disable_gutenberg($current_status, $post_type)
-        {
-            if ($post_type === $this->posttype) 
-            {
-                return false;
-            }
-            return $current_status;
-        }
     }
 }
