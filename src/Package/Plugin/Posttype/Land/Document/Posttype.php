@@ -27,12 +27,12 @@ class Posttype extends BasePosttype
     }
 
     protected function init_hook(): void
-    {
-        add_filter(PLUGIN_PRE_UNDS.'_admin_menu', [$this, 'add_menu_items']);
-        //add_filter(PLUGIN_PRE_UNDS.'_admin_menu', [$this, 'add_menu_items']);
-        
-        
-        parent::init_hook();           
+    {  
+        add_action('after_setup_theme', [$this, 'init_theme_supports']);
+        add_filter('use_block_editor_for_post_type', [$this, 'use_block_editor_for_posttye'], 10, 2);
+        add_action('init', [$this, 'init_posttype'], 30);
+        add_action('init', [$this, 'register_post_type'], 31);
+        //add_filter(PLUGIN_PRE_UNDS.'_admin_menu', [$this, 'add_menu_items']);            
     }
 
     protected function init_service(): void
@@ -54,6 +54,20 @@ class Posttype extends BasePosttype
         ];
 
         return $menu_items;
+    }
+
+    public function init_theme_supports()
+    {
+        add_theme_support('post-thumbnails', [$this->posttype]);
+        add_theme_support('editor-color-palette', [
+            [
+                'name'  => 'Primary Blue',
+                'slug'  => 'primary-blue',
+                'color' => '#3366FF',
+            ],
+        ]);
+        add_theme_support('align-wide');
+        add_theme_support('responsive-embeds');
     }
 
     public function init_posttype()
@@ -89,7 +103,7 @@ class Posttype extends BasePosttype
             'filter_items_list' => esc_html__('Filter Land Doc List', 'flex-eland')
         ]);
 
-        $this->set_supports(
+        $this->set_posttype_supports(
             array('title', 'thumbnail', 'editor', 'custom-fields')
         );
 
@@ -104,7 +118,7 @@ class Posttype extends BasePosttype
             'labels' => $this->labels,
             'menu_icon' => "dashicons-admin-post",
             'rewrite' => array('slug' => $this->slug),
-            'supports' => $this->supports,
+            'supports' => $this->posttype_supports,
             'taxonomies' => $this->taxonomies,
         ]);
 

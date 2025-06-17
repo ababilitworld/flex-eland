@@ -27,9 +27,9 @@ if (!class_exists(__NAMESPACE__.'\Taxonomy'))
         }
 
         protected function init_hook(): void
-        {
-            //add_filter(PLUGIN_PRE_UNDS.'_admin_menu', [$this, 'add_menu_items']); 
-            parent::init_hook();           
+        { 
+            parent::init_hook();
+            //add_filter(PLUGIN_PRE_UNDS.'_admin_menu', [$this, 'add_menu_items']);           
         }
 
         protected function init_service(): void
