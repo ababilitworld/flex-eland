@@ -9,7 +9,8 @@ use Ababilithub\{
 };
 
 use const Ababilithub\{
-    FlexELand\PLUGIN_PRE_UNDS
+    FlexELand\PLUGIN_PRE_UNDS,
+    FlexELand\PLUGIN_DIR,
 };
 
 class Posttype extends BasePosttype
@@ -20,19 +21,26 @@ class Posttype extends BasePosttype
         $this->posttype = 'fldoc';
         $this->slug = 'fldoc';
 
-        $this->use_block_editor = true;
-        
         $this->init_hook();
         $this->init_service();
     }
 
     protected function init_hook(): void
-    {  
+    {
         add_action('after_setup_theme', [$this, 'init_theme_supports']);
-        add_filter('use_block_editor_for_post_type', [$this, 'use_block_editor_for_posttye'], 10, 2);
         add_action('init', [$this, 'init_posttype'], 30);
         add_action('init', [$this, 'register_post_type'], 31);
-        //add_filter(PLUGIN_PRE_UNDS.'_admin_menu', [$this, 'add_menu_items']);            
+        add_action('init', [$this, 'register_metas'], 32);
+                
+        // Or if you want to use the action approach:do_action('flex_theme_by_ababilithub_content_template');
+        add_action('flex_theme_by_ababilithub_content_template', [$this, 'load_single_template']);
+        //add_filter('template_include', [$this, 'include_template']);
+        //remove_filter('template_include', [$this, 'include_template']);
+        //add_filter('single_template', array( $this, 'load_single_template' ) );
+        //add_filter( 'single_template', array( $this, 'load_single_template' ) );
+		//add_filter( 'template_include', array( $this, 'template_include' ) );
+        add_filter(PLUGIN_PRE_UNDS.'_admin_menu', [$this, 'add_menu_items']);  
+        add_shortcode('flex-eland-doc-list',[$this,'doc_list']);          
     }
 
     protected function init_service(): void
@@ -72,7 +80,7 @@ class Posttype extends BasePosttype
 
     public function init_posttype()
     {
-        
+
         $this->set_labels([
             'name' => esc_html__('Land Docs', 'flex-eland'),
             'singular_name' => esc_html__('Land Doc', 'flex-eland'),
@@ -108,55 +116,209 @@ class Posttype extends BasePosttype
         );
 
         $this->set_taxonomies(
-            array('media-type','extension-type')
+            array('land-type','media-type','extension-type')
         );
 
         $this->set_args([
-            'public' => true, // Changed to true
+            'public' => true,
+            'publicly_queryable' => true,
             'show_ui' => true,
+            'show_in_nav_menus' => true,
             'show_in_menu' => false, // Don't show in menu by default
             'labels' => $this->labels,
             'menu_icon' => "dashicons-admin-post",
-            'rewrite' => array('slug' => $this->slug),
+            'rewrite' => array('slug' => $this->slug,'with_front' => false),
+            'has_archive' => true,        // If you want archive pages
             'supports' => $this->posttype_supports,
             'taxonomies' => $this->taxonomies,
         ]);
 
         $this->set_metas([
-            $this->generate_meta_definition(
-               [
-                    'key' => '_doc_description',
-                    'type' => 'string',
-                    'description' => 'short description of the '.$this->slug,
-                    'single' => true,
-                    'show_in_rest' => true,
-                    'sanitize_callback' => null,
-                    'auth_callback' => null,
-                ]
-            ),
-            $this->generate_meta_definition(
-                [
-                    'key' => '_doc_author',
-                    'type' => 'string',
-                    'description' => 'short description of the '.$this->slug,
-                    'single' => true,
-                    'show_in_rest' => true,
-                    'sanitize_callback' => null,
-                    'auth_callback' => null,
-                ]
-            ),
-            $this->generate_meta_definition(
-                [
-                    'key' => '__short_description',
-                    'type' => 'string',
-                    'description' => 'short description of the '.$this->slug,
-                    'single' => true,
-                    'show_in_rest' => true,
-                    'sanitize_callback' => null,
-                    'auth_callback' => null,
-                ]
-            ),
+            [
+                'key' => '_doc_description',
+                'type' => 'string',
+                'description' => 'Document description',
+                'single' => true,
+                'show_in_rest' => true
+            ],
+            [
+                'key' => '_doc_author',
+                'type' => 'string',
+                'description' => 'Document author',
+                'single' => true,
+                'show_in_rest' => true
+            ]
         ]);
 
+    }
+
+    public function render_custom_content()
+    {
+        global $post;
+        
+        // Only handle our custom post type
+        if ($post->post_type !== $this->posttype) 
+        {
+            return;
+        }
+        
+        // Setup post data
+        setup_postdata($post);
+        
+        // Output your custom content
+        echo '<article id="post-' . get_the_ID() . '" ' . implode(' ', get_post_class()) . '>';
+        echo '<header class="entry-header">';
+        the_title('<h1 class="entry-title">', '</h1>');
+        echo '</header>';
+        
+        echo '<div class="entry-content">';
+        the_content();
+        
+        // Optional: Add pagination for multi-page posts
+        wp_link_pages([
+            'before' => '<div class="page-links">' . __('Pages:', 'flex-eland'),
+            'after'  => '</div>',
+        ]);
+        
+        echo '</div></article>';
+        
+        // Reset post data
+        wp_reset_postdata();
+    }
+
+    public function load_single_template($template): string 
+    {
+        global $post;
+        
+        if ($post && $post->post_type === $this->posttype) 
+        {
+            // 1. Check theme templates first
+            $theme_templates = [
+                "single-{$this->posttype}.php",
+                "templates/single-{$this->posttype}.php"
+            ];
+            
+            $located = locate_template($theme_templates);
+            if ($located) return $located;
+            
+            // 2. Load from plugin if no theme template exists
+            $plugin_template = trailingslashit(PLUGIN_DIR) . 
+                'src/Package/Plugin/Posttype/Land/Document/Presentation/Template/Single/V1/SinglePost-' . $this->posttype . '.php';
+            
+            if (file_exists($plugin_template)) {
+                return include_once($plugin_template);
+            }
+        }
+        
+        return $template;
+    }
+
+    public function load_single_templates($template): string 
+    {
+        global $post;
+        
+        if ($post && $post->post_type === $this->posttype) 
+        {
+            // Theme template hierarchy
+            $theme_templates = [
+                "single-{$this->posttype}.php",
+                "templates/single-{$this->posttype}.php",
+                "single.php"
+            ];
+            
+            // Check theme files first
+            $located = locate_template($theme_templates);
+            if ($located) {
+                return $located;
+            }
+            
+            // Plugin template fallback
+            $plugin_template = trailingslashit(PLUGIN_DIR) . 
+                'src/Package/Plugin/Posttype/Land/Document/Presentation/Template/Single/V1/SinglePost-' . $this->posttype . '.php';
+            
+            if (file_exists($plugin_template)) {
+                return $plugin_template;
+            }
+        }
+        
+        return $template;
+    }
+
+    public function template_include($template) 
+    {
+        if (is_singular($this->slug)) 
+        {
+            // Check theme first
+            $theme_template = locate_template(['single-' . $this->slug . '.php']);
+            clearstatcache(true, $theme_template);
+            if ($theme_template) {
+                return $theme_template;
+            }
+            
+            // Then check plugin directory
+            $plugin_template = trailingslashit(PLUGIN_DIR) . 'src/Package/Plugin/Posttype/Land/Document/Presentation/Template/Single/V1/SinglePost-' . $this->slug . '.php';
+            clearstatcache(true, $plugin_template);
+            if (file_exists($plugin_template)) 
+            {
+                return $plugin_template;
+            }
+        }
+        return $template;
+    }
+
+    public function doc_list($attribute): mixed 
+    {
+        $defaults = $this->default_attribute();
+        $params = shortcode_atts($defaults, $attribute);
+        ob_start();
+        do_action('ttbm_top_filter_static', $params);
+        return ob_get_clean();
+       
+    }
+
+    public function default_attribute(
+        $style = 'grid', 
+        $show = 9, 
+        $search_filter = 'yes',
+        $sidebar_filter = 'no', 
+        $feature_filter = 'no',
+        $tag_filter = 'no',
+        $month_filter = 'yes',
+        $tour_type = '', 
+        $sort_by = '', 
+        $shuffle = 'no'
+        ): array 
+        {
+			return array(
+				"style" => $style,
+				"show" => $show,
+				"pagination" => "yes",
+				"city" => "",
+				"country" => "",
+				'sort' => 'ASC',
+				'sort_by' => $sort_by,
+				'status' => '',
+				"pagination-style" => "load_more",
+				"column" => 3,
+				"tour-type" => $tour_type,
+				"cat" => "0",
+				"org" => "0",
+				"activity" => "0",
+				'search-filter' => $search_filter,
+				'sidebar-filter' => $sidebar_filter,
+				'title-filter' => 'no',
+				'category-filter' => 'no',
+				'organizer-filter' => 'no',
+				'location-filter' => 'yes',
+				'country-filter' => 'no',
+				'activity-filter' => 'yes',
+				'month-filter' => $month_filter,
+				'tag-filter' => $tag_filter,
+				'feature-filter' => $feature_filter,
+				'duration-filter' => 'no',
+				'type-filter' => 'no',
+				'shuffle' => $shuffle,
+				'filter_by_activity' => 'yes',
+	    );
     }
 }

@@ -69,6 +69,28 @@ if (!class_exists(__NAMESPACE__.'\Template'))
                 )
             );
         }
+
+        public static function single_post_template($query)
+        {            
+            ?>
+                <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+                    <header class="entry-header">
+                        <?php the_title('<h1 class="entry-title">', '</h1>'); ?>
+                    </header>
+
+                    <div class="entry-content">
+                        <?php the_content(); ?>
+                        
+                        <?php 
+                        // Display custom fields
+                        if ($description = get_post_meta(get_the_ID(), '_doc_description', true)) {
+                            echo '<div class="doc-description">' . esc_html($description) . '</div>';
+                        }
+                        ?>
+                    </div>
+                </article>
+            <?php
+        }
         
         public static function category_list($query)
         {            

@@ -19,6 +19,7 @@ use Ababilithub\{
     FlexELand\Package\Plugin\Posttype\Land\Document\Posttype as DocumentPosttype,
     FlexELand\Package\Plugin\Posttype\Land\Deed\Posttype as DeedPosttype,
     FlexELand\Package\Plugin\Menu\Menu as ProductionMenu,
+    FlexELand\Package\Shortcode\V1\Manager\Shortcode as ShortcodeManager, 
 };
 
 if (!class_exists(__NAMESPACE__.'\Production')) 
@@ -29,7 +30,7 @@ if (!class_exists(__NAMESPACE__.'\Production'))
 
         public function __construct($data = []) 
         {
-            $this->init();       
+            $this->init();      
         }
 
         public function init() 
@@ -47,8 +48,9 @@ if (!class_exists(__NAMESPACE__.'\Production'))
             
             
             ProductionMenu::getInstance();
-            PosttypeFactory::get(DocumentPosttype::class);
+            $document = PosttypeFactory::get(DocumentPosttype::class);
             //PosttypeFactory::get(DeedPosttype::class);
+            (new ShortcodeManager)->boot();
         }
         
     }

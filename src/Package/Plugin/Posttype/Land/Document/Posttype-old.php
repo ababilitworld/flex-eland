@@ -132,14 +132,5 @@ if (!class_exists(__NAMESPACE__.'\Posttype'))
             // register_taxonomy_for_object_type('document_category', $this->posttype);
 
         }
-
-        public function disable_gutenberg($current_status, $post_type)
-        {
-            if ($post_type === $this->posttype) 
-            {
-                return false;
-            }
-            return $current_status;
-        }
     }
 }

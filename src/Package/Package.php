@@ -47,10 +47,10 @@
 
 			public function init($data)
 			{
-				add_action('plugins_loaded', function () {
-					$this->production  = FlexProduction::getInstance();
-				});
-				
+				// add_action('plugins_loaded', function () {
+				// 	$this->production  = FlexProduction::getInstance();
+				// });
+				$this->production  = FlexProduction::getInstance();
 			}
 	
 			/**
