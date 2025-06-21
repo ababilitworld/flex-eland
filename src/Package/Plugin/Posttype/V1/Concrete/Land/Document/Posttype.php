@@ -5,6 +5,7 @@ namespace Ababilithub\FlexELand\Package\Plugin\Posttype\V1\Concrete\Land\Documen
 
 use Ababilithub\{
     FlexPhp\Package\Mixin\V1\Standard\Mixin as StandardMixin,
+    FlexWordpress\Package\Posttype\V1\Mixin\Posttype as WpPosttypeMixin,
     FlexWordpress\Package\Posttype\V1\Base\Posttype as BasePosttype
 };
 
@@ -14,72 +15,13 @@ use const Ababilithub\{
 };
 
 class Posttype extends BasePosttype
-{
-    use StandardMixin;
-    protected function init(): void
+{ 
+    use WpPosttypeMixin;
+    
+    public function init() : void
     {
         $this->posttype = 'fldoc';
         $this->slug = 'fldoc';
-
-        $this->init_hook();
-        $this->init_service();
-    }
-
-    protected function init_hook(): void
-    {
-        add_action('after_setup_theme', [$this, 'init_theme_supports']);
-        add_action('init', [$this, 'init_posttype'], 30);
-        add_action('init', [$this, 'register_post_type'], 31);
-        add_action('init', [$this, 'register_metas'], 32);
-                
-        // Or if you want to use the action approach:do_action('flex_theme_by_ababilithub_content_template');
-        add_action('flex_theme_by_ababilithub_content_template', [$this, 'load_single_template']);
-        //add_filter('template_include', [$this, 'include_template']);
-        //remove_filter('template_include', [$this, 'include_template']);
-        //add_filter('single_template', array( $this, 'load_single_template' ) );
-        //add_filter( 'single_template', array( $this, 'load_single_template' ) );
-		//add_filter( 'template_include', array( $this, 'template_include' ) );
-        add_filter(PLUGIN_PRE_UNDS.'_admin_menu', [$this, 'add_menu_items']);  
-        add_shortcode('flex-eland-doc-list',[$this,'doc_list']);          
-    }
-
-    protected function init_service(): void
-    {
-        //
-    }
-
-    public function add_menu_items($menu_items = [])
-    {
-        $menu_items[] = [
-            'type' => 'submenu',
-            'parent_slug' => 'flex-eland',
-            'page_title' => __('Land Doc', 'flex-eland'),
-            'menu_title' => __('Land Doc', 'flex-eland'),
-            'capability' => 'manage_options',
-            'menu_slug' => 'edit.php?post_type='.$this->posttype,
-            'callback' => null,
-            'position' => 9,
-        ];
-
-        return $menu_items;
-    }
-
-    public function init_theme_supports()
-    {
-        add_theme_support('post-thumbnails', [$this->posttype]);
-        add_theme_support('editor-color-palette', [
-            [
-                'name'  => 'Primary Blue',
-                'slug'  => 'primary-blue',
-                'color' => '#3366FF',
-            ],
-        ]);
-        add_theme_support('align-wide');
-        add_theme_support('responsive-embeds');
-    }
-
-    public function init_posttype()
-    {
 
         $this->set_labels([
             'name' => esc_html__('Land Docs', 'flex-eland'),
@@ -133,92 +75,65 @@ class Posttype extends BasePosttype
             'taxonomies' => $this->taxonomies,
         ]);
 
-        $this->set_metas([
+        $this->init_service();
+        $this->init_hook();
+
+    }
+
+    public function init_service(): void
+    {
+        //
+    }
+
+    public function init_hook(): void
+    {
+        add_action('after_setup_theme', [$this, 'init_theme_supports']);
+                
+        // Or if you want to use the action approach:do_action('flex_theme_by_ababilithub_content_template');
+        add_action('flex_theme_by_ababilithub_content_template', [$this, 'load_single_template']);
+        //add_filter('template_include', [$this, 'include_template']);
+        //remove_filter('template_include', [$this, 'include_template']);
+        //add_filter('single_template', array( $this, 'load_single_template' ) );
+        //add_filter( 'single_template', array( $this, 'load_single_template' ) );
+		//add_filter( 'template_include', array( $this, 'template_include' ) );
+        add_filter(PLUGIN_PRE_UNDS.'_admin_menu', [$this, 'add_menu_items']);          
+    }
+
+    public function init_theme_supports()
+    {
+        add_theme_support('post-thumbnails', [$this->posttype]);
+        add_theme_support('editor-color-palette', [
             [
-                'key' => '_doc_description',
-                'type' => 'string',
-                'description' => 'Document description',
-                'single' => true,
-                'show_in_rest' => true
+                'name'  => 'Primary Blue',
+                'slug'  => 'primary-blue',
+                'color' => '#3366FF',
             ],
-            [
-                'key' => '_doc_author',
-                'type' => 'string',
-                'description' => 'Document author',
-                'single' => true,
-                'show_in_rest' => true
-            ]
         ]);
-
+        add_theme_support('align-wide');
+        add_theme_support('responsive-embeds');
     }
 
-    public function render_custom_content()
+    public function add_menu_items($menu_items = [])
     {
-        global $post;
-        
-        // Only handle our custom post type
-        if ($post->post_type !== $this->posttype) 
-        {
-            return;
-        }
-        
-        // Setup post data
-        setup_postdata($post);
-        
-        // Output your custom content
-        echo '<article id="post-' . get_the_ID() . '" ' . implode(' ', get_post_class()) . '>';
-        echo '<header class="entry-header">';
-        the_title('<h1 class="entry-title">', '</h1>');
-        echo '</header>';
-        
-        echo '<div class="entry-content">';
-        the_content();
-        
-        // Optional: Add pagination for multi-page posts
-        wp_link_pages([
-            'before' => '<div class="page-links">' . __('Pages:', 'flex-eland'),
-            'after'  => '</div>',
-        ]);
-        
-        echo '</div></article>';
-        
-        // Reset post data
-        wp_reset_postdata();
+        $menu_items[] = [
+            'type' => 'submenu',
+            'parent_slug' => 'flex-eland',
+            'page_title' => __('Land Doc', 'flex-eland'),
+            'menu_title' => __('Land Doc', 'flex-eland'),
+            'capability' => 'manage_options',
+            'menu_slug' => 'edit.php?post_type='.$this->posttype,
+            'callback' => null,
+            'position' => 9,
+        ];
+
+        return $menu_items;
     }
 
-    public function load_single_template($template): string 
+    public function template_include($template) 
     {
-        global $post;
-        
-        if ($post && $post->post_type === $this->posttype) 
+        if (is_singular($this->slug)) 
         {
-            // 1. Check theme templates first
-            $theme_templates = [
-                "single-{$this->posttype}.php",
-                "templates/single-{$this->posttype}.php"
-            ];
-            
-            $located = locate_template($theme_templates);
-            if ($located) return $located;
-            
-            // 2. Load from plugin if no theme template exists
-            $plugin_template = trailingslashit(PLUGIN_DIR) . 
-                'src/Package/Plugin/Posttype/Land/Document/Presentation/Template/Single/V1/SinglePost-' . $this->posttype . '.php';
-            
-            if (file_exists($plugin_template)) {
-                return include_once($plugin_template);
-            }
-        }
-        
-        return $template;
-    }
-
-    public function load_single_templates($template): string 
-    {
-        global $post;
-        
-        if ($post && $post->post_type === $this->posttype) 
-        {
+            // Check theme first
             // Theme template hierarchy
             $theme_templates = [
                 "single-{$this->posttype}.php",
@@ -230,29 +145,6 @@ class Posttype extends BasePosttype
             $located = locate_template($theme_templates);
             if ($located) {
                 return $located;
-            }
-            
-            // Plugin template fallback
-            $plugin_template = trailingslashit(PLUGIN_DIR) . 
-                'src/Package/Plugin/Posttype/Land/Document/Presentation/Template/Single/V1/SinglePost-' . $this->posttype . '.php';
-            
-            if (file_exists($plugin_template)) {
-                return $plugin_template;
-            }
-        }
-        
-        return $template;
-    }
-
-    public function template_include($template) 
-    {
-        if (is_singular($this->slug)) 
-        {
-            // Check theme first
-            $theme_template = locate_template(['single-' . $this->slug . '.php']);
-            clearstatcache(true, $theme_template);
-            if ($theme_template) {
-                return $theme_template;
             }
             
             // Then check plugin directory

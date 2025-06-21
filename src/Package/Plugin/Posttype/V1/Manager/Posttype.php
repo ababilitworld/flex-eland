@@ -12,7 +12,7 @@ use Ababilithub\{
        
 };
 
-class Taxonomy extends BaseManager
+class Posttype extends BaseManager
 {
     public function __construct()
     {
@@ -23,7 +23,7 @@ class Taxonomy extends BaseManager
     {
         $this->set_items([
             LandDocumentPosttype::class,
-            LandDeedPosttype::class,
+            // LandDeedPosttype::class,
             // Add more posttype classes here...
         ]);
     }
@@ -36,7 +36,7 @@ class Taxonomy extends BaseManager
 
             if ($posttype instanceof PosttypeContract) 
             {
-                //$posttype->register();
+                $posttype;
             }
         }
     }
