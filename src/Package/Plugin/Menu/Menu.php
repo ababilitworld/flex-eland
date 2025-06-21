@@ -122,6 +122,8 @@ if (!class_exists(__NAMESPACE__.'\Menu'))
          */
         public function render_settings_page()
         {
+            global $shortcode_tags;
+            echo "<pre>";print_r( $shortcode_tags );echo "</pre>";
             echo '<div class="wrap">';
             echo '<h1>Flex Bangla Land Settings</h1>';
             echo '<form method="post" action="options.php">';

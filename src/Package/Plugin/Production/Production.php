@@ -5,21 +5,23 @@ namespace Ababilithub\FlexELand\Package\Plugin\Production;
 
 use Ababilithub\{
     FlexPhp\Package\Mixin\V1\Standard\Mixin as StandardMixin,
-    FlexWordpress\Package\Taxonomy\Factory\Taxonomy as TaxonomyFactory,
-    FlexWordpress\Package\Taxonomy\Concrete\Address\District\Taxonomy as DistrictTaxonomy,
-    FlexWordpress\Package\Taxonomy\Concrete\Address\Thana\Taxonomy as ThanaTaxonomy,
-    FlexWordpress\Package\Taxonomy\Concrete\Multimedia\MediaType\Taxonomy as MediaTypeTaxonomy,
-    FlexWordpress\Package\Taxonomy\Concrete\Multimedia\ExtensionType\Taxonomy as ExtensionTypeTaxonomy,
-    FlexELand\Package\Plugin\Taxonomy\Land\Deed\Type\Taxonomy as LandDeedTypeTaxonomy,
-    FlexELand\Package\Plugin\Taxonomy\Land\Document\Type\Taxonomy as LandDocumentTypeTaxonomy,
-    FlexELand\Package\Plugin\Taxonomy\Land\Mouza\Taxonomy as LandMouzaTaxonomy,
-    FlexELand\Package\Plugin\Taxonomy\Land\Survey\Taxonomy as LandSurveyTaxonomy,
-    FlexELand\Package\Plugin\Taxonomy\Land\Type\Taxonomy as LandTypeTaxonomy,
+    // FlexWordpress\Package\Taxonomy\Factory\Taxonomy as TaxonomyFactory,
+    // FlexWordpress\Package\Taxonomy\Concrete\Address\District\Taxonomy as DistrictTaxonomy,
+    // FlexWordpress\Package\Taxonomy\Concrete\Address\Thana\Taxonomy as ThanaTaxonomy,
+    // FlexWordpress\Package\Taxonomy\Concrete\Multimedia\MediaType\Taxonomy as MediaTypeTaxonomy,
+    // FlexWordpress\Package\Taxonomy\Concrete\Multimedia\ExtensionType\Taxonomy as ExtensionTypeTaxonomy,
+    // FlexELand\Package\Plugin\Taxonomy\Land\Deed\Type\Taxonomy as LandDeedTypeTaxonomy,
+    // FlexELand\Package\Plugin\Taxonomy\Land\Document\Type\Taxonomy as LandDocumentTypeTaxonomy,
+    // FlexELand\Package\Plugin\Taxonomy\Land\Mouza\Taxonomy as LandMouzaTaxonomy,
+    // FlexELand\Package\Plugin\Taxonomy\Land\Survey\Taxonomy as LandSurveyTaxonomy,
+    // FlexELand\Package\Plugin\Taxonomy\Land\Type\Taxonomy as LandTypeTaxonomy,
     FlexWordpress\Package\Posttype\V1\Factory\Posttype as PosttypeFactory,   
     FlexELand\Package\Plugin\Posttype\Land\Document\Posttype as DocumentPosttype,
     FlexELand\Package\Plugin\Posttype\Land\Deed\Posttype as DeedPosttype,
     FlexELand\Package\Plugin\Menu\Menu as ProductionMenu,
-    FlexELand\Package\Shortcode\V1\Manager\Shortcode as ShortcodeManager, 
+    FlexELand\Package\Plugin\Taxonomy\V1\Manager\Taxonomy as TaxonomyManager,
+    FlexELand\Package\Plugin\Posttype\V1\Manager\Posttype as PosttypeManager,
+    FlexELand\Package\Plugin\Shortcode\V1\Manager\Shortcode as ShortcodeManager, 
 };
 
 if (!class_exists(__NAMESPACE__.'\Production')) 
@@ -34,23 +36,22 @@ if (!class_exists(__NAMESPACE__.'\Production'))
         }
 
         public function init() 
-        {
-            
-            TaxonomyFactory::get(LandDeedTypeTaxonomy::class); 
-            TaxonomyFactory::get(LandDocumentTypeTaxonomy::class);
-            TaxonomyFactory::get(LandSurveyTaxonomy::class);            
-            TaxonomyFactory::get(DistrictTaxonomy::class); 
-            TaxonomyFactory::get(ThanaTaxonomy::class);
-            TaxonomyFactory::get(LandMouzaTaxonomy::class);
-            TaxonomyFactory::get(LandTypeTaxonomy::class);
-            TaxonomyFactory::get(MediaTypeTaxonomy::class); 
-            TaxonomyFactory::get(ExtensionTypeTaxonomy::class);
-            
+        {            
+            add_action('init', function () {
+                (new TaxonomyManager())->boot();
+            });
+
+            add_action('init', function () {
+                //(new PosttypeManager())->boot();
+            });
             
             ProductionMenu::getInstance();
             $document = PosttypeFactory::get(DocumentPosttype::class);
             //PosttypeFactory::get(DeedPosttype::class);
-            (new ShortcodeManager)->boot();
+
+            add_action('init', function () {
+                (new ShortcodeManager())->boot();
+            });
         }
         
     }
