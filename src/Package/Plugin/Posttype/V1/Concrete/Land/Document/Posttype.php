@@ -14,7 +14,7 @@ use const Ababilithub\{
     FlexELand\PLUGIN_DIR,
 };
 
-class Posttype extends BasePosttype
+class Posttype extends BasePosttype 
 { 
     use WpPosttypeMixin;
     
