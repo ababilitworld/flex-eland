@@ -51,7 +51,8 @@ class Taxonomy extends BaseManager
 
             if ($taxonomy instanceof TaxonomyContract) 
             {
-                //$taxonomy->register();
+                $taxonomy->register();
+                $taxonomy->process_terms();
             }
         }
     }

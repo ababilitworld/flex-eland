@@ -6,7 +6,9 @@ namespace Ababilithub\FlexELand\Package\Plugin\Posttype\V1\Concrete\Land\Documen
 use Ababilithub\{
     FlexPhp\Package\Mixin\V1\Standard\Mixin as StandardMixin,
     FlexWordpress\Package\Posttype\V1\Mixin\Posttype as WpPosttypeMixin,
-    FlexWordpress\Package\Posttype\V1\Base\Posttype as BasePosttype
+    FlexWordpress\Package\Posttype\V1\Base\Posttype as BasePosttype,
+    FlexELand\Package\Plugin\Posttype\V1\Concrete\Land\Document\Setting\Setting as PosttypeSetting
+
 };
 
 use const Ababilithub\{
@@ -14,14 +16,16 @@ use const Ababilithub\{
     FlexELand\PLUGIN_DIR,
 };
 
+defined( __NAMESPACE__.'\POSTTYPE' ) || define( __NAMESPACE__.'\POSTTYPE', 'fldoc' );
+
 class Posttype extends BasePosttype 
 { 
     use WpPosttypeMixin;
     
     public function init() : void
     {
-        $this->posttype = 'fldoc';
-        $this->slug = 'fldoc';
+        $this->posttype = POSTTYPE;
+        $this->slug = POSTTYPE;
 
         $this->set_labels([
             'name' => esc_html__('Land Docs', 'flex-eland'),
@@ -54,7 +58,7 @@ class Posttype extends BasePosttype
         ]);
 
         $this->set_posttype_supports(
-            array('title', 'thumbnail', 'editor', 'custom-fields')
+            array('title', 'thumbnail', 'editor')
         );
 
         $this->set_taxonomies(
@@ -82,7 +86,7 @@ class Posttype extends BasePosttype
 
     public function init_service(): void
     {
-        //
+        $this->meta_service = new PosttypeSetting();
     }
 
     public function init_hook(): void
@@ -90,7 +94,7 @@ class Posttype extends BasePosttype
         add_action('after_setup_theme', [$this, 'init_theme_supports']);
                 
         // Or if you want to use the action approach:do_action('flex_theme_by_ababilithub_content_template');
-        add_action('flex_theme_by_ababilithub_content_template', [$this, 'load_single_template']);
+        add_action('flex_theme_by_ababilithub_content_template', [$this, 'template_include']);
         //add_filter('template_include', [$this, 'include_template']);
         //remove_filter('template_include', [$this, 'include_template']);
         //add_filter('single_template', array( $this, 'load_single_template' ) );
@@ -101,7 +105,7 @@ class Posttype extends BasePosttype
 
     public function init_theme_supports()
     {
-        add_theme_support('post-thumbnails', [$this->posttype]);
+        add_theme_support('post-thumbnails', [POSTTYPE]);
         add_theme_support('editor-color-palette', [
             [
                 'name'  => 'Primary Blue',
@@ -121,7 +125,7 @@ class Posttype extends BasePosttype
             'page_title' => __('Land Doc', 'flex-eland'),
             'menu_title' => __('Land Doc', 'flex-eland'),
             'capability' => 'manage_options',
-            'menu_slug' => 'edit.php?post_type='.$this->posttype,
+            'menu_slug' => 'edit.php?post_type='.POSTTYPE,
             'callback' => null,
             'position' => 9,
         ];
@@ -136,8 +140,8 @@ class Posttype extends BasePosttype
             // Check theme first
             // Theme template hierarchy
             $theme_templates = [
-                "single-{$this->posttype}.php",
-                "templates/single-{$this->posttype}.php",
+                "single-{POSTTYPE}.php",
+                "templates/single-{POSTTYPE}.php",
                 "single.php"
             ];
             

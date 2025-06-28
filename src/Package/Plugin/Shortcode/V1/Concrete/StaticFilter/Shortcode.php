@@ -14,13 +14,10 @@ use const Ababilithub\{
 
 class Shortcode extends BaseShortcode
 {
-    protected function set_tag(): void
+    public function init(): void
     {
-        $this->tag = 'flex_eland_top_filter';
-    }
+        $this->tag = PLUGIN_PRE_UNDS.'_top_filter'; 
 
-    protected function init(): void
-    {
         $this->defaultAttributes = [
             'style' => 'grid',
             'column' => '3',
@@ -34,21 +31,30 @@ class Shortcode extends BaseShortcode
             'sidebar-filter' => 'yes',
             'shuffle' => 'no',
         ];
+
+        $this->init_hook();
+    }
+
+    public function init_hook()
+    {
+        add_action(PLUGIN_PRE_UNDS.'_doc_list',[$this, 'doc_list']);
     }
 
     public function render(array $attributes): string
     {
         $this->set_attributes($attributes);
-        $params = $this->get_attributes();
-
+        $params = $this->get_attributes();        
         ob_start();
-        do_action('flex_eland_top_filter', $params);
-
-        
+        do_action(PLUGIN_PRE_UNDS.'_doc_list', $params);        
         ?>
-        <div>Bismillah</div>
-        <?php echo "<pre>";print_r($params);echo "</pre>";
-        
+        <?php        
         return ob_get_clean();
+    }
+
+    public function doc_list()
+    {
+        ?>
+        <div style="background-color=black;color:white;">Bismillah</div>
+        <?php
     }
 }

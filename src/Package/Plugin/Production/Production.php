@@ -18,7 +18,7 @@ use Ababilithub\{
     // FlexWordpress\Package\Posttype\V1\Factory\Posttype as PosttypeFactory,   
     // FlexELand\Package\Plugin\Posttype\Land\Document\Posttype as DocumentPosttype,
     // FlexELand\Package\Plugin\Posttype\Land\Deed\Posttype as DeedPosttype,
-    // FlexELand\Package\Plugin\Menu\Menu as ProductionMenu,
+    FlexELand\Package\Plugin\Menu\Menu as ProductionMenu,
     FlexELand\Package\Plugin\Taxonomy\V1\Manager\Taxonomy as TaxonomyManager,
     FlexELand\Package\Plugin\Posttype\V1\Manager\Posttype as PosttypeManager,
     FlexELand\Package\Plugin\Shortcode\V1\Manager\Shortcode as ShortcodeManager, 
@@ -44,14 +44,15 @@ if (!class_exists(__NAMESPACE__.'\Production'))
             add_action('init', function () {
                 (new PosttypeManager())->boot();
             });
-            
-            // ProductionMenu::getInstance();
+
             // $document = PosttypeFactory::get(DocumentPosttype::class);
             //PosttypeFactory::get(DeedPosttype::class);
 
             add_action('init', function () {
                 (new ShortcodeManager())->boot();
             });
+
+            ProductionMenu::getInstance();
         }
         
     }

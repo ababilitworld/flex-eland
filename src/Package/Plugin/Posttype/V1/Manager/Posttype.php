@@ -23,7 +23,7 @@ class Posttype extends BaseManager
     {
         $this->set_items([
             LandDocumentPosttype::class,
-            // LandDeedPosttype::class,
+            LandDeedPosttype::class,
             // Add more posttype classes here...
         ]);
     }
@@ -36,7 +36,7 @@ class Posttype extends BaseManager
 
             if ($posttype instanceof PosttypeContract) 
             {
-                $posttype;
+                $posttype->register();
             }
         }
     }

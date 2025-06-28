@@ -15,21 +15,11 @@ use const Ababilithub\{
 
 class Shortcode extends BaseShortcode
 {
-    public function __construct()
+    public function init(): void
     {
-        
-        add_action(PLUGIN_PRE_UNDS.'_doc_list',[$this, 'doc_list']);
-        parent::__construct();
-    }
+        $this->set_tag(PLUGIN_PRE_HYPH.'-doc-list'); 
 
-    protected function set_tag(): void
-    {
-        $this->tag = PLUGIN_PRE_HYPH.'-doc-list';
-    }
-
-    protected function init(): void
-    {
-        $this->defaultAttributes = [
+        $this->set_default_attributes([
             'style' => 'grid',
             'column' => '3',
             'pagination' => 'yes',
@@ -41,7 +31,14 @@ class Shortcode extends BaseShortcode
             'search-filter' => 'yes',
             'sidebar-filter' => 'yes',
             'shuffle' => 'no',
-        ];
+        ]);
+
+        $this->init_hook();
+    }
+
+    public function init_hook()
+    {
+        add_action(PLUGIN_PRE_UNDS.'_doc_list',[$this, 'doc_list']);
     }
 
     public function render(array $attributes): string
@@ -58,7 +55,7 @@ class Shortcode extends BaseShortcode
     public function doc_list()
     {
         ?>
-        <div style="background-color=black;color:white;">Bismillah</div>
+        <div style="background-color:black;color:white;">Bismillah</div>
         <?php
     }
 }
