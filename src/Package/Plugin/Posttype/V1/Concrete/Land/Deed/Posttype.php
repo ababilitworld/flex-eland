@@ -7,6 +7,7 @@ use Ababilithub\{
     FlexPhp\Package\Mixin\V1\Standard\Mixin as StandardMixin,
     FlexWordpress\Package\Posttype\V1\Mixin\Posttype as WpPosttypeMixin,
     FlexWordpress\Package\Posttype\V1\Base\Posttype as BasePosttype,
+    FlexELand\Package\Plugin\Posttype\V1\Concrete\Land\Deed\Presentation\Template\List\PremiumCard\Template as PosttypeListTemplate,
     FlexELand\Package\Plugin\Posttype\V1\Concrete\Land\Deed\Presentation\Template\Single\Template as PosttypeTemplate,
     FlexELand\Package\Plugin\Posttype\V1\Concrete\Land\Deed\Setting\Setting as PosttypeSetting,
 };
@@ -90,6 +91,7 @@ class Posttype extends BasePosttype
     {
        $this->meta_service = new PosttypeSetting();
        $this->template_service = new PosttypeTemplate();
+       new PosttypeListTemplate();
     }
 
     public function init_hook(): void
@@ -102,7 +104,7 @@ class Posttype extends BasePosttype
 
         add_filter(PLUGIN_PRE_UNDS.'_admin_menu', [$this, 'add_menu_items']);
         add_filter('the_content', [$this, 'single_post']);
-        
+        add_shortcode(POSTTYPE.'-list',[$this,'list']);
 		//add_filter( 'template_include', array( $this, 'template_include' ) );
                   
     }
@@ -191,6 +193,86 @@ class Posttype extends BasePosttype
             add_filter('the_content', [$this, 'single_post']);
             
             // Combine with original content
-            return $content . $template_content;
+            return $template_content;
+        }
+
+        public function list($atts = [], $content = null, $tag = '') 
+        {
+            // Parse shortcode attributes
+            $atts = shortcode_atts([
+                'posts_per_page' => 10,
+                'orderby' => 'date',
+                'order' => 'DESC',
+                'deed_type' => '',
+                'district' => '',
+                'debug' => false
+            ], $atts, POSTTYPE.'-list');
+
+            // Start output buffering
+            ob_start();
+
+            try {
+                // Get filtered posts if needed
+                $args = [
+                    'post_type' => POSTTYPE,
+                    'posts_per_page' => (int)$atts['posts_per_page'],
+                    'orderby' => sanitize_text_field($atts['orderby']),
+                    'order' => sanitize_text_field($atts['order']),
+                    'post_status' => 'publish' // Ensure only published posts are shown
+                ];
+
+                // Add taxonomy filters if specified
+                $tax_queries = [];
+
+                if (!empty($atts['deed_type'])) {
+                    $tax_queries[] = [
+                        'taxonomy' => 'land-deed-type',
+                        'field' => 'slug',
+                        'terms' => array_map('sanitize_text_field', explode(',', $atts['deed_type']))
+                    ];
+                }
+
+                if (!empty($atts['district'])) {
+                    $tax_queries[] = [
+                        'taxonomy' => 'district',
+                        'field' => 'slug',
+                        'terms' => array_map('sanitize_text_field', explode(',', $atts['district']))
+                    ];
+                }
+
+                if (!empty($tax_queries)) {
+                    $args['tax_query'] = $tax_queries;
+                    if (count($tax_queries) > 1) {
+                        $args['tax_query']['relation'] = 'AND';
+                    }
+                }
+
+                if ($atts['debug']) {
+                    echo '<pre>Query Args: ' . print_r($args, true) . '</pre>';
+                }
+
+                // Get posts
+                $posts = get_posts($args);
+
+                if ($atts['debug']) {
+                    echo '<pre>Found Posts: ' . count($posts) . '</pre>';
+                }
+
+                if (empty($posts)) {
+                    return '<div class="deed-list-notice">No land deeds found matching your criteria.</div>';
+                }
+
+                // Render the list
+                echo PosttypeListTemplate::deed_list($posts);
+
+            } catch (Exception $e) {
+                if ($atts['debug']) {
+                    return '<div class="deed-list-error">Error: ' . esc_html($e->getMessage()) . '</div>';
+                }
+                return '<div class="deed-list-error">Unable to display land deeds at this time.</div>';
+            }
+
+            // Return the buffered content
+            return ob_get_clean();
         }
 }

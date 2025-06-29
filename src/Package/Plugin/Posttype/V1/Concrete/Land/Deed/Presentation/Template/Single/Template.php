@@ -83,7 +83,7 @@ class Template
         
         ob_start();
         ?>
-        <main class="deed-container">
+        <main class="deed-containr">
             <article class="deed-article" id="post-<?php echo $post->ID; ?>">
                 <!-- Hero Section -->
                 <header class="deed-hero">
