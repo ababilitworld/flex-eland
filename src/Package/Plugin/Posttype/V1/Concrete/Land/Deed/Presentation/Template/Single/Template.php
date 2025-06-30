@@ -49,7 +49,7 @@ class Template
 
         wp_enqueue_script(
             PLUGIN_PRE_HYPH.'-'.POSTTYPE.'-template-script', 
-            $this->asset_url.'js/script.js',
+            $this->asset_url.'Js/Script.js',
             array(), 
             time(), 
             true
