@@ -65,7 +65,7 @@ class Posttype extends BasePosttype
         );
 
         $this->set_taxonomies(
-            array('land-deed-type','district','thana','land-mouza','land-survey','land-type')
+            array('district','thana','land-mouza','land-survey','land-deed-type','land-type')
         );
 
         $this->set_args([
@@ -96,7 +96,7 @@ class Posttype extends BasePosttype
 
     public function init_hook(): void
     {
-        add_action('after_setup_theme', [$this, 'init_theme_supports']);
+        add_action('after_setup_theme', [$this, 'init_theme_supports'],0);
                 
         // Or if you want to use the action approach:do_action('flex_theme_by_ababilithub_content_template');
         //add_action('flex_theme_by_ababilithub_content_template', [$this, 'template_include']);

@@ -93,6 +93,8 @@ if (!class_exists(__NAMESPACE__.'\Setting'))
             $plot_number = get_post_meta($post_id, 'plot-number', true) ?: '';
             $land_quantity = get_post_meta($post_id, 'land-quantity', true) ?: '';
             
+            $deed_thumbnail_image = get_post_meta($post_id, 'deed-thumbnail-image', true) ?: '';
+            
             $images = get_post_meta($post_id, 'deed-images', true) ?: [];
             $docs = get_post_meta($post_id, 'deed-docs', true) ?: [];
             
@@ -192,6 +194,29 @@ if (!class_exists(__NAMESPACE__.'\Setting'))
                 </div>
                 <div class="panel-body">
                     <div class="panel-row">
+                        <?php
+                            $imageField = FieldFactory::get(ImageField::class);
+                            $imageField->init([
+                                'name' => 'deed-thumbnail-image',
+                                'id' => 'deed-thumbnail-image',
+                                'label' => 'Deed Thumbnail',
+                                'class' => 'custom-file-input',
+                                'required' => true,
+                                'multiple' => false,
+                                'allowed_types' => ['.jpg', '.jpeg', '.png', '.gif', '.webp'],
+                                'max_size' => 2097152, // 2MB
+                                'enable_media_library' => true,
+                                'upload_action_text' => 'Select Images',
+                                'help_text' => 'Only jpg, png, gif, webp files are allowed',
+                                'preview_items' => $deed_thumbnail_image,
+                                'data' => [
+                                    'custom' => 'value'
+                                ],
+                                'attributes' => [
+                                    'data-preview-size' => '150'
+                                ]
+                            ])->render();
+                        ?>
                         <?php
                             $imageField = FieldFactory::get(ImageField::class);
                             $imageField->init([
@@ -320,6 +345,35 @@ if (!class_exists(__NAMESPACE__.'\Setting'))
             else 
             {
                 delete_post_meta($post_id, 'land-quantity');
+            }
+
+            // Save thumbnail image
+            if (isset($_POST['deed-thumbnail-image']) && !empty($_POST['deed-thumbnail-image'])) 
+            {
+                // Ensure we're working with a single image ID (not an array)
+                $image_id = absint($_POST['deed-thumbnail-image']);
+                
+                // Verify the attachment exists and is an image
+                if ($image_id && wp_attachment_is_image($image_id)) 
+                {
+                    // Set as featured image (post thumbnail)
+                    set_post_thumbnail($post_id, $image_id);
+                    
+                    // Also save in custom meta if needed
+                    update_post_meta($post_id, 'deed-thumbnail-image', $image_id);
+                } 
+                else 
+                {
+                    // Invalid image - remove both featured image and custom meta
+                    delete_post_thumbnail($post_id);
+                    delete_post_meta($post_id, 'deed-thumbnail-image');
+                }
+            } 
+            else 
+            {
+                // No image submitted - remove both featured image and custom meta
+                delete_post_thumbnail($post_id);
+                delete_post_meta($post_id, 'deed-thumbnail-image');
             }
 
             // Save images
