@@ -1,6 +1,6 @@
 <?php
 
-namespace Ababilithub\FlexELand\Package\Plugin\Shortcode\V1\Concrete\Document\List;
+namespace Ababilithub\FlexELand\Package\Plugin\Shortcode\V1\Concrete\Land\Document\List;
 
 (defined('ABSPATH') && defined('WPINC')) || exit();
 

@@ -2,8 +2,8 @@
    #BASE STYLES
    ========================================================================== */
 :root {
-    --primary: #3366ff;
-    --primary-dark: #254eda;
+    --primary: #04aa6d;
+    --primary-dark: #03744a;
     --secondary: #6c757d;
     --light: #f8f9fa;
     --dark: #212529;
@@ -252,7 +252,7 @@ img {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--secondary);
+    color: var(--primary);
     flex-shrink: 0;
     font-size: 1.25rem;
 }
