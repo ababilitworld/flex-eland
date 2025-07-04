@@ -39,11 +39,17 @@ class Shortcode extends BaseShortcode
         ]);
 
         $this->init_hook();
+        $this->init_service();
     }
 
     public function init_hook(): void
     {
         add_action(PLUGIN_PRE_UNDS.'_deed_list', [$this, 'deed_list']);
+    }
+
+    public function init_service(): void
+    {
+        new PosttypeListTemplate();
     }
 
     public function render(array $attributes): string
