@@ -9,7 +9,7 @@ use Ababilithub\{
 };
 
 use const Ababilithub\{
-    FlexWordpress\PLUGIN_PRE_UNDS
+    FlexELand\PLUGIN_PRE_UNDS
 };
 
 if (!class_exists(__NAMESPACE__.'\Taxonomy')) 
@@ -130,6 +130,8 @@ if (!class_exists(__NAMESPACE__.'\Taxonomy'))
         {
             //add_action('init', [$this, 'init_taxonomy'], 97);
             //add_filter(PLUGIN_PRE_UNDS.'_admin_menu', [$this, 'add_menu_items']);
+            add_filter($this->taxonomy.'_row_actions', [$this, 'add_action_view_details'], 10, 2);
+            
         }
 
         public function add_menu_items($menu_items = [])

@@ -10,6 +10,9 @@ use Ababilithub\{
     FlexELand\Package\Plugin\Posttype\V1\Concrete\Land\Deed\Presentation\Template\List\PremiumCard\Template as PosttypeListTemplate,
     FlexELand\Package\Plugin\Posttype\V1\Concrete\Land\Deed\Presentation\Template\Single\Template as PosttypeTemplate,
     FlexELand\Package\Plugin\Posttype\V1\Concrete\Land\Deed\Setting\Setting as PosttypeSetting,
+    FlexELand\Package\Plugin\Posttype\V1\Concrete\Land\Deed\PostMeta\PostMetaBox\Manager\PostMetaBox as LandDeedPostMetaBoxManager,
+    FlexELand\Package\Plugin\Posttype\V1\Concrete\Land\Deed\PostMeta\PostMetaBoxContent\Manager\PostMetaBoxContent as LandDeedPostMetaBoxContentManager,
+    
 };
 
 use const Ababilithub\{
@@ -24,6 +27,9 @@ class Posttype extends BasePosttype
     use WpPosttypeMixin;
 
     private $template_service;
+
+    private $meta_box_manager;
+    private $meta_box_content_manager;
     
     public function init() : void
     {
@@ -89,18 +95,35 @@ class Posttype extends BasePosttype
 
     public function init_service(): void
     {
-       $this->meta_service = new PosttypeSetting();
+       //$this->meta_service = new PosttypeSetting();
        $this->template_service = new PosttypeTemplate();
+    //    $this->meta_box_manager = new LandDeedPostMetaBoxManager();
+    //    $this->meta_box_content_manager = new LandDeedPostMetaBoxContentManager();
     }
 
     public function init_hook(): void
     {
         add_action('after_setup_theme', [$this, 'init_theme_supports'],0);
 
+        add_action('add_meta_boxes', function () {
+            (new LandDeedPostMetaBoxManager())->boot();
+        });
+
+        add_action('add_meta_boxes', function () {
+            (new LandDeedPostMetaBoxContentManager())->boot();
+        });
+
+        add_action('save_post', function () {
+            (new LandDeedPostMetaBoxContentManager())->save();
+        });
+
         add_filter(PLUGIN_PRE_UNDS.'_admin_menu', [$this, 'add_menu_items']);
         add_filter('the_content', [$this, 'single_post']);
         
-                  
+        add_filter('post_row_actions', [$this, 'add_action_view_details'], 10, 2);
+        add_filter('page_row_actions', [$this, 'add_action_view_details'], 10, 2);
+
+
     }
 
     public function init_theme_supports()

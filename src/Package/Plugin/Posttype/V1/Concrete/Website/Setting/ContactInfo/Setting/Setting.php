@@ -1,9 +1,9 @@
 <?php
-    namespace Ababilithub\FlexELand\Package\Plugin\Posttype\V1\Concrete\Land\Deed\Setting;
+    namespace Ababilithub\FlexELand\Package\Plugin\Posttype\V1\Concrete\Website\Setting\ContactInfo\Setting;
 
     use Ababilithub\{
         FlexPhp\Package\Mixin\V1\Standard\Mixin as StandardMixin,
-        FlexELand\Package\Plugin\Posttype\V1\Concrete\Land\Deed\Setting\General\Setting as GeneralSetting
+        FlexELand\Package\Plugin\Posttype\V1\Concrete\Website\Setting\ContactInfo\Setting\General\Setting as GeneralSetting
     };
 
     use const Ababilithub\{
@@ -14,7 +14,7 @@
         FlexELand\PLUGIN_PRE_UNDS,
         FlexELand\PLUGIN_PRE_HYPH,
         FlexELand\PLUGIN_VERSION,
-        FlexELand\Package\Plugin\Posttype\V1\Concrete\Land\Deed\POSTTYPE,
+        FlexELand\Package\Plugin\Posttype\V1\Concrete\Website\Setting\ContactInfo\POSTTYPE,
     };
 
     (defined( 'ABSPATH' ) && defined( 'WPINC' )) || exit();

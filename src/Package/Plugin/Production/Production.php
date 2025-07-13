@@ -6,7 +6,7 @@ namespace Ababilithub\FlexELand\Package\Plugin\Production;
 use Ababilithub\{
     FlexPhp\Package\Mixin\V1\Standard\Mixin as StandardMixin,
     FlexELand\Package\Plugin\Menu\Menu as ProductionMenu,
-    FlexELand\Package\Plugin\Route\V1\Manager as RouteManager,
+    FlexELand\Package\Plugin\Route\V1\Manager\Route as RouteManager,
     FlexELand\Package\Plugin\Taxonomy\V1\Manager\Taxonomy as TaxonomyManager,
     FlexELand\Package\Plugin\Posttype\V1\Manager\Posttype as PosttypeManager,
     FlexELand\Package\Plugin\Shortcode\V1\Manager\Shortcode as ShortcodeManager, 
@@ -25,9 +25,6 @@ if (!class_exists(__NAMESPACE__.'\Production'))
 
         public function init() 
         {
-            add_action('init', function () {
-                (new RouteManager())->boot();
-            });
 
             add_action('init', function () {
                 (new TaxonomyManager())->boot();
@@ -37,14 +34,15 @@ if (!class_exists(__NAMESPACE__.'\Production'))
                 (new PosttypeManager())->boot();
             });
 
-            // $document = PosttypeFactory::get(DocumentPosttype::class);
-            //PosttypeFactory::get(DeedPosttype::class);
-
             add_action('init', function () {
                 (new ShortcodeManager())->boot();
             });
 
-            ProductionMenu::getInstance();
+            add_action('init', function () {
+                ProductionMenu::getInstance();
+            });
+
+            //ProductionMenu::getInstance();
         }
         
     }

@@ -1,5 +1,5 @@
 <?php
-namespace Ababilithub\FlexELand\Package\Plugin\Posttype\V1\Concrete\Land\Deed\Setting\General;
+namespace Ababilithub\FlexELand\Package\Plugin\Posttype\V1\Concrete\Website\Setting\ContactInfo\Setting\General;
 
 use Ababilithub\{
     FlexPhp\Package\Mixin\V1\Standard\Mixin as StandardMixin,
@@ -17,7 +17,7 @@ use const Ababilithub\{
     FlexELand\PLUGIN_PRE_UNDS,
     FlexELand\PLUGIN_PRE_HYPH,
     FlexELand\PLUGIN_VERSION,
-    FlexELand\Package\Plugin\Posttype\V1\Concrete\Land\Deed\POSTTYPE,
+    FlexELand\Package\Plugin\Posttype\V1\Concrete\Website\Setting\ContactInfo\POSTTYPE,
 };
 
 (defined('ABSPATH') && defined('WPINC')) || exit();
@@ -88,12 +88,11 @@ if (!class_exists(__NAMESPACE__.'\Setting'))
 
         public function general_info($post_id) 
         {
-            $deed_date = get_post_meta($post_id, 'deed-date', true) ?: '';
-            $deed_number = get_post_meta($post_id, 'deed-number', true) ?: '';            
-            $plot_number = get_post_meta($post_id, 'plot-number', true) ?: '';
-            $land_quantity = get_post_meta($post_id, 'land-quantity', true) ?: '';
+            $phone_number = get_post_meta($post_id, 'phone-number', true) ?: '';
+            $email = get_post_meta($post_id, 'email', true) ?: '';            
+            $address = get_post_meta($post_id, 'address', true) ?: '';
             
-            $deed_thumbnail_image = get_post_meta($post_id, 'deed-thumbnail-image', true) ?: '';
+            $deed_thumbnail_image = get_post_meta($post_id, 'company-logo', true) ?: '';
             
             $images = get_post_meta($post_id, 'deed-images', true) ?: [];
             $docs = get_post_meta($post_id, 'deed-docs', true) ?: [];
@@ -110,13 +109,13 @@ if (!class_exists(__NAMESPACE__.'\Setting'))
                         <?php
                             $deedDateField = FieldFactory::get(TextField::class);
                             $deedDateField->init([
-                                'name' => 'deed-date',
-                                'id' => 'deed-date',
-                                'label' => 'Deed Date',
+                                'name' => 'phone-number',
+                                'id' => 'phone-number',
+                                'label' => 'Phone Number',
                                 'class' => 'custom-file-input',
                                 'required' => true,
-                                'help_text' => 'Enter Deed Date used in the Deed',
-                                'value' => $deed_date,
+                                'help_text' => 'Enter Phone Number used in the Deed',
+                                'value' => $phone_number,
                                 'data' => [
                                     'custom' => 'value'
                                 ],
@@ -126,17 +125,17 @@ if (!class_exists(__NAMESPACE__.'\Setting'))
                             ])->render();
                         ?>
                     </div>
-                    <div class="panel-row two-columns">
+                    <div class="panel-row">
                         <?php
                             $deedNumberField = FieldFactory::get(TextField::class);
                             $deedNumberField->init([
-                                'name' => 'deed-number',
-                                'id' => 'deed-number',
-                                'label' => 'Deed Number',
+                                'name' => 'email',
+                                'id' => 'email',
+                                'label' => 'Email',
                                 'class' => 'custom-file-input',
                                 'required' => true,
-                                'help_text' => 'Enter Deed number of the deed',
-                                'value' => $deed_number,
+                                'help_text' => 'Enter Email',
+                                'value' => $email,
                                 'data' => [
                                     'custom' => 'value'
                                 ],
@@ -145,37 +144,19 @@ if (!class_exists(__NAMESPACE__.'\Setting'))
                                 ]
                             ])->render();
                         ?>
-                        <?php
-                            $plotNumberField = FieldFactory::get(TextField::class);
-                            $plotNumberField->init([
-                                'name' => 'plot-number',
-                                'id' => 'plot-number',
-                                'label' => 'Plot Number',
-                                'class' => 'custom-file-input',
-                                'required' => true,
-                                'help_text' => 'Enter Plot number according to the Respective Survey',
-                                'value' => $plot_number,
-                                'data' => [
-                                    'custom' => 'value'
-                                ],
-                                'attributes' => [
-                                    'data-preview-size' => '150'
-                                ]
-                            ])->render();
-                        ?>
-                        
+                                                
                     </div>
                     <div class="panel-row">
                         <?php
                             $landQuantityField = FieldFactory::get(TextField::class);
                             $landQuantityField->init([
-                                'name' => 'land-quantity',
-                                'id' => 'land-quantity',
-                                'label' => 'Land Quantity (Decimal)',
+                                'name' => 'address',
+                                'id' => 'address',
+                                'label' => 'Address',
                                 'class' => 'custom-file-input',
                                 'required' => true,
                                 'help_text' => 'Enter Land Quantity in decimal used in the Deed',
-                                'value' => $land_quantity,
+                                'value' => $address,
                                 'data' => [
                                     'custom' => 'value'
                                 ],
@@ -197,9 +178,9 @@ if (!class_exists(__NAMESPACE__.'\Setting'))
                         <?php
                             $imageField = FieldFactory::get(ImageField::class);
                             $imageField->init([
-                                'name' => 'deed-thumbnail-image',
-                                'id' => 'deed-thumbnail-image',
-                                'label' => 'Deed Thumbnail',
+                                'name' => 'company-logo',
+                                'id' => 'company-logo',
+                                'label' => 'Website Logo',
                                 'class' => 'custom-file-input',
                                 'required' => true,
                                 'multiple' => false,
@@ -304,54 +285,54 @@ if (!class_exists(__NAMESPACE__.'\Setting'))
             }
 
             // Save plot number
-            if (isset($_POST['deed-date'])) 
+            if (isset($_POST['phone-number'])) 
             {
-                $plot_number = sanitize_text_field($_POST['deed-date']);                
-                update_post_meta($post_id, 'deed-date', $plot_number);
+                $address = sanitize_text_field($_POST['phone-number']);                
+                update_post_meta($post_id, 'phone-number', $address);
             } 
             else 
             {
-                delete_post_meta($post_id, 'deed-date');
+                delete_post_meta($post_id, 'phone-number');
             }
 
             // Save deeed number
-            if (isset($_POST['deed-number'])) 
+            if (isset($_POST['email'])) 
             {
-                $plot_number = sanitize_text_field($_POST['deed-number']);                
-                update_post_meta($post_id, 'deed-number', $plot_number);
+                $address = sanitize_text_field($_POST['email']);                
+                update_post_meta($post_id, 'email', $address);
             } 
             else 
             {
-                delete_post_meta($post_id, 'deed-number');
+                delete_post_meta($post_id, 'email');
             }
 
             // Save plot number
-            if (isset($_POST['plot-number'])) 
+            if (isset($_POST['address'])) 
             {
-                $plot_number = sanitize_text_field($_POST['plot-number']);                
-                update_post_meta($post_id, 'plot-number', $plot_number);
+                $address = sanitize_text_field($_POST['address']);                
+                update_post_meta($post_id, 'address', $address);
             } 
             else 
             {
-                delete_post_meta($post_id, 'plot-number');
+                delete_post_meta($post_id, 'address');
             }
 
             // Save quantity
-            if (isset($_POST['land-quantity'])) 
+            if (isset($_POST['address'])) 
             {
-                $quantity = sanitize_text_field($_POST['land-quantity']);                
-                update_post_meta($post_id, 'land-quantity', $quantity);
+                $quantity = sanitize_text_field($_POST['address']);                
+                update_post_meta($post_id, 'address', $quantity);
             } 
             else 
             {
-                delete_post_meta($post_id, 'land-quantity');
+                delete_post_meta($post_id, 'address');
             }
 
             // Save thumbnail image
-            if (isset($_POST['deed-thumbnail-image']) && !empty($_POST['deed-thumbnail-image'])) 
+            if (isset($_POST['company-logo']) && !empty($_POST['company-logo'])) 
             {
                 // Ensure we're working with a single image ID (not an array)
-                $image_id = absint($_POST['deed-thumbnail-image']);
+                $image_id = absint($_POST['company-logo']);
                 
                 // Verify the attachment exists and is an image
                 if ($image_id && wp_attachment_is_image($image_id)) 
@@ -360,20 +341,20 @@ if (!class_exists(__NAMESPACE__.'\Setting'))
                     set_post_thumbnail($post_id, $image_id);
                     
                     // Also save in custom meta if needed
-                    update_post_meta($post_id, 'deed-thumbnail-image', $image_id);
+                    update_post_meta($post_id, 'company-logo', $image_id);
                 } 
                 else 
                 {
                     // Invalid image - remove both featured image and custom meta
                     delete_post_thumbnail($post_id);
-                    delete_post_meta($post_id, 'deed-thumbnail-image');
+                    delete_post_meta($post_id, 'company-logo');
                 }
             } 
             else 
             {
                 // No image submitted - remove both featured image and custom meta
                 delete_post_thumbnail($post_id);
-                delete_post_meta($post_id, 'deed-thumbnail-image');
+                delete_post_meta($post_id, 'company-logo');
             }
 
             // Save images

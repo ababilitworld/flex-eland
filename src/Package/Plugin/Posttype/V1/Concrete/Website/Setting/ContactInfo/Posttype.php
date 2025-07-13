@@ -7,9 +7,9 @@ use Ababilithub\{
     FlexPhp\Package\Mixin\V1\Standard\Mixin as StandardMixin,
     FlexWordpress\Package\Posttype\V1\Mixin\Posttype as WpPosttypeMixin,
     FlexWordpress\Package\Posttype\V1\Base\Posttype as BasePosttype,
-    FlexELand\Package\Plugin\Posttype\V1\Concrete\Land\Deed\Presentation\Template\List\PremiumCard\Template as PosttypeListTemplate,
-    FlexELand\Package\Plugin\Posttype\V1\Concrete\Land\Deed\Presentation\Template\Single\Template as PosttypeTemplate,
-    FlexELand\Package\Plugin\Posttype\V1\Concrete\Land\Deed\Setting\Setting as PosttypeSetting,
+    //FlexELand\Package\Plugin\Posttype\V1\Concrete\Land\Deed\Presentation\Template\List\PremiumCard\Template as PosttypeListTemplate,
+    FlexELand\Package\Plugin\Posttype\V1\Concrete\Website\Setting\ContactInfo\Presentation\Template\Single\Template as PosttypeTemplate,
+    FlexELand\Package\Plugin\Posttype\V1\Concrete\Website\Setting\ContactInfo\Setting\Setting as PosttypeSetting,
 };
 
 use const Ababilithub\{
@@ -17,7 +17,7 @@ use const Ababilithub\{
     FlexELand\PLUGIN_DIR,
 };
 
-defined( __NAMESPACE__.'\POSTTYPE' ) || define( __NAMESPACE__.'\POSTTYPE', 'cinfo' );
+defined( __NAMESPACE__.'\POSTTYPE' ) || define( __NAMESPACE__.'\POSTTYPE', 'fcinfo' );
 
 class Posttype extends BasePosttype 
 { 
@@ -31,33 +31,33 @@ class Posttype extends BasePosttype
         $this->slug = POSTTYPE;
 
         $this->set_labels([
-            'name' => esc_html__('Land Deeds', 'flex-eland'),
-            'singular_name' => esc_html__('Land Deed', 'flex-eland'),
-            'menu_name' => esc_html__('Land Deeds', 'flex-eland'),
-            'name_admin_bar' => esc_html__('Land Deeds', 'flex-eland'),
-            'archives' => esc_html__('Land Deed List', 'flex-eland'),
-            'attributes' => esc_html__('Land Deed List', 'flex-eland'),
-            'parent_item_colon' => esc_html__('Land Deed Item : ', 'flex-eland'),
-            'all_items' => esc_html__('All Land Deed', 'flex-eland'),
-            'add_new_item' => esc_html__('Add new Land Deed', 'flex-eland'),
-            'add_new' => esc_html__('Add new Land Deed', 'flex-eland'),
-            'new_item' => esc_html__('New Land Deed', 'flex-eland'),
-            'edit_item' => esc_html__('Edit Land Deed', 'flex-eland'),
-            'update_item' => esc_html__('Update Land Deed', 'flex-eland'),
-            'view_item' => esc_html__('View Land Deed', 'flex-eland'),
-            'view_items' => esc_html__('View Land Deeds', 'flex-eland'),
-            'search_items' => esc_html__('Search Land Deeds', 'flex-eland'),
-            'not_found' => esc_html__('Land Deed Not found', 'flex-eland'),
-            'not_found_in_trash' => esc_html__('Land Deed Not found in Trash', 'flex-eland'),
-            'featured_image' => esc_html__('Land Deed Feature Image', 'flex-eland'),
-            'set_featured_image' => esc_html__('Set Land Deed Feature Image', 'flex-eland'),
+            'name' => esc_html__('Contact Infos', 'flex-eland'),
+            'singular_name' => esc_html__('Contact Info', 'flex-eland'),
+            'menu_name' => esc_html__('Contact Infos', 'flex-eland'),
+            'name_admin_bar' => esc_html__('Contact Infos', 'flex-eland'),
+            'archives' => esc_html__('Contact Info List', 'flex-eland'),
+            'attributes' => esc_html__('Contact Info List', 'flex-eland'),
+            'parent_item_colon' => esc_html__('Contact Info Item : ', 'flex-eland'),
+            'all_items' => esc_html__('All Contact Info', 'flex-eland'),
+            'add_new_item' => esc_html__('Add new Contact Info', 'flex-eland'),
+            'add_new' => esc_html__('Add new Contact Info', 'flex-eland'),
+            'new_item' => esc_html__('New Contact Info', 'flex-eland'),
+            'edit_item' => esc_html__('Edit Contact Info', 'flex-eland'),
+            'update_item' => esc_html__('Update Contact Info', 'flex-eland'),
+            'view_item' => esc_html__('View Contact Info', 'flex-eland'),
+            'view_items' => esc_html__('View Contact Infos', 'flex-eland'),
+            'search_items' => esc_html__('Search Contact Infos', 'flex-eland'),
+            'not_found' => esc_html__('Contact Info Not found', 'flex-eland'),
+            'not_found_in_trash' => esc_html__('Contact Info Not found in Trash', 'flex-eland'),
+            'featured_image' => esc_html__('Contact Info Feature Image', 'flex-eland'),
+            'set_featured_image' => esc_html__('Set Contact Info Feature Image', 'flex-eland'),
             'remove_featured_image' => esc_html__('Remove Feature Image', 'flex-eland'),
-            'use_featured_image' => esc_html__('Use as Land Deed featured image', 'flex-eland'),
-            'insert_into_item' => esc_html__('Insert into Land Deed', 'flex-eland'),
+            'use_featured_image' => esc_html__('Use as Contact Info featured image', 'flex-eland'),
+            'insert_into_item' => esc_html__('Insert into Contact Info', 'flex-eland'),
             'uploaded_to_this_item' => esc_html__('Uploaded to this ', 'flex-eland'),
-            'items_list' => esc_html__('Land Deed list', 'flex-eland'),
-            'items_list_navigation' => esc_html__('Land Deed list navigation', 'flex-eland'),
-            'filter_items_list' => esc_html__('Filter Land Deed List', 'flex-eland')
+            'items_list' => esc_html__('Contact Info list', 'flex-eland'),
+            'items_list_navigation' => esc_html__('Contact Info list navigation', 'flex-eland'),
+            'filter_items_list' => esc_html__('Filter Contact Info List', 'flex-eland')
         ]);
 
         $this->set_posttype_supports(
@@ -65,7 +65,8 @@ class Posttype extends BasePosttype
         );
 
         $this->set_taxonomies(
-            array('district','thana','land-mouza','land-survey','land-deed-type','land-type')
+            []
+            //array('district','thana','land-mouza','land-survey','land-deed-type','land-type')
         );
 
         $this->set_args([
@@ -91,21 +92,15 @@ class Posttype extends BasePosttype
     {
        $this->meta_service = new PosttypeSetting();
        $this->template_service = new PosttypeTemplate();
-       new PosttypeListTemplate();
     }
 
     public function init_hook(): void
     {
         add_action('after_setup_theme', [$this, 'init_theme_supports'],0);
-                
-        // Or if you want to use the action approach:do_action('flex_theme_by_ababilithub_content_template');
-        //add_action('flex_theme_by_ababilithub_content_template', [$this, 'template_include']);
-        // add_action('single_post', [$this, 'single_post']);
 
         add_filter(PLUGIN_PRE_UNDS.'_admin_menu', [$this, 'add_menu_items']);
         add_filter('the_content', [$this, 'single_post']);
-        //add_shortcode(POSTTYPE.'-list',[$this,'list']);
-		//add_filter( 'template_include', array( $this, 'template_include' ) );
+        
                   
     }
 
@@ -128,8 +123,8 @@ class Posttype extends BasePosttype
         $menu_items[] = [
             'type' => 'submenu',
             'parent_slug' => 'flex-eland',
-            'page_title' => __('Land Deed', 'flex-eland'),
-            'menu_title' => __('Land Deed', 'flex-eland'),
+            'page_title' => __('Contact Info', 'flex-eland'),
+            'menu_title' => __('Contact Info', 'flex-eland'),
             'capability' => 'manage_options',
             'menu_slug' => 'edit.php?post_type='.POSTTYPE,
             'callback' => null,
@@ -139,140 +134,32 @@ class Posttype extends BasePosttype
         return $menu_items;
     }
 
-    public function template_include($template) 
+    public function single_post($content)
     {
-        if (is_singular($this->slug)) 
+        // Only modify content on single post pages of specific post types
+        if (!is_singular() || !in_the_loop() || !is_main_query()) 
         {
-            // Check theme first
-            // Theme template hierarchy
-            $theme_templates = [
-                "single-{POSTTYPE}.php",
-                "templates/single-{POSTTYPE}.php",
-                "single.php"
-            ];
-            
-            // Check theme files first
-            $located = locate_template($theme_templates);
-            if ($located) {
-                return $located;
-            }
-            
-            // Then check plugin directory
-            $plugin_template = trailingslashit(PLUGIN_DIR) . 'src/Package/Plugin/Posttype/Land/Document/Presentation/Template/Single/V1/SinglePost-' . $this->slug . '.php';
-            clearstatcache(true, $plugin_template);
-            if (file_exists($plugin_template)) 
-            {
-                return $plugin_template;
-            }
+            return $content;
         }
-        return $template;
+
+        global $post;
+        
+        if ($post->post_type !== POSTTYPE) 
+        {
+            return $content;
+        }
+
+        // Prevent infinite recursion
+        remove_filter('the_content', [$this, 'single_post']);
+        
+        // Get template content
+        $template_content = PosttypeTemplate::single_post($post);
+        
+        // Re-add our filter
+        add_filter('the_content', [$this, 'single_post']);
+        
+        // Combine with original content
+        return $template_content;
     }
 
-        public function single_post($content)
-        {
-            // Only modify content on single post pages of specific post types
-            if (!is_singular() || !in_the_loop() || !is_main_query()) 
-            {
-                return $content;
-            }
-
-            global $post;
-            
-            if ($post->post_type !== POSTTYPE) 
-            {
-                return $content;
-            }
-
-            // Prevent infinite recursion
-            remove_filter('the_content', [$this, 'single_post']);
-            
-            // Get template content
-            $template_content = PosttypeTemplate::single_post($post);
-            
-            // Re-add our filter
-            add_filter('the_content', [$this, 'single_post']);
-            
-            // Combine with original content
-            return $template_content;
-        }
-
-        // public function list($atts = [], $content = null, $tag = '') 
-        // {
-        //     // Parse shortcode attributes
-        //     $atts = shortcode_atts([
-        //         'posts_per_page' => 10,
-        //         'orderby' => 'date',
-        //         'order' => 'DESC',
-        //         'deed_type' => '',
-        //         'district' => '',
-        //         'debug' => false
-        //     ], $atts, POSTTYPE.'-list');
-
-        //     // Start output buffering
-        //     ob_start();
-
-        //     try {
-        //         // Get filtered posts if needed
-        //         $args = [
-        //             'post_type' => POSTTYPE,
-        //             'posts_per_page' => (int)$atts['posts_per_page'],
-        //             'orderby' => sanitize_text_field($atts['orderby']),
-        //             'order' => sanitize_text_field($atts['order']),
-        //             'post_status' => 'publish' // Ensure only published posts are shown
-        //         ];
-
-        //         // Add taxonomy filters if specified
-        //         $tax_queries = [];
-
-        //         if (!empty($atts['deed_type'])) {
-        //             $tax_queries[] = [
-        //                 'taxonomy' => 'land-deed-type',
-        //                 'field' => 'slug',
-        //                 'terms' => array_map('sanitize_text_field', explode(',', $atts['deed_type']))
-        //             ];
-        //         }
-
-        //         if (!empty($atts['district'])) {
-        //             $tax_queries[] = [
-        //                 'taxonomy' => 'district',
-        //                 'field' => 'slug',
-        //                 'terms' => array_map('sanitize_text_field', explode(',', $atts['district']))
-        //             ];
-        //         }
-
-        //         if (!empty($tax_queries)) {
-        //             $args['tax_query'] = $tax_queries;
-        //             if (count($tax_queries) > 1) {
-        //                 $args['tax_query']['relation'] = 'AND';
-        //             }
-        //         }
-
-        //         if ($atts['debug']) {
-        //             echo '<pre>Query Args: ' . print_r($args, true) . '</pre>';
-        //         }
-
-        //         // Get posts
-        //         $posts = get_posts($args);
-
-        //         if ($atts['debug']) {
-        //             echo '<pre>Found Posts: ' . count($posts) . '</pre>';
-        //         }
-
-        //         if (empty($posts)) {
-        //             return '<div class="deed-list-notice">No land deeds found matching your criteria.</div>';
-        //         }
-
-        //         // Render the list
-        //         echo PosttypeListTemplate::deed_list($posts);
-
-        //     } catch (Exception $e) {
-        //         if ($atts['debug']) {
-        //             return '<div class="deed-list-error">Error: ' . esc_html($e->getMessage()) . '</div>';
-        //         }
-        //         return '<div class="deed-list-error">Unable to display land deeds at this time.</div>';
-        //     }
-
-        //     // Return the buffered content
-        //     return ob_get_clean();
-        // }
 }
