@@ -6,7 +6,7 @@ namespace Ababilithub\FlexELand\Package\Plugin\Shortcode\V1\Concrete\Land\Deed\L
 
 use Ababilithub\{
     FlexWordpress\Package\Shortcode\V1\Base\Shortcode as BaseShortcode,
-    FlexELand\Package\Plugin\Posttype\V1\Concrete\Land\Deed\Presentation\Template\List\PremiumCard\Template as PosttypeListTemplate
+    FlexELand\Package\Plugin\Shortcode\V1\Concrete\Land\Deed\List\Presentation\Template\List\PremiumCard\Template as PosttypeListTemplate
 };
 
 use const Ababilithub\{

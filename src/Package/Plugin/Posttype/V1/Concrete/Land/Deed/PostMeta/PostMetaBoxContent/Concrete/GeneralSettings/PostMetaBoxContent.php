@@ -19,7 +19,7 @@ use const Ababilithub\{
 class PostMetaBoxContent extends BasePostMetaBoxContent
 {
     use PostMetaMixin;
-    public function init():void
+    public function init(array $data = []) : static
     {
         $this->posttype = POSTTYPE;
         $this->post_id = get_the_ID();
@@ -30,6 +30,8 @@ class PostMetaBoxContent extends BasePostMetaBoxContent
 
         $this->init_service();
         $this->init_hook();
+
+        return $this;
     }
 
     public function init_service():void
@@ -41,7 +43,7 @@ class PostMetaBoxContent extends BasePostMetaBoxContent
     {
         add_action(PLUGIN_PRE_UNDS.'_'.$this->posttype.'_'.'meta_box_tab_item',[$this,'tab_item']);
         add_action(PLUGIN_PRE_UNDS.'_'.$this->posttype.'_'.'meta_box_tab_content', [$this,'tab_content']);
-        add_action('save_post', [$this, 'save'], 10, 2);
+        //add_action('save_post', [$this, 'save'], 10, 3);
     }
 
     public function render() : void
@@ -228,7 +230,7 @@ class PostMetaBoxContent extends BasePostMetaBoxContent
 
     }
 
-    public function get_meta_values($post_id) 
+    public function get_meta_values($post_id): array 
     {
         return [
             'deed_date' => get_post_meta($post_id, 'deed-date', true) ?: '',
@@ -241,7 +243,7 @@ class PostMetaBoxContent extends BasePostMetaBoxContent
         ];
     }
 
-    public function save($post_id, $post) : void 
+    public function save($post_id, $post, $update) : void 
     {
         if (!$this->is_valid_save($post_id, $post)) 
         {
@@ -255,24 +257,5 @@ class PostMetaBoxContent extends BasePostMetaBoxContent
         $this->save_thumbnail_image($post_id,'deed-thumbnail-image',absint($_POST['deed-thumbnail-image']));
         $this->save_multiple_images($post_id,'deed-images',array_map('sanitize_text_field',$_POST['deed-images']));
         $this->save_multiple_attachments($post_id,'deed-attachments',array_map('sanitize_text_field',$_POST['deed-attachments']));
-    }
-
-    public function save_post() : void 
-    {
-        $post_id = get_the_ID();
-        $post = get_post($post_id);
-
-        if (!$this->is_valid_save($post_id, $post)) 
-        {
-            return;
-        }
-
-        $this->save_text_field($post_id,'deed-date',sanitize_text_field($_POST['deed-date']??''));
-        $this->save_text_field($post_id,'deed-number',sanitize_text_field($_POST['deed-number']??''));
-        $this->save_text_field($post_id,'plot-number',sanitize_text_field($_POST['plot-number']??''));
-        $this->save_text_field($post_id,'land-quantity',sanitize_text_field($_POST['land-quantity']??''));
-        $this->save_thumbnail_image($post_id,'deed-thumbnail-image',absint($_POST['deed-thumbnail-image']??''));
-        $this->save_multiple_images($post_id,'deed-images',array_map('sanitize_text_field',$_POST['deed-images']??[]));
-        $this->save_multiple_attachments($post_id,'deed-attachments',array_map('sanitize_text_field',$_POST['deed-attachments']??[]));
     }
 }

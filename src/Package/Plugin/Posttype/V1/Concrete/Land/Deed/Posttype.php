@@ -113,9 +113,9 @@ class Posttype extends BasePosttype
             (new LandDeedPostMetaBoxContentManager())->boot();
         });
 
-        add_action('save_post', function () {
-            (new LandDeedPostMetaBoxContentManager())->save();
-        });
+        add_action('save_post', function ($post_id, $post, $update) {
+            (new LandDeedPostMetaBoxContentManager())->save_post($post_id, $post, $update);
+        }, 10, 3);
 
         add_filter(PLUGIN_PRE_UNDS.'_admin_menu', [$this, 'add_menu_items']);
         add_filter('the_content', [$this, 'single_post']);

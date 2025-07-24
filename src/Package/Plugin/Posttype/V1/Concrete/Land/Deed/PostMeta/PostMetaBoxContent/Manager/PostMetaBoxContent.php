@@ -39,7 +39,7 @@ class  PostMetaBoxContent extends BaseManager
         }
     }
 
-    public function save(): void 
+    public function save_post($post_id, $post, $update): void 
     {
         foreach ($this->get_items() as $item) 
         {
@@ -47,7 +47,7 @@ class  PostMetaBoxContent extends BaseManager
 
             if ($item_instance instanceof PostMetaBoxContentContract) 
             {
-                $item_instance->save_post();
+                $item_instance->save($post_id, $post, $update);
             }
         }
     }
