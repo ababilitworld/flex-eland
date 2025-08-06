@@ -7,7 +7,9 @@ use Ababilithub\{
     FlexPhp\Package\Manager\V1\Base\Manager as BaseManager,
     FlexWordpress\Package\PostMetaBoxContent\V1\Contract\PostMetaBoxContent as PostMetaBoxContentContract, 
     FlexWordpress\Package\PostMetaBoxContent\V1\Factory\PostMetaBoxContent as PostMetaBoxContentFactory,
-    FlexELand\Package\Plugin\Posttype\V1\Concrete\Land\Deed\PostMeta\PostMetaBoxContent\Concrete\GeneralSettings\PostMetaBoxContent as LandDeedPostMetaBoxContent,
+    FlexELand\Package\Plugin\Posttype\V1\Concrete\Land\Deed\PostMeta\PostMetaBoxContent\Concrete\Section\General\PostMetaBoxContent as GeneralSectionPostMetaBoxContent,
+    FlexELand\Package\Plugin\Posttype\V1\Concrete\Land\Deed\PostMeta\PostMetaBoxContent\Concrete\Section\Image\PostMetaBoxContent as ImageSectionPostMetaBoxContent,
+    FlexELand\Package\Plugin\Posttype\V1\Concrete\Land\Deed\PostMeta\PostMetaBoxContent\Concrete\Section\Attachment\PostMetaBoxContent as AttachmentSectionPostMetaBoxContent,
 };
 
 class  PostMetaBoxContent extends BaseManager
@@ -21,7 +23,9 @@ class  PostMetaBoxContent extends BaseManager
     {
         $this->set_items(
                 [
-                LandDeedPostMetaBoxContent::class,
+                GeneralSectionPostMetaBoxContent::class,
+                ImageSectionPostMetaBoxContent::class,
+                AttachmentSectionPostMetaBoxContent::class,
             ]
         );
     }

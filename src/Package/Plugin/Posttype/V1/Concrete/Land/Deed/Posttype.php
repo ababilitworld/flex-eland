@@ -20,11 +20,10 @@ use const Ababilithub\{
     FlexELand\PLUGIN_DIR,
 };
 
-defined( __NAMESPACE__.'\POSTTYPE' ) || define( __NAMESPACE__.'\POSTTYPE', 'fldeed' );
-
 class Posttype extends BasePosttype 
 { 
     use WpPosttypeMixin;
+    public const POSTTYPE = 'fldeed';
 
     private $template_service;
 
@@ -33,8 +32,8 @@ class Posttype extends BasePosttype
     
     public function init() : void
     {
-        $this->posttype = POSTTYPE;
-        $this->slug = POSTTYPE;
+        $this->posttype = self::POSTTYPE;
+        $this->slug = self::POSTTYPE;
 
         $this->set_labels([
             'name' => esc_html__('Land Deeds', 'flex-eland'),
@@ -80,6 +79,8 @@ class Posttype extends BasePosttype
             'show_ui' => true,
             'show_in_nav_menus' => true,
             'show_in_menu' => false, // Don't show in menu by default
+            'capability_type' => self::POSTTYPE,
+            'map_meta_cap' => true,
             'labels' => $this->labels,
             'menu_icon' => "dashicons-admin-post",
             'rewrite' => array('slug' => $this->slug,'with_front' => false),
@@ -117,7 +118,7 @@ class Posttype extends BasePosttype
             (new LandDeedPostMetaBoxContentManager())->save_post($post_id, $post, $update);
         }, 10, 3);
 
-        add_filter(PLUGIN_PRE_UNDS.'_admin_menu', [$this, 'add_menu_items']);
+        //add_filter(PLUGIN_PRE_UNDS.'_admin_menu', [$this, 'add_menu_items']);
         add_filter('the_content', [$this, 'single_post']);
         
         add_filter('post_row_actions', [$this, 'add_action_view_details'], 10, 2);
@@ -128,7 +129,7 @@ class Posttype extends BasePosttype
 
     public function init_theme_supports()
     {
-        add_theme_support('post-thumbnails', [POSTTYPE]);
+        add_theme_support('post-thumbnails', [self::POSTTYPE]);
         add_theme_support('editor-color-palette', [
             [
                 'name'  => 'Primary Blue',
@@ -148,7 +149,7 @@ class Posttype extends BasePosttype
             'page_title' => __('Land Deed', 'flex-eland'),
             'menu_title' => __('Land Deed', 'flex-eland'),
             'capability' => 'manage_options',
-            'menu_slug' => 'edit.php?post_type='.POSTTYPE,
+            'menu_slug' => 'edit.php?post_type='.self::POSTTYPE,
             'callback' => null,
             'position' => 8,
         ];
@@ -166,7 +167,7 @@ class Posttype extends BasePosttype
 
         global $post;
         
-        if ($post->post_type !== POSTTYPE) 
+        if ($post->post_type !== self::POSTTYPE) 
         {
             return $content;
         }

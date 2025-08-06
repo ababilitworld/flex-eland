@@ -1,18 +1,18 @@
 :root {
-    --primary: #04aa6d;
-    --primary-dark: #03744a;
-    --text-color: #1f2937;
-    --light-gray: #f3f4f6;
-    --medium-gray: #e5e7eb;
-    --dark-gray: #6b7280;
-    --white: #ffffff;
-    --badge-bg: #e0e7ff;
-    --badge-text: #4338ca;
-    --border-radius: 0.5rem;
-    --transition: all 0.3s ease;
+    --fa-primary: #04aa6d;
+    --fa-primary-dark: #03744a;
+    --fa-text-color: #1f2937;
+    --fa-light-gray: #f3f4f6;
+    --fa-medium-gray: #e5e7eb;
+    --fa-dark-gray: #6b7280;
+    --fa-white: #ffffff;
+    --fa-badge-bg:  #4338ca;
+    --fa-badge-text: #e0e7ff;
+    --fa-border-radius: 0.5rem;
+    --fa-transition: all 0.3s ease;
 }
 
-.deed-app {
+.fa-deed-app {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
@@ -21,46 +21,46 @@
     margin: 0 auto;
 }
 
-.search-panel {
+.fa-search-panel {
     display: flex;
     gap: 1rem;
     padding: 1rem;
-    background: var(--white);
-    border-radius: var(--border-radius);
+    background: var(--fa-white);
+    border-radius: var(--fa-border-radius);
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 
-.search-input {
+.fa-search-input {
     flex: 1;
     padding: 0.75rem 1rem;
-    border: 1px solid var(--medium-gray);
-    border-radius: var(--border-radius);
+    border: 1px solid var(--fa-medium-gray);
+    border-radius: var(--fa-border-radius);
     font-size: 1rem;
 }
 
-.search-btn {
+.fa-search-btn {
     padding: 0.75rem 1.5rem;
-    background: var(--primary);
-    color: var(--white);
+    background: var(--fa-primary);
+    color: var(--fa-white);
     border: none;
-    border-radius: var(--border-radius);
+    border-radius: var(--fa-border-radius);
     cursor: pointer;
-    transition: var(--transition);
+    transition: var(--fa-transition);
 }
 
-.search-btn:hover {
-    background: var(--primary-dark);
+.fa-search-btn:hover {
+    background: var(--fa-primary-dark);
 }
 
-.deed-container {
+.fa-deed-container {
     display: grid;
     grid-template-columns: 300px 1fr;
     gap: 1.5rem;
 }
 
-.filter-sidebar {
-    background: var(--white);
-    border-radius: var(--border-radius);
+.fa-filter-sidebar {
+    background: var(--fa-white);
+    border-radius: var(--fa-border-radius);
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     padding: 1.5rem;
     height: fit-content;
@@ -68,89 +68,89 @@
     top: 1rem;
 }
 
-.filter-header {
+.fa-filter-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 1.5rem;
 }
 
-.filter-title {
+.fa-filter-title {
     font-size: 1.25rem;
     font-weight: 600;
-    color: var(--text-color);
+    color: var(--fa-text-color);
     margin: 0;
 }
 
-.filter-reset-btn {
+.fa-filter-reset-btn {
     background: none;
     border: none;
-    color: var(--primary);
+    color: var(--fa-primary);
     font-size: 0.875rem;
     cursor: pointer;
 }
 
-.filter-accordions {
+.fa-filter-accordions {
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
 }
 
-.filter-accordion {
-    border: 1px solid var(--medium-gray);
-    border-radius: var(--border-radius);
+.fa-filter-accordion {
+    border: 1px solid var(--fa-medium-gray);
+    border-radius: var(--fa-border-radius);
     overflow: hidden;
 }
 
-.accordion-header {
+.fa-accordion-header {
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0.75rem 1rem;
-    background: var(--white);
+    background: var(--fa-white);
     border: none;
     cursor: pointer;
-    transition: var(--transition);
+    transition: var(--fa-transition);
 }
 
-.accordion-header:hover {
-    background: var(--light-gray);
+.fa-accordion-header:hover {
+    background: var(--fa-light-gray);
 }
 
-.accordion-title {
+.fa-accordion-title {
     display: flex;
     align-items: center;
     gap: 0.75rem;
     font-weight: 500;
 }
 
-.accordion-icon {
+.fa-accordion-icon {
     transition: transform 0.3s ease;
 }
 
-.filter-accordion.active .accordion-icon {
+.fa-filter-accordion.active .fa-accordion-icon {
     transform: rotate(180deg);
 }
 
-.accordion-content {
+.fa-accordion-content {
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.3s ease-out;
 }
 
-.filter-accordion.active .accordion-content {
+.fa-filter-accordion.active .fa-accordion-content {
     max-height: 500px;
 }
 
-.filter-items {
+.fa-filter-items {
     padding: 0.5rem 1rem 1rem;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
 }
 
-.filter-item {
+.fa-filter-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -158,132 +158,130 @@
     cursor: pointer;
 }
 
-.filter-label {
+.fa-filter-label {
     margin-left: 0.5rem;
 }
 
-.filter-badge {
-    background: var(--badge-bg);
-    color: var(--badge-text);
+.fa-filter-badge {
+    background: var(--fa-badge-bg);
+    color: var(--fa-badge-text);
     font-size: 0.75rem;
     padding: 0.25rem 0.5rem;
     border-radius: 9999px;
 }
 
-.price-range-filter {
+.fa-price-range-filter {
     padding: 1rem;
 }
 
-.price-values {
+.fa-price-values {
     display: flex;
     justify-content: space-between;
     margin-bottom: 0.5rem;
 }
 
-.price-slider {
+.fa-price-slider {
     height: 4px;
-    background: var(--medium-gray);
+    background: var(--fa-medium-gray);
     margin: 1rem 0;
     position: relative;
 }
 
-.price-slider .ui-slider-range {
-    background: var(--primary);
+.fa-price-slider .ui-slider-range {
+    background: var(--fa-primary);
     height: 100%;
 }
 
-.price-slider .ui-slider-handle {
+.fa-price-slider .ui-slider-handle {
     width: 16px;
     height: 16px;
-    background: var(--primary);
+    background: var(--fa-primary);
     border-radius: 50%;
     border: none;
     top: -6px;
     cursor: pointer;
 }
 
-.deed-list-container {
+.fa-deed-list-container {
     flex: 1;
 }
 
-.deed-list {
+.fa-deed-list {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 1.5rem;
 }
 
-.deed-card {
-    background: var(--white);
-    border-radius: var(--border-radius);
+.fa-deed-card {
+    background: var(--fa-white);
+    border-radius: var(--fa-border-radius);
     overflow: hidden;
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    transition: var(--transition);
+    transition: var(--fa-transition);
 }
 
-.deed-card:hover {
+.fa-deed-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 10px 15px rgba(0,0,0,0.1);
 }
 
-.deed-image {
+.fa-deed-image {
     height: 200px;
     background-size: cover;
     background-position: center;
 }
 
-.deed-content {
+.fa-deed-content {
     padding: 1.5rem;
 }
 
-.deed-content h3 {
+.fa-deed-content h3 {
     margin: 0 0 0.5rem;
     font-size: 1.25rem;
 }
 
-.deed-meta {
+.fa-deed-meta {
     display: flex;
     gap: 1rem;
     font-size: 0.875rem;
-    color: var(--dark-gray);
+    color: var(--fa-dark-gray);
     margin-bottom: 1rem;
 }
 
-.deed-footer {
+.fa-deed-footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding-top: 1rem;
-    border-top: 1px solid var(--medium-gray);
+    border-top: 1px solid var(--fa-medium-gray);
 }
 
-.deed-price {
+.fa-deed-price {
     font-weight: 600;
-    color: var(--primary);
+    color: var(--fa-primary);
 }
 
-.view-btn {
+.fa-view-btn {
     padding: 0.5rem 1rem;
-    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-    color: var(--white);
+    background: linear-gradient(135deg, var(--fa-primary) 0%, var(--fa-primary-dark) 100%);
+    color: var(--fa-white);
     border: none;
-    border-radius: var(--border-radius);
+    border-radius: var(--fa-border-radius);
     text-decoration: none;
     font-size: 0.875rem;
-    /* Animation */
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     transform-style: preserve-3d;
     position: relative;
     overflow: hidden;
 }
 
-.view-btn:hover {
-    background: var(--primary-dark);
-    color: var(--white);
+.fa-view-btn:hover {
+    background: var(--fa-primary-dark);
+    color: var(--fa-white);
     text-decoration: none;
 }
 
-.view-btn {
-    /* Base Styling */
+.fa-view-btn {
     min-width: 2.7rem;
     height: 2.1rem;
     border-radius: 12px;
@@ -293,52 +291,34 @@
     justify-content: center;
     gap: 0.5rem;
     padding: 0 1.25rem;
-    
-    /* Color & Effects */
-    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    background: linear-gradient(135deg, var(--fa-primary) 0%, var(--fa-primary-dark) 100%);
     color: white;
     box-shadow: 0 4px 12px rgba(51, 102, 255, 0.25);
     border: none;
     cursor: pointer;
-    
-    /* Text */
     font-weight: 600;
     font-size: 0.9rem;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    
-    /* Animation */
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     transform-style: preserve-3d;
     position: relative;
     overflow: hidden;
 }
 
-.view-btn:hover {
-    /* Hover Effects */
-    background: linear-gradient(135deg, var(--primary-dark) 0%, #254eda 100%);
+.fa-view-btn:hover {
+    background: linear-gradient(135deg, var(--fa-primary-dark) 0%, #254eda 100%);
     color: white;
     box-shadow: 0 6px 16px rgba(51, 102, 255, 0.4);
-
     transform: translateY(-2px) scale(1.05);
     text-decoration: none;
 }
 
-.view-btn:active {
-    /* Click Effect */
+.fa-view-btn:active {
     transform: translateY(1px) scale(0.98);
 }
 
-/* Optional Icon (using Font Awesome) */
-.view-btn::after {
-    /* content: "\f019"; FA download icon */
-    font-family: "FontAwesome";
-    font-weight: 900;
-    font-size: 1rem;
-}
-
-/* Micro-interaction Wave Effect */
-.view-btn::before {
+.fa-view-btn::before {
     content: "";
     position: absolute;
     top: 50%;
@@ -352,11 +332,11 @@
     transform-origin: 50% 50%;
 }
 
-.view-btn:hover::before {
-    animation: ripple 1s ease-out;
+.fa-view-btn:hover::before {
+    animation: fa-ripple 1s ease-out;
 }
 
-@keyframes ripple {
+@keyframes fa-ripple {
     0% {
         transform: scale(0, 0);
         opacity: 0.5;
@@ -367,13 +347,12 @@
     }
 }
 
-
 @media (max-width: 992px) {
-    .deed-container {
+    .fa-deed-container {
         grid-template-columns: 1fr;
     }
     
-    .filter-sidebar {
+    .fa-filter-sidebar {
         position: static;
     }
 }

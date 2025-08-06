@@ -5,7 +5,8 @@ namespace Ababilithub\FlexELand\Package\Plugin\Posttype\V1\Concrete\Land\Deed\Pr
 
 use Ababilithub\{
     FlexPhp\Package\Mixin\V1\Standard\Mixin as StandardMixin,
-    FlexWordpress\Package\Mixin\V1\Standard\Mixin as StandardWpMixin,
+    FlexWordpress\Package\Mixin\V1\Standard\Mixin as StandardWpMixin,    
+    FlexELand\Package\Plugin\Posttype\V1\Concrete\Land\Deed\Posttype as LandDeedPosttype,
 };
 
 use const Ababilithub\{
@@ -16,7 +17,6 @@ use const Ababilithub\{
     FlexELand\PLUGIN_PRE_UNDS,
     FlexELand\PLUGIN_PRE_HYPH,
     FlexELand\PLUGIN_VERSION,
-    FlexELand\Package\Plugin\Posttype\V1\Concrete\Land\Deed\POSTTYPE,
 };
 
 class Template 
@@ -30,7 +30,7 @@ class Template
 
     public function __construct() 
     {
-        $this->posttype = POSTTYPE;
+        $this->posttype = LandDeedPosttype::POSTTYPE;
         $this->asset_url = $this->get_url('Asset/');
         add_action('admin_enqueue_scripts', array($this, 'enqueue_scripts'));
         add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts'));
@@ -42,14 +42,14 @@ class Template
         wp_enqueue_script('jquery-ui-slider');
 
         wp_enqueue_style(
-            PLUGIN_PRE_HYPH.'-'.POSTTYPE.'-list-premium-card-template-style', 
+            PLUGIN_PRE_HYPH.'-'.LandDeedPosttype::POSTTYPE.'-list-premium-card-template-style', 
             $this->asset_url.'Css/Style.css',
             array(), 
             time()
         );
 
         wp_enqueue_script(
-            PLUGIN_PRE_HYPH.'-'.POSTTYPE.'-list-premium-card-template-script', 
+            PLUGIN_PRE_HYPH.'-'.LandDeedPosttype::POSTTYPE.'-list-premium-card-template-script', 
             $this->asset_url.'Js/Script.js',
             array('jquery', 'jquery-ui-slider'), 
             time(), 
@@ -57,11 +57,11 @@ class Template
         );
         
         wp_localize_script(
-            PLUGIN_PRE_HYPH.'-'.POSTTYPE.'-list-premium-card-template-script', 
-            PLUGIN_PRE_UNDS.'_'.POSTTYPE.'_template_localize', 
+            PLUGIN_PRE_HYPH.'-'.LandDeedPosttype::POSTTYPE.'-list-premium-card-template-script', 
+            PLUGIN_PRE_UNDS.'_'.LandDeedPosttype::POSTTYPE.'_template_localize', 
             array(
                 'adminAjaxUrl' => admin_url('admin-ajax.php'),
-                'ajaxNonce' => wp_create_nonce(PLUGIN_PRE_UNDS.'_'.POSTTYPE.'_nonce'),
+                'ajaxNonce' => wp_create_nonce(PLUGIN_PRE_UNDS.'_'.LandDeedPosttype::POSTTYPE.'_nonce'),
             )
         );
     }

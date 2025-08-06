@@ -6,6 +6,7 @@ namespace Ababilithub\FlexELand\Package\Plugin\Shortcode\V1\Concrete\Land\Deed\L
 use Ababilithub\{
     FlexPhp\Package\Mixin\V1\Standard\Mixin as StandardMixin,
     FlexWordpress\Package\Mixin\V1\Standard\Mixin as StandardWpMixin,
+    FlexELand\Package\Plugin\Posttype\V1\Concrete\Land\Deed\Posttype as LandDeedPosttype,
 };
 
 use const Ababilithub\{
@@ -16,7 +17,6 @@ use const Ababilithub\{
     FlexELand\PLUGIN_PRE_UNDS,
     FlexELand\PLUGIN_PRE_HYPH,
     FlexELand\PLUGIN_VERSION,
-    FlexELand\Package\Plugin\Posttype\V1\Concrete\Land\Deed\POSTTYPE,
 };
 
 class Template 
@@ -30,7 +30,7 @@ class Template
 
     public function __construct() 
     {
-        $this->posttype = POSTTYPE;
+        $this->posttype = LandDeedPosttype::POSTTYPE;
         $this->asset_url = $this->get_url('Asset/');
         add_action('admin_enqueue_scripts', array($this, 'enqueue_scripts'));
         add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts'));
@@ -42,14 +42,14 @@ class Template
         wp_enqueue_script('jquery-ui-slider');
 
         wp_enqueue_style(
-            PLUGIN_PRE_HYPH.'-'.POSTTYPE.'-list-premium-card-template-style', 
+            PLUGIN_PRE_HYPH.'-'.LandDeedPosttype::POSTTYPE.'-list-premium-card-template-style', 
             $this->asset_url.'Css/Style.css',
             array(), 
             time()
         );
 
         wp_enqueue_script(
-            PLUGIN_PRE_HYPH.'-'.POSTTYPE.'-list-premium-card-template-script', 
+            PLUGIN_PRE_HYPH.'-'.LandDeedPosttype::POSTTYPE.'-list-premium-card-template-script', 
             $this->asset_url.'Js/Script.js',
             array('jquery', 'jquery-ui-slider'), 
             time(), 
@@ -57,16 +57,16 @@ class Template
         );
         
         wp_localize_script(
-            PLUGIN_PRE_HYPH.'-'.POSTTYPE.'-list-premium-card-template-script', 
-            PLUGIN_PRE_UNDS.'_'.POSTTYPE.'_template_localize', 
+            PLUGIN_PRE_HYPH.'-'.LandDeedPosttype::POSTTYPE.'-list-premium-card-template-script', 
+            PLUGIN_PRE_UNDS.'_'.LandDeedPosttype::POSTTYPE.'_template_localize', 
             array(
                 'adminAjaxUrl' => admin_url('admin-ajax.php'),
-                'ajaxNonce' => wp_create_nonce(PLUGIN_PRE_UNDS.'_'.POSTTYPE.'_nonce'),
+                'ajaxNonce' => wp_create_nonce(PLUGIN_PRE_UNDS.'_'.LandDeedPosttype::POSTTYPE.'_nonce'),
             )
         );
     }
 
-    public static function deed_list($posts = null) 
+    public static function deed_list($posts = null): bool|string 
     {
         $posts = $posts ?: get_posts([
             'post_type' => 'fldeed',
@@ -81,24 +81,24 @@ class Template
         
         ob_start();
         ?>
-        <div class="deed-app">
+        <div class="fa-deed-app">
             <!-- Search Panel -->
-            <div class="search-panel">
-                <input type="text" class="search-input" placeholder="Search deeds by location, type, or ID...">
-                <button class="search-btn">
+            <div class="fa-search-panel">
+                <input type="text" class="fa-search-input" placeholder="Search deeds by location, type, or ID...">
+                <button class="fa-search-btn">
                     <i class="fas fa-search"></i> Search
                 </button>
             </div>
 
-            <div class="deed-container">
+            <div class="fa-deed-container">
                 <!-- Filter Sidebar -->
-                <aside class="filter-sidebar">
-                    <div class="filter-header">
-                        <h3 class="filter-title">Filters</h3>
-                        <button class="filter-reset-btn">Reset All</button>
+                <aside class="fa-filter-sidebar">
+                    <div class="fa-filter-header">
+                        <h3 class="fa-filter-title">Filters</h3>
+                        <button class="fa-filter-reset-btn">Reset All</button>
                     </div>
 
-                    <div class="filter-accordions">
+                    <div class="fa-filter-accordions">
                         <?php
                         $taxonomies = get_object_taxonomies('fldeed', 'objects');
                         $icon_map = [
@@ -122,23 +122,23 @@ class Template
                             
                             $icon = $icon_map[$taxonomy->name] ?? 'fa-filter';
                             ?>
-                            <div class="filter-accordion" data-taxonomy="<?php echo esc_attr($taxonomy->name); ?>">
-                                <button class="accordion-header">
-                                    <div class="accordion-title">
+                            <div class="fa-filter-accordion" data-taxonomy="<?php echo esc_attr($taxonomy->name); ?>">
+                                <button class="fa-accordion-header">
+                                    <div class="fa-accordion-title">
                                         <i class="fas <?php echo esc_attr($icon); ?>"></i>
                                         <span><?php echo esc_html($taxonomy->label); ?></span>
                                     </div>
-                                    <i class="fas fa-chevron-down accordion-icon"></i>
+                                    <i class="fas fa-chevron-down fa-accordion-icon"></i>
                                 </button>
-                                <div class="accordion-content">
-                                    <div class="filter-items">
+                                <div class="fa-accordion-content">
+                                    <div class="fa-filter-items">
                                         <?php foreach ($terms as $term) { ?>
-                                            <label class="filter-item">
+                                            <label class="fa-filter-item">
                                                 <input type="checkbox" 
                                                     name="<?php echo esc_attr($taxonomy->name); ?>[]" 
                                                     value="<?php echo esc_attr($term->slug); ?>">
-                                                <span class="filter-label"><?php echo esc_html($term->name); ?></span>
-                                                <span class="filter-badge"><?php echo esc_html($term->count); ?></span>
+                                                <span class="fa-filter-label"><?php echo esc_html($term->name); ?></span>
+                                                <span class="fa-filter-badge"><?php echo esc_html($term->count); ?></span>
                                             </label>
                                         <?php } ?>
                                     </div>
@@ -147,23 +147,23 @@ class Template
                         <?php } ?>
 
                         <!-- Price Range Filter -->
-                        <div class="filter-accordion">
-                            <button class="accordion-header">
-                                <div class="accordion-title">
+                        <div class="fa-filter-accordion">
+                            <button class="fa-accordion-header">
+                                <div class="fa-accordion-title">
                                     <i class="fas fa-tag"></i>
                                     <span>Price Range</span>
                                 </div>
-                                <i class="fas fa-chevron-down accordion-icon"></i>
+                                <i class="fas fa-chevron-down fa-accordion-icon"></i>
                             </button>
-                            <div class="accordion-content">
-                                <div class="price-range-filter">
-                                    <div class="price-values">
-                                        <span class="min-price">$0</span>
-                                        <span class="max-price">$1M+</span>
+                            <div class="fa-accordion-content">
+                                <div class="fa-price-range-filter">
+                                    <div class="fa-price-values">
+                                        <span class="fa-min-price">$0</span>
+                                        <span class="fa-max-price">$1M+</span>
                                     </div>
-                                    <div class="price-slider"></div>
-                                    <input type="hidden" class="min-price-input" name="min_price" value="0">
-                                    <input type="hidden" class="max-price-input" name="max_price" value="1000000">
+                                    <div class="fa-price-slider"></div>
+                                    <input type="hidden" class="fa-min-price-input" name="min_price" value="0">
+                                    <input type="hidden" class="fa-max-price-input" name="max_price" value="1000000">
                                 </div>
                             </div>
                         </div>
@@ -171,8 +171,8 @@ class Template
                 </aside>
 
                 <!-- Main Content -->
-                <main class="deed-list-container">
-                    <div class="deed-list">
+                <main class="fa-deed-list-container">
+                    <div class="fa-deed-list">
                         <?php foreach ($posts as $post) {
                             $price = get_post_meta($post->ID, 'price', true);
                             $size = get_post_meta($post->ID, 'land-quantity', true);
@@ -188,15 +188,15 @@ class Template
                                 }
                             }
                             ?>
-                            <article class="deed-card" 
+                            <article class="fa-deed-card" 
                                 data-price="<?php echo esc_attr($price ?: 0); ?>"
                                 <?php foreach ($terms_data as $tax => $terms) {
                                     echo 'data-' . esc_attr($tax) . '="' . esc_attr(implode(' ', $terms)) . '" ';
                                 } ?>>
-                                <div class="deed-image" style="background-image: url('<?php echo esc_url($thumbnail); ?>')"></div>
-                                <div class="deed-content">
+                                <div class="fa-deed-image" style="background-image: url('<?php echo esc_url($thumbnail); ?>')"></div>
+                                <div class="fa-deed-content">
                                     <h3><?php echo esc_html(get_the_title($post)); ?></h3>
-                                    <div class="deed-meta">
+                                    <div class="fa-deed-meta">
                                         <?php if ($deed_number) { ?>
                                             <span><i class="fas fa-file-alt"></i> <?php echo esc_html($deed_number); ?></span>
                                         <?php } ?>
@@ -204,11 +204,11 @@ class Template
                                             <span><i class="fas fa-ruler-combined"></i> <?php echo esc_html($size); ?> Decimal</span>
                                         <?php } ?>
                                     </div>
-                                    <div class="deed-footer">
+                                    <div class="fa-deed-footer">
                                         <?php if ($price) { ?>
-                                            <div class="deed-price">$<?php echo number_format($price); ?></div>
+                                            <div class="fa-deed-price">$<?php echo number_format($price); ?></div>
                                         <?php } ?>
-                                        <a href="<?php the_permalink($post); ?>" class="view-btn">View Details</a>
+                                        <a href="<?php the_permalink($post); ?>" class="fa-view-btn">View Details</a>
                                     </div>
                                 </div>
                             </article>

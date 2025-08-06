@@ -6,20 +6,20 @@ namespace Ababilithub\FlexELand\Package\Plugin\Shortcode\V1\Concrete\Land\Deed\L
 
 use Ababilithub\{
     FlexWordpress\Package\Shortcode\V1\Base\Shortcode as BaseShortcode,
+    FlexELand\Package\Plugin\Posttype\V1\Concrete\Land\Deed\Posttype as LandDeedPosttype,
     FlexELand\Package\Plugin\Shortcode\V1\Concrete\Land\Deed\List\Presentation\Template\List\PremiumCard\Template as PosttypeListTemplate
 };
 
 use const Ababilithub\{
     FlexELand\PLUGIN_PRE_UNDS,
     FlexELand\PLUGIN_PRE_HYPH,
-    FlexELand\Package\Plugin\Posttype\V1\Concrete\Land\Deed\POSTTYPE
 };
 
 class Shortcode extends BaseShortcode
 {
     public function init(): void
     {
-        $this->set_tag(PLUGIN_PRE_HYPH.'-'.POSTTYPE.'-list'); 
+        $this->set_tag(PLUGIN_PRE_HYPH.'-'.LandDeedPosttype::POSTTYPE.'-list'); 
 
         $this->set_default_attributes([
             'style' => 'grid',
@@ -67,7 +67,7 @@ class Shortcode extends BaseShortcode
         try {
             // Build query args
             $args = [
-                'post_type' => POSTTYPE,
+                'post_type' => LandDeedPosttype::POSTTYPE,
                 'posts_per_page' => (int)$params['show'],
                 'orderby' => sanitize_text_field($params['sort_by']),
                 'order' => sanitize_text_field($params['sort']),

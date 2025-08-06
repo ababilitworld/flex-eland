@@ -7,7 +7,6 @@ use Ababilithub\{
     FlexPhp\Package\Manager\V1\Base\Manager as BaseManager,
     FlexWordpress\Package\Posttype\V1\Factory\Posttype as PosttypeFactory,
     FlexWordpress\Package\Posttype\V1\Contract\Posttype as PosttypeContract, 
-    FlexELand\Package\Plugin\Posttype\V1\Concrete\Website\Setting\ContactInfo\Posttype as ContactInfoPosttype,
     FlexELand\Package\Plugin\Posttype\V1\Concrete\Land\Document\Posttype as LandDocumentPosttype,
     FlexELand\Package\Plugin\Posttype\V1\Concrete\Land\Deed\Posttype as LandDeedPosttype,
        
@@ -23,7 +22,6 @@ class Posttype extends BaseManager
     protected function init(): void
     {
         $this->set_items([
-            ContactInfoPosttype::class,
             LandDocumentPosttype::class,
             LandDeedPosttype::class,
             // Add more posttype classes here...
