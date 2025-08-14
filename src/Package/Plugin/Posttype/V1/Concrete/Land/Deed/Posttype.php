@@ -176,7 +176,7 @@ class Posttype extends BasePosttype
         remove_filter('the_content', [$this, 'single_post']);
         
         // Get template content
-        $template_content = PosttypeTemplate::single_post($post);
+        $template_content = $this->template_service->single_post($post);
         
         // Re-add our filter
         add_filter('the_content', [$this, 'single_post']);

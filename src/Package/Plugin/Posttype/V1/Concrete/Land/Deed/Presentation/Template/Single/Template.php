@@ -5,7 +5,8 @@ namespace Ababilithub\FlexELand\Package\Plugin\Posttype\V1\Concrete\Land\Deed\Pr
 
 use Ababilithub\{
     FlexPhp\Package\Mixin\V1\Standard\Mixin as StandardMixin,
-    FlexWordpress\Package\Mixin\V1\Standard\Mixin as StandardWpMixin,    
+    FlexWordpress\Package\Mixin\V1\Standard\Mixin as StandardWpMixin,
+    FlexWordpress\Package\PostMeta\V1\Mixin\PostMeta as PostMetaMixin,    
     FlexELand\Package\Plugin\Posttype\V1\Concrete\Land\Deed\Posttype as LandDeedPosttype,
 };
 
@@ -21,7 +22,7 @@ use const Ababilithub\{
 
 class Template 
 {
-    use StandardMixin, StandardWpMixin;
+    use StandardMixin, StandardWpMixin, PostMetaMixin;
 
     private $package;
     private $template_url;
@@ -69,7 +70,7 @@ class Template
         );
     }
 
-    public static function single_post($post = null)
+    public function single_post($post = null)
     {
         // Use passed post or fall back to global
         $post = $post ?: get_post();
@@ -83,25 +84,25 @@ class Template
         
         ob_start();
         ?>
-        <main class="land-deed">
-            <div class="ld-container">
-                <article class="ld-article" id="post-<?php echo $post->ID; ?>">
+        <main class="fl-single-post">
+            <div class="flsp-container">
+                <article class="flsp-article" id="post-<?php echo $post->ID; ?>">
                     <!-- Hero Section -->
-                    <header class="ld-hero">
+                    <header class="flsp-hero">
                         <?php if (has_post_thumbnail($post->ID)) : ?>
-                            <?php echo get_the_post_thumbnail($post->ID, 'large', ['class' => 'ld-hero-image']); ?>
+                            <?php echo get_the_post_thumbnail($post->ID, 'large', ['class' => 'flsp-hero-image']); ?>
                         <?php endif; ?>
                         
-                        <div class="ld-hero-overlay"></div>
+                        <div class="flsp-hero-overlay"></div>
                         
-                        <div class="ld-hero-content">
-                            <h1 class="ld-title"><?php echo get_the_title($post); ?></h1>
-                            <div class="ld-meta">
-                                <span class="ld-meta-item">
+                        <div class="flsp-hero-content">
+                            <h1 class="flsp-title"><?php echo get_the_title($post); ?></h1>
+                            <div class="flsp-meta">
+                                <span class="flsp-meta-item">
                                     <i class="fas fa-calendar"></i> <?php echo get_the_date('', $post); ?>
                                 </span>
                                 <?php if ($deed_number = get_post_meta($post->ID, 'deed-number', true)) : ?>
-                                    <span class="ld-meta-item">
+                                    <span class="flsp-meta-item">
                                         <i class="fas fa-file-alt"></i> <?php echo esc_html($deed_number); ?>
                                     </span>
                                 <?php endif; ?>
@@ -110,18 +111,18 @@ class Template
                     </header>
 
                     <!-- Main Content Grid -->
-                    <div class="ld-grid">
+                    <div class="flsp-grid">
                         <!-- Primary Content Column -->
-                        <div class="ld-main-content">
+                        <div class="flsp-main-content">
                             
                             <!-- Location Information -->
-                            <section class="ld-section">
-                                <h2 class="ld-section-title">
+                            <section class="flsp-section">
+                                <h2 class="flsp-section-title">
                                     <i class="fas fa-map-marked-alt"></i>
                                     <?php esc_html_e('Location', 'flex-eland'); ?>
                                 </h2>
                                 
-                                <div class="ld-location-grid">
+                                <div class="flsp-location-grid">
                                     <?php
                                     $location_taxonomies = [
                                         'district' => ['icon' => 'fas fa-map', 'label' => __('District', 'flex-eland')],
@@ -133,13 +134,13 @@ class Template
                                     foreach ($location_taxonomies as $taxonomy => $data) :
                                         $terms = get_the_terms($post->ID, $taxonomy);
                                         if ($terms && !is_wp_error($terms)) : ?>
-                                            <div class="ld-card ld-location-card">
-                                                <div class="ld-location-icon">
+                                            <div class="flsp-card flsp-location-card">
+                                                <div class="flsp-location-icon">
                                                     <i class="<?php echo esc_attr($data['icon']); ?>"></i>
                                                 </div>
-                                                <div class="ld-location-content">
+                                                <div class="flsp-location-content">
                                                     <h3><?php echo esc_html($data['label']); ?></h3>
-                                                    <ul class="ld-term-list">
+                                                    <ul class="flsp-term-list">
                                                         <?php foreach ($terms as $term) : ?>
                                                             <li>
                                                                 <?php echo esc_html($term->name); ?>
@@ -154,13 +155,13 @@ class Template
                             </section>
 
                             <!-- Property Details -->
-                            <section class="ld-section">
-                                <h2 class="ld-section-title">
+                            <section class="flsp-section">
+                                <h2 class="flsp-section-title">
                                     <i class="fas fa-info-circle"></i>
                                     <?php esc_html_e('Deed Information', 'flex-eland'); ?>
                                 </h2>
                                 
-                                <div class="ld-details-grid">
+                                <div class="flsp-details-grid">
                                     <?php 
                                     $property_details = [
                                         'deed-date' => ['icon' => 'fas fa-calendar-check', 'label' => __('Deed Date', 'flex-eland')],
@@ -171,11 +172,11 @@ class Template
                                     
                                     foreach ($property_details as $field => $data) :
                                         if ($value = get_post_meta($post->ID, $field, true)) : ?>
-                                            <div class="ld-card ld-detail-item">
-                                                <div class="ld-detail-icon">
+                                            <div class="flsp-card flsp-detail-item">
+                                                <div class="flsp-detail-icon">
                                                     <i class="<?php echo esc_attr($data['icon']); ?>"></i>
                                                 </div>
-                                                <div class="ld-detail-content">
+                                                <div class="flsp-detail-content">
                                                     <h3><?php echo esc_html($data['label']); ?></h3>
                                                     <p><?php echo esc_html($value); ?></p>
                                                 </div>
@@ -185,44 +186,67 @@ class Template
                                 </div>
                             </section>
 
+                            <!-- Map Location -->
+                            <section class="flsp-section">
+                                <h2 class="flsp-section-title">
+                                    <i class="fas fa-info-circle"></i>
+                                    <?php esc_html_e('Map Location', 'flex-master-pro'); ?>
+                                </h2>
+                                
+                                <div class="flsp-map-grid">
+                                    <?php 
+                                    $property_details = [
+                                        'google-map-location' => ['icon' => 'fas fa-ruler-combined', 'label' => __('Google Map Location', 'flex-master-pro')],
+                                    ];
+                                    
+                                    foreach ($property_details as $field => $data) :
+                                        if ($value = get_post_meta($post->ID, $field, true)) : ?>
+                                            <div class="flsp-card flsp-map-item">
+                                                <?php echo $this->get_map_location($value);?>
+                                            </div>
+                                        <?php endif;
+                                    endforeach; ?>
+                                </div>
+                            </section>
+
                             <!-- Deed Content -->
-                            <section class="ld-section">
-                                <h2 class="ld-section-title">
+                            <section class="flsp-section">
+                                <h2 class="flsp-section-title">
                                     <i class="fas fa-file-signature"></i>
                                     <?php esc_html_e('Deed Details', 'flex-eland'); ?>
                                 </h2>
-                                <div class="ld-content-wrapper">
+                                <div class="flsp-content-wrapper">
                                     <?php echo apply_filters('the_content', $post->post_content); ?>
                                 </div>
                             </section>
                         </div>
 
                         <!-- Sidebar Column -->
-                        <aside class="ld-sidebar">
+                        <aside class="flsp-sidebar">
                             <!-- Documents Gallery Widget -->
-                            <?php if ($docs = get_post_meta($post->ID, 'deed-docs', true)) : ?>
-                                <div class="ld-sidebar-widget">
-                                    <h3 class="ld-widget-title">
+                            <?php if ($attachments = get_post_meta($post->ID, 'deed-attachments', true)) : ?>
+                                <div class="flsp-sidebar-widget">
+                                    <h3 class="flsp-widget-title">
                                         <i class="fas fa-file-contract"></i>
                                         <?php esc_html_e('Deed Documents', 'flex-eland'); ?>
                                     </h3>
-                                    <div class="ld-documents-grid">
-                                        <?php foreach ($docs as $doc_id) : 
-                                            $doc_url = wp_get_attachment_url($doc_id);
-                                            $doc_title = get_the_title($doc_id);
-                                            $file_type = wp_check_filetype($doc_url);
+                                    <div class="flsp-documents-grid">
+                                        <?php foreach ($attachments as $attachment_id) : 
+                                            $attachment_url = wp_get_attachment_url($attachment_id);
+                                            $attachment_title = get_the_title($attachment_id);
+                                            $file_type = wp_check_filetype($attachment_url);
                                             $icon = self::get_file_icon($file_type['ext']);
                                             ?>
-                                            <div class="ld-card ld-document-card">
-                                                <div class="ld-document-icon">
+                                            <div class="flsp-card flsp-document-card">
+                                                <div class="flsp-document-icon">
                                                     <i class="<?php echo esc_attr($icon); ?>"></i>
                                                 </div>
-                                                <div class="ld-document-info">
-                                                    <h4><?php echo esc_html($doc_title); ?></h4>
-                                                    <span class="ld-file-type"><?php echo strtoupper($file_type['ext']); ?></span>
+                                                <div class="flsp-document-info">
+                                                    <h4><?php echo esc_html($attachment_title); ?></h4>
+                                                    <span class="flsp-file-type"><?php echo strtoupper($file_type['ext']); ?></span>
                                                 </div>
-                                                <a href="<?php echo esc_url($doc_url); ?>" 
-                                                class="ld-download-btn" 
+                                                <a href="<?php echo esc_url($attachment_url); ?>" 
+                                                class="flsp-download-btn" 
                                                 target="_blank" 
                                                 download>
                                                     <i class="fas fa-download"></i>
@@ -232,28 +256,28 @@ class Template
                                     </div>
                                 </div>
                             <?php else : ?>
-                                <div class="ld-sidebar-widget">
-                                    <h3 class="ld-widget-title">
+                                <div class="flsp-sidebar-widget">
+                                    <h3 class="flsp-widget-title">
                                         <i class="fas fa-file-contract"></i>
                                         <?php esc_html_e('Deed Documents', 'flex-eland'); ?>
                                     </h3>
-                                    <p class="ld-text-center ld-mb-0"><?php esc_html_e('No documents available', 'flex-eland'); ?></p>
+                                    <p class="flsp-text-center flsp-mb-0"><?php esc_html_e('No documents available', 'flex-eland'); ?></p>
                                 </div>
                             <?php endif; ?>
 
                             <!-- Image Gallery -->
                             <?php if ($images = get_post_meta($post->ID, 'deed-images', true)) : ?>
-                                <div class="ld-sidebar-widget">
-                                    <h3 class="ld-widget-title">
+                                <div class="flsp-sidebar-widget">
+                                    <h3 class="flsp-widget-title">
                                         <i class="fas fa-images"></i>
                                         <?php esc_html_e('Image Gallery', 'flex-eland'); ?>
                                     </h3>
-                                    <div class="ld-gallery-grid">
+                                    <div class="flsp-gallery-grid">
                                         <?php foreach ($images as $image_id) : 
                                             $image_url = wp_get_attachment_image_url($image_id, 'medium');
                                             $image_full = wp_get_attachment_image_url($image_id, 'full');
                                             ?>
-                                            <a href="<?php echo esc_url($image_full); ?>" class="ld-gallery-item" data-fancybox="deed-gallery">
+                                            <a href="<?php echo esc_url($image_full); ?>" class="flsp-gallery-item" data-fancybox="deed-gallery">
                                                 <img src="<?php echo esc_url($image_url); ?>" alt="<?php echo esc_attr(get_the_title($image_id)); ?>">
                                             </a>
                                         <?php endforeach; ?>
@@ -281,23 +305,23 @@ class Template
                                 $related_deeds = new \WP_Query($related_args);
                                 
                                 if ($related_deeds->have_posts()) : ?>
-                                    <div class="ld-sidebar-widget">
-                                        <h3 class="ld-widget-title">
+                                    <div class="flsp-sidebar-widget">
+                                        <h3 class="flsp-widget-title">
                                             <i class="fas fa-paperclip"></i>
                                             <?php esc_html_e('Related Deeds', 'flex-eland'); ?>
                                         </h3>
-                                        <div class="ld-related-grid">
+                                        <div class="flsp-related-grid">
                                             <?php while ($related_deeds->have_posts()) : $related_deeds->the_post(); ?>
-                                                <a href="<?php the_permalink(); ?>" class="ld-card ld-related-card">
+                                                <a href="<?php the_permalink(); ?>" class="flsp-card flsp-related-card">
                                                     <?php if (has_post_thumbnail()) : ?>
-                                                        <div class="ld-related-thumbnail">
+                                                        <div class="flsp-related-thumbnail">
                                                             <?php the_post_thumbnail('thumbnail'); ?>
                                                         </div>
                                                     <?php endif; ?>
-                                                    <div class="ld-related-content">
+                                                    <div class="flsp-related-content">
                                                         <h4><?php the_title(); ?></h4>
                                                         <?php if ($deed_number = get_post_meta(get_the_ID(), 'deed-number', true)) : ?>
-                                                            <span class="ld-deed-number"><?php echo esc_html($deed_number); ?></span>
+                                                            <span class="flsp-deed-number"><?php echo esc_html($deed_number); ?></span>
                                                         <?php endif; ?>
                                                     </div>
                                                 </a>

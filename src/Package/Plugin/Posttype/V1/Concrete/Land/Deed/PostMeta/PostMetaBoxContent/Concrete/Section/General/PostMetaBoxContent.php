@@ -135,6 +135,46 @@ class PostMetaBoxContent extends BasePostMetaBoxContent
                             ])->render();
                         ?>
                     </div>
+                    <div class="panel-row">
+                        <?php
+                            // Regular text field for map URL/embed code
+                            $googleMapLocationField = FieldFactory::get(TextField::class);
+                            $googleMapLocationField->init([
+                                'name' => 'google-map-location',
+                                'id' => 'google-map-location',
+                                'label' => 'Google Map Embed Code',
+                                'class' => 'custom-file-input',
+                                'required' => false,
+                                'help_text' => 'Paste Google Map embed code or share link',
+                                'value' => $this->get_map_location($meta_values['google_map_location']),
+                                'attributes' => [
+                                    'data-preview-size' => '150'
+                                ]
+                            ])->render();
+                        ?>
+                    </div>
+                    <!-- Add new fields for latitude/longitude -->
+                    <div class="panel-row two-columns">
+                        <?php
+                            $latitudeField = FieldFactory::get(TextField::class);
+                            $latitudeField->init([
+                                'name' => 'map-latitude',
+                                'id' => 'map-latitude',
+                                'label' => 'Latitude',
+                                'value' => $meta_values['map_latitude'],
+                                'help_text' => 'e.g., 23.8103'
+                            ])->render();
+                            
+                            $longitudeField = FieldFactory::get(TextField::class);
+                            $longitudeField->init([
+                                'name' => 'map-longitude',
+                                'id' => 'map-longitude',
+                                'label' => 'Longitude',
+                                'value' => $meta_values['map_longitude'],
+                                'help_text' => 'e.g., 90.4125'
+                            ])->render();
+                        ?>
+                    </div>
                 </div>
             </div>
         <?php
@@ -148,7 +188,9 @@ class PostMetaBoxContent extends BasePostMetaBoxContent
             'deed_number' => get_post_meta($post_id, 'deed-number', true) ?: '',
             'plot_number' => get_post_meta($post_id, 'plot-number', true) ?: '',
             'land_quantity' => get_post_meta($post_id, 'land-quantity', true) ?: '',
-            
+            'google_map_location' => get_post_meta($post_id, 'google-map-location', true) ?: '',
+            'map_latitude' => get_post_meta($post_id, 'map-latitude', true) ?: '',
+            'map_longitude' => get_post_meta($post_id, 'map-longitude', true) ?: ''
         ];
     }
 
@@ -164,6 +206,8 @@ class PostMetaBoxContent extends BasePostMetaBoxContent
         $this->save_text_field($post_id,'deed-number',sanitize_text_field($_POST['deed-number'] ?? ''));
         $this->save_text_field($post_id,'plot-number',sanitize_text_field($_POST['plot-number'] ?? ''));
         $this->save_text_field($post_id,'land-quantity',sanitize_text_field($_POST['land-quantity'] ?? ''));
-        
+        $this->save_text_field($post_id, 'google-map-location', sanitize_textarea_field($this->prepare_map_location($_POST['google-map-location'] ?? '')));
+        $this->save_text_field($post_id, 'map-latitude', sanitize_text_field($_POST['map-latitude'] ?? ''));
+        $this->save_text_field($post_id, 'map-longitude', sanitize_text_field($_POST['map-longitude'] ?? ''));
     }
 }
