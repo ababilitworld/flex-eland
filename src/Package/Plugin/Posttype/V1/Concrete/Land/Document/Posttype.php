@@ -101,7 +101,7 @@ class Posttype extends BasePosttype
         //add_filter( 'single_template', array( $this, 'load_single_template' ) );
 		//add_filter( 'template_include', array( $this, 'template_include' ) );
         //add_filter(PLUGIN_PRE_UNDS.'_admin_menu', [$this, 'add_menu_items']);          
-        add_filter('post_row_actions', [$this, 'add_action_view_details'], 10, 2);
+        add_filter('post_row_actions', [$this, 'row_action_view_details'], 10, 2);
         
     }
 

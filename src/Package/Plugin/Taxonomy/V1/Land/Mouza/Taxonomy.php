@@ -97,7 +97,7 @@ if (!class_exists(__NAMESPACE__.'\Taxonomy'))
         {
             //add_action('init', [$this, 'init_taxonomy'], 97);
             //add_filter(PLUGIN_PRE_UNDS.'_admin_menu', [$this, 'add_menu_items']);
-            add_filter($this->taxonomy.'_row_actions', [$this, 'add_action_view_details'], 10, 2);
+            add_filter($this->taxonomy.'_row_actions', [$this, 'row_action_view_details'], 10, 2);
     
         }
 
