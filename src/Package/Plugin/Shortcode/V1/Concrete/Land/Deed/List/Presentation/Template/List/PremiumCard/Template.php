@@ -1,22 +1,22 @@
 <?php
-namespace Ababilithub\FlexELand\Package\Plugin\Shortcode\V1\Concrete\Land\Deed\List\Presentation\Template\List\PremiumCard;
+namespace Ababilithub\FlexEland\Package\Plugin\Shortcode\V1\Concrete\Land\Deed\List\Presentation\Template\List\PremiumCard;
 
 (defined('ABSPATH') && defined('WPINC')) || die();
 
 use Ababilithub\{
     FlexPhp\Package\Mixin\V1\Standard\Mixin as StandardMixin,
     FlexWordpress\Package\Mixin\V1\Standard\Mixin as StandardWpMixin,
-    FlexELand\Package\Plugin\Posttype\V1\Concrete\Land\Deed\Posttype as LandDeedPosttype,
+    FlexEland\Package\Plugin\Posttype\V1\Concrete\Land\Deed\Posttype as LandDeedPosttype,
 };
 
 use const Ababilithub\{
-    FlexELand\PLUGIN_NAME,
-    FlexELand\PLUGIN_DIR,
-    FlexELand\PLUGIN_URL,
-    FlexELand\PLUGIN_FILE,
-    FlexELand\PLUGIN_PRE_UNDS,
-    FlexELand\PLUGIN_PRE_HYPH,
-    FlexELand\PLUGIN_VERSION,
+    FlexEland\PLUGIN_NAME,
+    FlexEland\PLUGIN_DIR,
+    FlexEland\PLUGIN_URL,
+    FlexEland\PLUGIN_FILE,
+    FlexEland\PLUGIN_PRE_UNDS,
+    FlexEland\PLUGIN_PRE_HYPH,
+    FlexEland\PLUGIN_VERSION,
 };
 
 class Template 

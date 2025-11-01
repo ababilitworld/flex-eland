@@ -1,5 +1,5 @@
 <?php
-namespace Ababilithub\FlexELand\Package\Plugin\Shortcode\V1\Manager;
+namespace Ababilithub\FlexEland\Package\Plugin\Shortcode\V1\Manager;
 
 (defined('ABSPATH') && defined('WPINC')) || exit();
 
@@ -7,9 +7,9 @@ use Ababilithub\{
     FlexPhp\Package\Manager\V1\Base\Manager as BaseManager,
     FlexWordpress\Package\Shortcode\V1\Factory\Shortcode as ShortcodeFactory,
     FlexWordpress\Package\Shortcode\V1\Contract\Shortcode as ShortcodeContract,
-    FlexELand\Package\Plugin\Shortcode\V1\Concrete\Plugin\Info\Shortcode as PluginInfoShortcode,
-    FlexELand\Package\Plugin\Shortcode\V1\Concrete\Land\Deed\List\Shortcode as DeedListShortcode,
-    FlexELand\Package\Plugin\Shortcode\V1\Concrete\Land\Document\List\Shortcode as DocumentListShortcode,
+    FlexEland\Package\Plugin\Shortcode\V1\Concrete\Plugin\Info\Shortcode as PluginInfoShortcode,
+    FlexEland\Package\Plugin\Shortcode\V1\Concrete\Land\Deed\List\Shortcode as DeedListShortcode,
+    FlexEland\Package\Plugin\Shortcode\V1\Concrete\Land\Document\List\Shortcode as DocumentListShortcode,
     
     
 };

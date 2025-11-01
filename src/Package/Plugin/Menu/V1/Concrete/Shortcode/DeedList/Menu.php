@@ -1,17 +1,17 @@
 <?php
-namespace Ababilithub\FlexEland\Package\Plugin\Menu\V1\Concrete\Posttype\Deed;
+namespace Ababilithub\FlexEland\Package\Plugin\Menu\V1\Concrete\Shortcode\DeedList;
 
 (defined( 'ABSPATH' ) && defined( 'WPINC' )) || exit();
 
 use Ababilithub\{
     FlexPhp\Package\Mixin\V1\Standard\Mixin as StandardMixin,
     FlexWordpress\Package\Menu\V1\Base\Menu as BaseMenu,
-    FlexEland\Package\Plugin\Posttype\V1\Concrete\Land\Deed\Posttype as LandDeedPosttype
+    FlexEland\Package\Plugin\Posttype\V1\Concrete\Land\Deed\Posttype as LandDeedPosttype,
 };
 
 use const Ababilithub\{
     FlexEland\PLUGIN_PRE_UNDS,
-    FlexEland\PLUGIN_DIR,
+    FlexEland\PLUGIN_PRE_HYPH,
 };
 
 if (!class_exists(__NAMESPACE__.'\Menu')) 
@@ -19,6 +19,7 @@ if (!class_exists(__NAMESPACE__.'\Menu'))
 
     class Menu extends BaseMenu
     {
+        private $option_box;
 
         public function init(array $data = []) : static
         {
@@ -30,7 +31,7 @@ if (!class_exists(__NAMESPACE__.'\Menu'))
 
         public function init_service() : void
         {
-            
+            //
         }
 
         public function init_hook() : void
@@ -48,12 +49,12 @@ if (!class_exists(__NAMESPACE__.'\Menu'))
             $menu_items[] = [
                 'type' => 'submenu',
                 'parent_slug' => 'flex-eland',
-                'page_title' => 'Deed',
-                'menu_title' => 'Deed',
+                'page_title' => 'Deed List',
+                'menu_title' => 'Deed List',
                 'capability' => 'manage_options',
-                'menu_slug' => 'edit.php?post_type='.LandDeedPosttype::POSTTYPE,
-                'callback' => '',
-                'position' => 1,
+                'menu_slug' => 'flex-eland-deed-list',
+                'callback' => [$this,'render'],
+                'position' => 6,
             ];
 
             return $menu_items;
@@ -62,23 +63,9 @@ if (!class_exists(__NAMESPACE__.'\Menu'))
         /**
          * Custom main page render
          */
-        public function render_main_page()
+        public function render(): void
         {
-            echo '<div class="wrap">';
-            echo '<h1>Main Menu Dashboard</h1>';
-            echo '<p>Welcome to Flex Bangla Land administration panel.</p>';
-            echo '</div>';
-        }
-
-        /**
-         * Custom main page render
-         */
-        public function render_submenu()
-        {
-            echo '<div class="wrap">';
-            echo '<h1>Sub Menu Dashboard</h1>';
-            echo '<p>Welcome to Flex Bangla Land administration panel.</p>';
-            echo '</div>';
+            echo do_shortcode('['.PLUGIN_PRE_HYPH.'-'.LandDeedPosttype::POSTTYPE.'-'.'list'.']');
         }
         
     }

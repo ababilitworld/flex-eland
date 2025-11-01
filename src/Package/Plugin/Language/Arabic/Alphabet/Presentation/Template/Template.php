@@ -1,5 +1,5 @@
 <?php
-namespace Ababilithub\FlexELand\Package\Plugin\Language\Arabic\Alphabet\Presentation\Template;
+namespace Ababilithub\FlexEland\Package\Plugin\Language\Arabic\Alphabet\Presentation\Template;
 
 (defined('ABSPATH') && defined('WPINC')) || die();
 
@@ -9,13 +9,13 @@ use Ababilithub\{
 };
 
 use const Ababilithub\{
-    FlexELand\PLUGIN_NAME,
-    FlexELand\PLUGIN_DIR,
-    FlexELand\PLUGIN_URL,
-    FlexELand\PLUGIN_FILE,
-    FlexELand\PLUGIN_PRE_UNDS,
-    FlexELand\PLUGIN_PRE_HYPH,
-    FlexELand\PLUGIN_VERSION
+    FlexEland\PLUGIN_NAME,
+    FlexEland\PLUGIN_DIR,
+    FlexEland\PLUGIN_URL,
+    FlexEland\PLUGIN_FILE,
+    FlexEland\PLUGIN_PRE_UNDS,
+    FlexEland\PLUGIN_PRE_HYPH,
+    FlexEland\PLUGIN_VERSION
 };
 
 if (!class_exists(__NAMESPACE__.'\Template')) 

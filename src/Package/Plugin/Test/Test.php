@@ -1,19 +1,19 @@
 <?php
-namespace Ababilithub\FlexELand\Package\Plugin\Test;
+namespace Ababilithub\FlexEland\Package\Plugin\Test;
 
 use Ababilithub\{
     FlexPhp\Package\Mixin\V1\Standard\Mixin as StandardMixin,
-    FlexELand\Package\Plugin\Menu\Menu as TestMenu,
+    FlexEland\Package\Plugin\Menu\Menu as TestMenu,
 };
 
 use const Ababilithub\{
-    FlexELand\PLUGIN_NAME,
-    FlexELand\PLUGIN_DIR,
-    FlexELand\PLUGIN_URL,
-    FlexELand\PLUGIN_FILE,
-    FlexELand\PLUGIN_PRE_UNDS,
-    FlexELand\PLUGIN_PRE_HYPH,
-    FlexELand\PLUGIN_VERSION
+    FlexEland\PLUGIN_NAME,
+    FlexEland\PLUGIN_DIR,
+    FlexEland\PLUGIN_URL,
+    FlexEland\PLUGIN_FILE,
+    FlexEland\PLUGIN_PRE_UNDS,
+    FlexEland\PLUGIN_PRE_HYPH,
+    FlexEland\PLUGIN_VERSION
 };
 
 (defined( 'ABSPATH' ) && defined( 'WPINC' )) || exit();

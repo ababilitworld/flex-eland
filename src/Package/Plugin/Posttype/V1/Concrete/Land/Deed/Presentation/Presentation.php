@@ -1,6 +1,6 @@
 <?php
 
-namespace Ababilithub\FlexELand\Package\Plugin\Posttype\Land\Document\Presentation;
+namespace Ababilithub\FlexEland\Package\Plugin\Posttype\Land\Document\Presentation;
 
 (defined('ABSPATH') && defined('WPINC')) || die();
 

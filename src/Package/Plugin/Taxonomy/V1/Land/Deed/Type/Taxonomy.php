@@ -1,5 +1,5 @@
 <?php
-namespace Ababilithub\FlexELand\Package\Plugin\Taxonomy\V1\Land\Deed\Type;
+namespace Ababilithub\FlexEland\Package\Plugin\Taxonomy\V1\Land\Deed\Type;
 
 (defined('ABSPATH') && defined('WPINC')) || exit();
 
@@ -9,7 +9,7 @@ use Ababilithub\{
 };
 
 use const Ababilithub\{
-    FlexELand\PLUGIN_PRE_UNDS
+    FlexEland\PLUGIN_PRE_UNDS
 };
 
 if (!class_exists(__NAMESPACE__.'\Taxonomy')) 

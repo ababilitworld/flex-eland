@@ -1,5 +1,5 @@
 <?php
-namespace Ababilithub\FlexELand\Package\Plugin\Route\V1\Manager;
+namespace Ababilithub\FlexEland\Package\Plugin\Route\V1\Manager;
 
 (defined('ABSPATH') && defined('WPINC')) || exit();
 

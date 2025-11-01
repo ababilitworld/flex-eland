@@ -1,5 +1,5 @@
 <?php
-namespace Ababilithub\FlexELand\Package\Plugin\Posttype\V1\Manager;
+namespace Ababilithub\FlexEland\Package\Plugin\Posttype\V1\Manager;
 
 (defined('ABSPATH') && defined('WPINC')) || exit();
 
@@ -7,8 +7,8 @@ use Ababilithub\{
     FlexPhp\Package\Manager\V1\Base\Manager as BaseManager,
     FlexWordpress\Package\Posttype\V1\Factory\Posttype as PosttypeFactory,
     FlexWordpress\Package\Posttype\V1\Contract\Posttype as PosttypeContract, 
-    FlexELand\Package\Plugin\Posttype\V1\Concrete\Land\Document\Posttype as LandDocumentPosttype,
-    FlexELand\Package\Plugin\Posttype\V1\Concrete\Land\Deed\Posttype as LandDeedPosttype,
+    FlexEland\Package\Plugin\Posttype\V1\Concrete\Land\Document\Posttype as LandDocumentPosttype,
+    FlexEland\Package\Plugin\Posttype\V1\Concrete\Land\Deed\Posttype as LandDeedPosttype,
        
 };
 

@@ -1,5 +1,5 @@
 <?php
-namespace Ababilithub\FlexELand\Package\Plugin\Taxonomy\V1\Land\Mouza;
+namespace Ababilithub\FlexEland\Package\Plugin\Taxonomy\V1\Land\Mouza;
 
 (defined('ABSPATH') && defined('WPINC')) || exit();
 

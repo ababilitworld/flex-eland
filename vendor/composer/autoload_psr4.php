@@ -6,5 +6,5 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
-    'Ababilithub\\FlexELand\\' => array($baseDir . '/src', $baseDir . '/Test'),
+    'Ababilithub\\FlexEland\\' => array($baseDir . '/src', $baseDir . '/Test'),
 );

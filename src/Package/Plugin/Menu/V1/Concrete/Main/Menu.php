@@ -1,5 +1,5 @@
 <?php
-namespace Ababilithub\FlexELand\Package\Plugin\Menu\V1\Concrete\Main;
+namespace Ababilithub\FlexEland\Package\Plugin\Menu\V1\Concrete\Main;
 
 (defined( 'ABSPATH' ) && defined( 'WPINC' )) || exit();
 
@@ -9,9 +9,8 @@ use Ababilithub\{
 };
 
 use const Ababilithub\{
-    FlexELand\PLUGIN_PRE_UNDS,
-    FlexELand\PLUGIN_PRE_HYPH,
-    FlexELand\PLUGIN_DIR,
+    FlexEland\PLUGIN_PRE_UNDS,
+    FlexEland\PLUGIN_PRE_HYPH,
 };
 
 if (!class_exists(__NAMESPACE__.'\Menu')) 
@@ -47,12 +46,12 @@ if (!class_exists(__NAMESPACE__.'\Menu'))
         {
             $menu_items[] = [
                 'type' => 'menu',
-                'page_title' => 'Flex ELand',
-                'menu_title' => 'Flex ELand',
-                'capability' => 'flex_eland',
+                'page_title' => 'Flex Eland',
+                'menu_title' => 'Flex Eland',
+                'capability' => 'manage_options',
                 'menu_slug' => 'flex-eland',
                 'callback' => [$this, 'render_main_page'],
-                'icon' => 'dashicons-location-alt',
+                'icon' => 'dashicons-admin-customizer',
                 'position' => 9
             ];
 
@@ -63,7 +62,7 @@ if (!class_exists(__NAMESPACE__.'\Menu'))
          * Custom main page render
          */
         public function render_main_page()
-        {
+        {            
             echo do_shortcode('[' . PLUGIN_PRE_HYPH . '-plugin-info]');
         }
 

@@ -1,14 +1,14 @@
 <?php
-namespace Ababilithub\FlexELand\Package\Plugin\Posttype\V1\Concrete\Land\Deed\PostMeta\PostMetaBox\Concrete\PostMetaBoxOne;
+namespace Ababilithub\FlexEland\Package\Plugin\Posttype\V1\Concrete\Land\Deed\PostMeta\PostMetaBox\Concrete\PostMetaBoxOne;
 
 use Ababilithub\{
     FlexWordpress\Package\PostMetaBox\V1\Base\PostMetaBox as BasePostMetaBox,
-    FlexELand\Package\Plugin\Posttype\V1\Concrete\Land\Deed\Posttype as LandDeedPosttype,
+    FlexEland\Package\Plugin\Posttype\V1\Concrete\Land\Deed\Posttype as LandDeedPosttype,
 };
 
 use const Ababilithub\{
-    FlexELand\PLUGIN_PRE_HYPH,
-    FlexELand\PLUGIN_PRE_UNDS,
+    FlexEland\PLUGIN_PRE_HYPH,
+    FlexEland\PLUGIN_PRE_UNDS,
 };
 
 class PostMetaBox extends BasePostMetaBox

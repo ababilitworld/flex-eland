@@ -1,5 +1,5 @@
 <?php
-namespace Ababilithub\FlexELand\Package\Plugin\Posttype\Land\Document\Presentation\Template\Single;
+namespace Ababilithub\FlexEland\Package\Plugin\Posttype\Land\Document\Presentation\Template\Single;
 
 (defined('ABSPATH') && defined('WPINC')) || die();
 
@@ -8,7 +8,7 @@ use Ababilithub\{
     FlexWordpress\Package\Mixin\V1\Standard\Mixin as StandardWpMixin,
 };
 
-use const Ababilithub\FlexELand\{
+use const Ababilithub\FlexEland\{
     PLUGIN_NAME,
     PLUGIN_DIR,
     PLUGIN_URL,

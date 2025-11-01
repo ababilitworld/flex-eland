@@ -1,5 +1,5 @@
 <?php
-namespace Ababilithub\FlexELand;
+namespace Ababilithub\FlexEland;
 
 class Bootstrap
 {

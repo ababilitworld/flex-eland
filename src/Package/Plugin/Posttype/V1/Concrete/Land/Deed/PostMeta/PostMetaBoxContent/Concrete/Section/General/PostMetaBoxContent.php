@@ -1,8 +1,8 @@
 <?php
-namespace Ababilithub\FlexELand\Package\Plugin\Posttype\V1\Concrete\Land\Deed\PostMeta\PostMetaBoxContent\Concrete\Section\General;
+namespace Ababilithub\FlexEland\Package\Plugin\Posttype\V1\Concrete\Land\Deed\PostMeta\PostMetaBoxContent\Concrete\Section\General;
 
 use Ababilithub\{
-    FlexELand\Package\Plugin\Posttype\V1\Concrete\Land\Deed\Posttype as LandDeedPosttype,
+    FlexEland\Package\Plugin\Posttype\V1\Concrete\Land\Deed\Posttype as LandDeedPosttype,
     FlexWordpress\Package\PostMeta\V1\Mixin\PostMeta as PostMetaMixin,
     FlexWordpress\Package\PostMetaBoxContent\V1\Base\PostMetaBoxContent as BasePostMetaBoxContent,
     FlexPhp\Package\Form\Field\V1\Factory\Field as FieldFactory,
@@ -12,8 +12,8 @@ use Ababilithub\{
 };
 
 use const Ababilithub\{
-    FlexELand\PLUGIN_PRE_HYPH,
-    FlexELand\PLUGIN_PRE_UNDS,
+    FlexEland\PLUGIN_PRE_HYPH,
+    FlexEland\PLUGIN_PRE_UNDS,
 };
 
 class PostMetaBoxContent extends BasePostMetaBoxContent

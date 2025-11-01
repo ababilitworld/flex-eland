@@ -1,5 +1,5 @@
 <?php
-namespace Ababilithub\FlexELand\Package\Plugin\Posttype\V1\Concrete\Land\Deed;
+namespace Ababilithub\FlexEland\Package\Plugin\Posttype\V1\Concrete\Land\Deed;
 
 (defined('ABSPATH') && defined('WPINC')) || exit();
 
@@ -7,17 +7,17 @@ use Ababilithub\{
     FlexPhp\Package\Mixin\V1\Standard\Mixin as StandardMixin,
     FlexWordpress\Package\Posttype\V1\Mixin\Posttype as WpPosttypeMixin,
     FlexWordpress\Package\Posttype\V1\Base\Posttype as BasePosttype,
-    FlexELand\Package\Plugin\Posttype\V1\Concrete\Land\Deed\Presentation\Template\List\PremiumCard\Template as PosttypeListTemplate,
-    FlexELand\Package\Plugin\Posttype\V1\Concrete\Land\Deed\Presentation\Template\Single\Template as PosttypeTemplate,
-    FlexELand\Package\Plugin\Posttype\V1\Concrete\Land\Deed\Setting\Setting as PosttypeSetting,
-    FlexELand\Package\Plugin\Posttype\V1\Concrete\Land\Deed\PostMeta\PostMetaBox\Manager\PostMetaBox as LandDeedPostMetaBoxManager,
-    FlexELand\Package\Plugin\Posttype\V1\Concrete\Land\Deed\PostMeta\PostMetaBoxContent\Manager\PostMetaBoxContent as LandDeedPostMetaBoxContentManager,
+    FlexEland\Package\Plugin\Posttype\V1\Concrete\Land\Deed\Presentation\Template\List\PremiumCard\Template as PosttypeListTemplate,
+    FlexEland\Package\Plugin\Posttype\V1\Concrete\Land\Deed\Presentation\Template\Single\Template as PosttypeTemplate,
+    FlexEland\Package\Plugin\Posttype\V1\Concrete\Land\Deed\Setting\Setting as PosttypeSetting,
+    FlexEland\Package\Plugin\Posttype\V1\Concrete\Land\Deed\PostMeta\PostMetaBox\Manager\PostMetaBox as LandDeedPostMetaBoxManager,
+    FlexEland\Package\Plugin\Posttype\V1\Concrete\Land\Deed\PostMeta\PostMetaBoxContent\Manager\PostMetaBoxContent as LandDeedPostMetaBoxContentManager,
     
 };
 
 use const Ababilithub\{
-    FlexELand\PLUGIN_PRE_UNDS,
-    FlexELand\PLUGIN_DIR,
+    FlexEland\PLUGIN_PRE_UNDS,
+    FlexEland\PLUGIN_DIR,
 };
 
 class Posttype extends BasePosttype 

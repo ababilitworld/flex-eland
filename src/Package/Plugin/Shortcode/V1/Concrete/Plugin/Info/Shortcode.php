@@ -1,17 +1,17 @@
 <?php
 
-namespace Ababilithub\FlexELand\Package\Plugin\Shortcode\V1\Concrete\Plugin\Info;
+namespace Ababilithub\FlexEland\Package\Plugin\Shortcode\V1\Concrete\Plugin\Info;
 
 (defined('ABSPATH') && defined('WPINC')) || exit();
 
 use Ababilithub\{
     FlexWordpress\Package\Shortcode\V1\Base\Shortcode as BaseShortcode,
-    FlexELand\Package\Plugin\Shortcode\V1\Concrete\Plugin\Info\Presentation\Template\Template as PluginInfoTemplate,
+    FlexEland\Package\Plugin\Shortcode\V1\Concrete\Plugin\Info\Presentation\Template\Template as PluginInfoTemplate,
 };
 
 use const Ababilithub\{
-    FlexELand\PLUGIN_PRE_UNDS,
-    FlexELand\PLUGIN_PRE_HYPH,
+    FlexEland\PLUGIN_PRE_UNDS,
+    FlexEland\PLUGIN_PRE_HYPH,
 };
 
 class Shortcode extends BaseShortcode

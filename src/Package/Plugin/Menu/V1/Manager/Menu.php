@@ -1,5 +1,5 @@
 <?php
-namespace Ababilithub\FlexELand\Package\Plugin\Menu\V1\Manager;
+namespace Ababilithub\FlexEland\Package\Plugin\Menu\V1\Manager;
 
 (defined('ABSPATH') && defined('WPINC')) || exit();
 
@@ -7,8 +7,10 @@ use Ababilithub\{
     FlexPhp\Package\Manager\V1\Base\Manager as BaseManager,
     FlexWordpress\Package\Menu\V1\Contract\Menu as MenuContract, 
     FlexWordpress\Package\Menu\V1\Factory\Menu as MenuFactory,
-    FlexELand\Package\Plugin\Menu\V1\Concrete\Main\Menu as MainMenu,
-    FlexELand\Package\Plugin\Menu\V1\Concrete\Posttype\Deed\Menu as DeedMenu,
+    FlexEland\Package\Plugin\Menu\V1\Concrete\Main\Menu as MainMenu,
+    FlexEland\Package\Plugin\Menu\V1\Concrete\Posttype\Deed\Menu as DeedPosttypeMenu,
+    FlexEland\Package\Plugin\Menu\V1\Concrete\Shortcode\DeedList\Menu as DeedListShortcodeMenu,
+    
 };
 
 class  Menu extends BaseManager
@@ -23,7 +25,8 @@ class  Menu extends BaseManager
         $this->set_items(
             [
                 MainMenu::class,
-                DeedMenu::class,                  
+                DeedPosttypeMenu::class,
+                DeedListShortcodeMenu::class,                  
             ]
         );
     }

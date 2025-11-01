@@ -1,5 +1,5 @@
 <?php
-namespace Ababilithub\FlexELand\Package\Plugin\Taxonomy\V1\Land\Survey;
+namespace Ababilithub\FlexEland\Package\Plugin\Taxonomy\V1\Land\Survey;
 
 (defined('ABSPATH') && defined('WPINC')) || exit();
 

@@ -13,12 +13,12 @@ class ComposerStaticInit4fda97124dad9ed3da8947e15e244422
     public static $prefixLengthsPsr4 = array (
         'A' => 
         array (
-            'Ababilithub\\FlexELand\\' => 22,
+            'Ababilithub\\FlexEland\\' => 22,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'Ababilithub\\FlexELand\\' => 
+        'Ababilithub\\FlexEland\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src',
             1 => __DIR__ . '/../..' . '/Test',

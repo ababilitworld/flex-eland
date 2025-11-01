@@ -1,5 +1,5 @@
 <?php
-namespace Ababilithub\FlexELand\Package\Plugin\Posttype\V1\Concrete\Land\Document;
+namespace Ababilithub\FlexEland\Package\Plugin\Posttype\V1\Concrete\Land\Document;
 
 (defined('ABSPATH') && defined('WPINC')) || exit();
 
@@ -7,13 +7,13 @@ use Ababilithub\{
     FlexPhp\Package\Mixin\V1\Standard\Mixin as StandardMixin,
     FlexWordpress\Package\Posttype\V1\Mixin\Posttype as WpPosttypeMixin,
     FlexWordpress\Package\Posttype\V1\Base\Posttype as BasePosttype,
-    FlexELand\Package\Plugin\Posttype\V1\Concrete\Land\Document\Setting\Setting as PosttypeSetting
+    FlexEland\Package\Plugin\Posttype\V1\Concrete\Land\Document\Setting\Setting as PosttypeSetting
 
 };
 
 use const Ababilithub\{
-    FlexELand\PLUGIN_PRE_UNDS,
-    FlexELand\PLUGIN_DIR,
+    FlexEland\PLUGIN_PRE_UNDS,
+    FlexEland\PLUGIN_DIR,
 };
 
 defined( __NAMESPACE__.'\POSTTYPE' ) || define( __NAMESPACE__.'\POSTTYPE', 'fldoc' );

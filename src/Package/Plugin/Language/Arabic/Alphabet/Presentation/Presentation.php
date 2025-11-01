@@ -1,6 +1,6 @@
 <?php
 
-namespace Ababilithub\FlexELand\Package\Plugin\Alphabet\Presentation;
+namespace Ababilithub\FlexEland\Package\Plugin\Alphabet\Presentation;
 
 (defined('ABSPATH') && defined('WPINC')) || die();
 

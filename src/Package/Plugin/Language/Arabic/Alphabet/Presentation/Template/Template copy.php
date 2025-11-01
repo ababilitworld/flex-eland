@@ -1,11 +1,11 @@
 <?php
-namespace Ababilithub\FlexELand\Package\Plugin\Alphabet\Presentation\Template;
+namespace Ababilithub\FlexEland\Package\Plugin\Alphabet\Presentation\Template;
 
 (defined('ABSPATH') && defined('WPINC')) || die();
 
 use Ababilitworld\FlexTraitByAbabilitworld\Standard\Standard;
 
-use const Ababilithub\FlexELand\{
+use const Ababilithub\FlexEland\{
     PLUGIN_NAME,
     PLUGIN_DIR,
     PLUGIN_URL,

@@ -1,5 +1,5 @@
 <?php
-namespace Ababilithub\FlexELand\Package\Plugin\Posttype\V1\Concrete\Land\Document\Setting\General;
+namespace Ababilithub\FlexEland\Package\Plugin\Posttype\V1\Concrete\Land\Document\Setting\General;
 
 use Ababilithub\{
     FlexPhp\Package\Mixin\V1\Standard\Mixin as StandardMixin,
@@ -9,14 +9,14 @@ use Ababilithub\{
 };
 
 use const Ababilithub\{
-    FlexELand\PLUGIN_NAME,
-    FlexELand\PLUGIN_DIR,
-    FlexELand\PLUGIN_URL,
-    FlexELand\PLUGIN_FILE,
-    FlexELand\PLUGIN_PRE_UNDS,
-    FlexELand\PLUGIN_PRE_HYPH,
-    FlexELand\PLUGIN_VERSION,
-    FlexELand\Package\Plugin\Posttype\V1\Concrete\Land\Document\POSTTYPE,
+    FlexEland\PLUGIN_NAME,
+    FlexEland\PLUGIN_DIR,
+    FlexEland\PLUGIN_URL,
+    FlexEland\PLUGIN_FILE,
+    FlexEland\PLUGIN_PRE_UNDS,
+    FlexEland\PLUGIN_PRE_HYPH,
+    FlexEland\PLUGIN_VERSION,
+    FlexEland\Package\Plugin\Posttype\V1\Concrete\Land\Document\POSTTYPE,
 };
 
 (defined('ABSPATH') && defined('WPINC')) || exit();

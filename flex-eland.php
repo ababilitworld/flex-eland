@@ -1,14 +1,14 @@
 <?php
 
-namespace Ababilithub\FlexELand;
+namespace Ababilithub\FlexEland;
 
 /**
- * FlexELand
+ * FlexEland
  *
  * @package ababilithub/flex-eland
  *
  * @wordpress-plugin
- * Plugin Name:       FlexELand
+ * Plugin Name:       FlexEland
  * Plugin URI:        https://ababilithub.com/wp-plugin/flex-eland
  * Description:       A flexible, Composer-managed, package to Interactive Land Record Management by following modern WordPress and OOP PHP best practices by Ababil IT Hub.
  * Version:           1.0.0
@@ -35,7 +35,7 @@ namespace Ababilithub\FlexELand;
 require_once __DIR__ . '/bootstrap.php';
 
 use Ababilithub\{
-   FlexELand\Package\Package,
+   FlexEland\Package\Package,
 };
  
 $package = Package::getInstance();

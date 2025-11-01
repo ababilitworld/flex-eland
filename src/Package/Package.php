@@ -1,19 +1,19 @@
 <?php
-    namespace Ababilithub\FlexELand\Package;
+    namespace Ababilithub\FlexEland\Package;
 
     (defined( 'ABSPATH' ) && defined( 'WPINC' )) || exit();
 
 	use Ababilithub\{
 		FlexPhp\Package\Mixin\V1\Standard\Mixin as StandardMixin,
-		FlexELand\Package\Plugin\Production\Production as FlexProduction,
+		FlexEland\Package\Plugin\Production\Production as FlexProduction,
 	};
 
 	use const Ababilithub\{
-		FlexELand\PLUGIN_NAME,
-		FlexELand\PLUGIN_DIR,
-        FlexELand\PLUGIN_URL,
-		FlexELand\PLUGIN_FILE,
-		FlexELand\PLUGIN_VERSION
+		FlexEland\PLUGIN_NAME,
+		FlexEland\PLUGIN_DIR,
+        FlexEland\PLUGIN_URL,
+		FlexEland\PLUGIN_FILE,
+		FlexEland\PLUGIN_VERSION
 	};
 
 	if ( ! class_exists( __NAMESPACE__.'\Package' ) ) 
@@ -21,7 +21,7 @@
 		/**
 		 * Class Package
 		 *
-		 * @package Ababilithub\FlexELand\Package
+		 * @package Ababilithub\FlexEland\Package
 		 */
 		class Package 
 		{
@@ -77,7 +77,7 @@
 			 */
 			public static function activate(): void 
 			{
-				//flush_rewrite_rules();
+				flush_rewrite_rules();
                 self::run();
 			}
 	

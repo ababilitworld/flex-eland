@@ -1,5 +1,5 @@
 <?php
-namespace Ababilithub\FlexELand\Package\Plugin\Taxonomy\V1\Land\Document\Type;
+namespace Ababilithub\FlexEland\Package\Plugin\Taxonomy\V1\Land\Document\Type;
 
 (defined('ABSPATH') && defined('WPINC')) || exit();
 

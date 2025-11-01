@@ -1,5 +1,5 @@
 <?php
-namespace Ababilithub\FlexELand\Package\Plugin\Taxonomy\V1\Manager;
+namespace Ababilithub\FlexEland\Package\Plugin\Taxonomy\V1\Manager;
 
 (defined('ABSPATH') && defined('WPINC')) || exit();
 
@@ -11,12 +11,12 @@ use Ababilithub\{
     FlexWordpress\Package\Taxonomy\V1\Concrete\Address\Thana\Taxonomy as ThanaTaxonomy,
     FlexWordpress\Package\Taxonomy\V1\Concrete\Multimedia\MediaType\Taxonomy as MediaTypeTaxonomy,
     FlexWordpress\Package\Taxonomy\V1\Concrete\Multimedia\ExtensionType\Taxonomy as ExtensionTypeTaxonomy,
-    FlexELand\Package\Plugin\Taxonomy\V1\Land\Deed\Type\Taxonomy as LandDeedTypeTaxonomy,
-    FlexELand\Package\Plugin\Taxonomy\V1\Land\Document\Category\Taxonomy as LandDocumentCategoryTaxonomy,
-    FlexELand\Package\Plugin\Taxonomy\V1\Land\Document\Type\Taxonomy as LandDocumentTypeTaxonomy,
-    FlexELand\Package\Plugin\Taxonomy\V1\Land\Mouza\Taxonomy as LandMouzaTaxonomy,
-    FlexELand\Package\Plugin\Taxonomy\V1\Land\Survey\Taxonomy as LandSurveyTaxonomy,
-    FlexELand\Package\Plugin\Taxonomy\V1\Land\Type\Taxonomy as LandTypeTaxonomy,    
+    FlexEland\Package\Plugin\Taxonomy\V1\Land\Deed\Type\Taxonomy as LandDeedTypeTaxonomy,
+    FlexEland\Package\Plugin\Taxonomy\V1\Land\Document\Category\Taxonomy as LandDocumentCategoryTaxonomy,
+    FlexEland\Package\Plugin\Taxonomy\V1\Land\Document\Type\Taxonomy as LandDocumentTypeTaxonomy,
+    FlexEland\Package\Plugin\Taxonomy\V1\Land\Mouza\Taxonomy as LandMouzaTaxonomy,
+    FlexEland\Package\Plugin\Taxonomy\V1\Land\Survey\Taxonomy as LandSurveyTaxonomy,
+    FlexEland\Package\Plugin\Taxonomy\V1\Land\Type\Taxonomy as LandTypeTaxonomy,    
 };
 
 class Taxonomy extends BaseManager
