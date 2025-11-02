@@ -22,7 +22,7 @@ use const Ababilithub\{
 
 class Template 
 {
-    use StandardMixin, StandardWpMixin;//, PostMetaMixin;
+    use StandardMixin, StandardWpMixin, PostMetaMixin;
 
     private $package;
     private $template_url;
